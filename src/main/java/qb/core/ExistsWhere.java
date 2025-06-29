@@ -4,7 +4,7 @@ import jakarta.annotation.Nonnull;
 import org.apache.commons.lang3.StringUtils;
 
 final class ExistsWhere extends AbstractWhere {
-    @Override TypeOfWhere getTypeOfWhere() { return TypeOfWhere.WhereExist; }
+    @Override TypeOfWhere getTypeOfWhere() { return TypeOfWhere.WHERE_EXIST; }
 
     private final String inSubSelect;
 

@@ -19,7 +19,7 @@ final class BuildSQLInsertRows extends BuildSQLCore {
         boolean putAutoStamp = forSQLRetrieverForDB.getWorkBuildSQLWorkTable().getDbTable().getPutAutoStamp();
 
         final List<DbF> intoDbFs = new ArrayList<>();
-        if (!forSQLRetrieverForDB.getWorkBuildSQLWorkTable().getDbTable().getAutoIncrease()) {
+        if (Boolean.FALSE.equals(forSQLRetrieverForDB.getWorkBuildSQLWorkTable().getDbTable().getAutoIncrease())) {
             intoDbFs.addAll(forSQLRetrieverForDB.getWorkBuildSQLWorkTable().getDbTable().getHasKeys());
         }
         forSQLRetrieverForDB.getWorkBuildSQLWorkTable().getDbTable().getDbTableInfo().getDbtHasDbFields().stream()

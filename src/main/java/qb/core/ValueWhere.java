@@ -4,7 +4,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 final class ValueWhere extends AbstractWhere {
-    @Override TypeOfWhere getTypeOfWhere() { return TypeOfWhere.WhereValue; }
+    @Override TypeOfWhere getTypeOfWhere() { return TypeOfWhere.WHERE_VALUE; }
 
     private final LinSQL.TypeOfComparison typeOfComparison;
     private final Object compareValue;

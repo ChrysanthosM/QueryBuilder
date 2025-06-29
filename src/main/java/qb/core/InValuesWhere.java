@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 
 final class InValuesWhere extends AbstractWhere {
-    @Override TypeOfWhere getTypeOfWhere() { return TypeOfWhere.WhereInValues; }
+    @Override TypeOfWhere getTypeOfWhere() { return TypeOfWhere.WHERE_IN_VALUES; }
 
     private final List<Object> inValues;
 

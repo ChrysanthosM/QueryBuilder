@@ -18,11 +18,11 @@ final class SQLFunctionAggregates extends SQLFunction {
     @Override
     public String defaultResolver(SQLRetrieverForDBs forSQLRetrieverForDB) {
         String funcParam = StringUtils.EMPTY;
-        if (super.getParams().size() > 1) {
-            if (super.getParam() == Boolean.valueOf(true)) {
-                funcParam = "DISTINCT ";
-            }
+        if (super.getParams().size() > 1
+                && super.getParam() == Boolean.valueOf(true)) {
+            funcParam = "DISTINCT ";
         }
+
         String result = this.typeOfSQLFunction.name() + "(" +
                 funcParam.concat(super.getLastParamSelectedFieldForSQL(forSQLRetrieverForDB, null)) +
                 ")";

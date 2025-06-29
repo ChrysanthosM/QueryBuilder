@@ -1,5 +1,6 @@
 package qb.core;
 
+import com.google.common.base.Preconditions;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +23,7 @@ final class SQLFunctionCONCAT extends SQLFunction {
 
     @Override
     public String alternateResolver(SQLRetrieverForDBs forSQLRetrieverForDB, @Nullable Object... args) {
-        assert args != null;
+        Preconditions.checkNotNull(args);
         String result = StringUtils.join(super.getParamsSelectedFieldForSQL(forSQLRetrieverForDB, null), args[0].toString()) ;
         return getFinalValueAsAlias(result, super.getAsAlias());
     }

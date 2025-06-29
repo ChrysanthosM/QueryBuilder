@@ -1,5 +1,6 @@
 package qb.core;
 
+import com.google.common.base.Preconditions;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import org.apache.commons.collections4.CollectionUtils;
@@ -10,7 +11,6 @@ import qb.definition.db.sqlite.schema.structure.DbT;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +33,10 @@ final class SQLFieldFromTable extends SqlUserSelection {
         init(setPrefix, asAlias, dbF);
     }
     @Override public void init(@Nullable String setPrefix, @Nullable String asAlias, @Nullable Object... args) {
-        assert args != null;
+        Preconditions.checkNotNull(args);
+        Preconditions.checkElementIndex(0, args.length);
+        Preconditions.checkNotNull(args[0]);
+        Preconditions.checkArgument(args[0] instanceof DbF);
         this.dbF = (DbF) args[0];
         this.dbField = DbFieldInstances.getMapTableInstance(this.dbF);
         super.setHasPrefix(setPrefix);
@@ -65,25 +68,26 @@ final class SQLFieldFromTable extends SqlUserSelection {
             Set<Triple<DbTable, String, List<DbF>>> availableTablesWithFields = forSQLRetrieverForDB.getAvailableTablesWithFields();
             if (CollectionUtils.isNotEmpty(availableTablesWithFields)) {
                 List<Triple<DbTable, String, List<DbF>>> tablesList = new ArrayList<>(availableTablesWithFields.stream().toList());
-                Collections.reverse(tablesList);
-                for (Triple<DbTable, String, List<DbF>> availableTableWithFields : tablesList) {
+                for (Triple<DbTable, String, List<DbF>> availableTableWithFields : tablesList.reversed()) {
                     List<DbF> tblFields = availableTableWithFields.getRight();
-                    if (CollectionUtils.isNotEmpty(tblFields)) {
-                        if (tblFields.contains(this.dbField.getDbfNameEnum())) {
-                            tableAsAlias = availableTableWithFields.getMiddle();
-                            break;
-                        }
+                    if (CollectionUtils.isNotEmpty(tblFields)
+                            && tblFields.contains(this.dbField.getDbfNameEnum())) {
+                        tableAsAlias = availableTableWithFields.getMiddle();
+                        break;
                     }
+
                 }
             }
             if (StringUtils.isNotBlank(tableAsAlias)) returnName = tableAsAlias.concat(".").concat(returnName);
         }
 
-        if (StringUtils.isBlank(super.getAsAlias())) {
-            if (forSQLRetrieverForDB.getWorkLInSQLBuilderParams().isApplyAutoAlias()) {
-                if (!super.isIgnoreTableAsAlias()) super.setAsAlias(this.dbField.getDbfAsAlias());
-            }
+        if (StringUtils.isBlank(super.getAsAlias())
+                && forSQLRetrieverForDB.getWorkLInSQLBuilderParams().isApplyAutoAlias()
+                && !super.isIgnoreTableAsAlias()) {
+            super.setAsAlias(this.dbField.getDbfAsAlias());
         }
+
+
         return LinSQLCommons.applyAsAlias(returnName, super.getAsAlias(), false, false);
     }
 }

@@ -4,7 +4,7 @@ import jakarta.annotation.Nonnull;
 import org.apache.commons.lang3.tuple.Pair;
 
 final class BetweenValuesWhere extends AbstractWhere {
-    @Override TypeOfWhere getTypeOfWhere() { return TypeOfWhere.WhereBetween; }
+    @Override TypeOfWhere getTypeOfWhere() { return TypeOfWhere.WHERE_BETWEEN; }
 
     private final Pair<Object, Object> betweenValues;
 

@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.springframework.context.annotation.Description;
 
@@ -147,23 +148,12 @@ public interface J2SQLShared {
     }
 
     //-------Create Filters
-    final class Filter {
+    @UtilityClass
+    class Filter {
         @Description("Filter Where Value")
         public static IWhere whereValue(@Nonnull Object whereObject, @Nullable LinSQL.TypeOfComparison typeOfComparison, @Nullable Object compareValue) {
             return new ValueWhere(whereObject, typeOfComparison, compareValue);
         }
-//        @Description("Filter Where Value with Prefixed Where")
-//        public static IWhere whereValue(@Nonnull J2SQL.PFX wherePrefix, @Nonnull GlobalFieldsDefinition.DbF whereDbField, @Nullable J2SQL.TypeOfComparison typeOfComparison, @Nullable Object compareValue) {
-//            return new ValuePrefixedWhere(wherePrefix, whereDbField, typeOfComparison, null, compareValue);
-//        }
-//        @Description("Filter Where Value with Prefixed Value")
-//        public static IWhere whereValue(@Nonnull Object whereObject, @Nullable J2SQL.TypeOfComparison typeOfComparison, @Nonnull J2SQL.PFX comparePrefix, @Nullable GlobalFieldsDefinition.DbF compareValue) {
-//            return new ValuePrefixedWhere(null, whereObject, typeOfComparison, comparePrefix, compareValue);
-//        }
-//        @Description("Filter Where Value with Prefixed Where and Value")
-//        public static IWhere whereValue(@Nonnull J2SQL.PFX wherePrefix, @Nonnull GlobalFieldsDefinition.DbF whereDbField, @Nullable J2SQL.TypeOfComparison typeOfComparison, @Nonnull J2SQL.PFX comparePrefix, @Nullable GlobalFieldsDefinition.DbF compareValue) {
-//            return new ValuePrefixedWhere(wherePrefix, whereDbField, typeOfComparison, comparePrefix, compareValue);
-//        }
 
         @Description("Filter Where IN Values")
         public static IWhere whereInValues(@Nonnull Object whereObject, @Nonnull List<Object> inValues) {

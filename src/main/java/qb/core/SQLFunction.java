@@ -1,5 +1,6 @@
 package qb.core;
 
+import com.google.common.base.Preconditions;
 import jakarta.annotation.Nullable;
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -53,7 +54,7 @@ abstract sealed class SQLFunction extends SqlUserSelection
     }
 
     @Override public void init(@Nullable String setPrefix, @Nullable String asAlias, @Nullable Object... args) {
-        assert args != null;
+        Preconditions.checkNotNull(args);
         Stream.of(args).filter(Objects::nonNull).forEach(arg -> this.params.add(arg));
         super.setAsAlias(asAlias);
         super.setHasPrefix(setPrefix);

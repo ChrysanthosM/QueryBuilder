@@ -108,11 +108,6 @@ final class LinSQL {
     public void selectAll() {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addUserSelection(DbF.ALL, StringUtils.EMPTY);
     }
-//    @Description("Add selected SQL Field/Constant/SQLFunction")
-//    public J2SQL selectAsAlias(@Nonnull Object addSelectedField, @Nullable String asAlias) {
-//        workLInSQLBuilder.getWorkLInSQLBuilderParams().addUserSelection(addSelectedField, Strings.nullToEmpty(asAlias));
-//        return this;
-//    }
 
     public void addFilters(@Nonnull IWhere... filters) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addWhereClause(GroupOfWheres.getGroupOfFilters(TypeOfLogicalOperator.AND, false, filters));
@@ -149,7 +144,7 @@ final class LinSQL {
     }
 
     public void groupBy(@Nonnull Object... setGroupBy) {
-        List<Object> groupBy = Stream.of(setGroupBy).filter(Objects::nonNull).collect(Collectors.toList());
+        List<Object> groupBy = Stream.of(setGroupBy).filter(Objects::nonNull).toList();
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setGroupBySelectionsHavingValues(MutablePair.of(groupBy, new ArrayList<>()));
     }
     public void having(@Nonnull IWhere... filters) {
@@ -164,7 +159,7 @@ final class LinSQL {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addJoinWith(MutableTriple.of(typeOfJoin, joinWith, joinOnList));
     }
     public LinSQL on(@Nonnull IWhere... joinOn) {
-        List<IWhere> joinOnList = Stream.of(joinOn).filter(Objects::nonNull).collect(Collectors.toList());
+        List<IWhere> joinOnList = Stream.of(joinOn).filter(Objects::nonNull).toList();
         workLInSQLBuilder.getWorkLInSQLBuilderParams().getLastJoin().setRight(joinOnList);
         return this;
     }

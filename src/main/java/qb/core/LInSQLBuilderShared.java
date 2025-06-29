@@ -1,8 +1,10 @@
 package qb.core;
 
+import lombok.experimental.UtilityClass;
 import qb.definition.db.sqlite.schema.structure.DbF;
 
-final class LInSQLBuilderShared {
+@UtilityClass
+class LInSQLBuilderShared {
     public static SqlUserSelection getSqlUserSelection(Object selectionObject) {
         return getSqlUserSelectionMain(selectionObject, null, null);
     }
@@ -12,24 +14,20 @@ final class LInSQLBuilderShared {
     public static SqlUserSelection getSqlUserSelection(Object selectionObject, Boolean inQuotesRequirement) {
         return getSqlUserSelectionMain(selectionObject, null, inQuotesRequirement);
     }
+
     private static SqlUserSelection getSqlUserSelectionMain(Object selectionObject, String asAlias, Boolean inQuotesRequirement) {
-        if (selectionObject instanceof SQLFieldOperation) return (SqlUserSelection) selectionObject;
-        if (selectionObject instanceof SQLFieldObject) return (SqlUserSelection) selectionObject;
-        if (selectionObject instanceof SQLFieldFromTable) return (SqlUserSelection) selectionObject;
-        if (selectionObject instanceof SQLFieldFromPairOfTableField) return (SQLFieldFromPairOfTableField) selectionObject;
-
-        if (selectionObject instanceof DbF) {
-            return new SQLFieldFromTable((DbF) selectionObject, asAlias);
-        }
-        if (selectionObject instanceof PairOfTableField) {
-            return new SQLFieldFromPairOfTableField((PairOfTableField) selectionObject, asAlias);
-        }
-
-        if (selectionObject instanceof J2SQLShared.SQLFunctionObject stringsFunction) {
-            ((SQLFunction) stringsFunction.getSqlFunction()).setAsAlias(asAlias);
-            return ((SQLFunction) stringsFunction.getSqlFunction());
-        }
-
-        return new SQLFieldFromConstant(selectionObject, asAlias, inQuotesRequirement);
+        return switch (selectionObject) {
+            case SQLFieldOperation op -> op;
+            case SQLFieldObject obj -> obj;
+            case SQLFieldFromTable table -> table;
+            case SQLFieldFromPairOfTableField pair -> pair;
+            case DbF dbf -> new SQLFieldFromTable(dbf, asAlias);
+            case PairOfTableField pair -> new SQLFieldFromPairOfTableField(pair, asAlias);
+            case J2SQLShared.SQLFunctionObject stringsFunction -> {
+                ((SQLFunction) stringsFunction.getSqlFunction()).setAsAlias(asAlias);
+                yield ((SQLFunction) stringsFunction.getSqlFunction());
+            }
+            default -> new SQLFieldFromConstant(selectionObject, asAlias, inQuotesRequirement);
+        };
     }
 }

@@ -1,5 +1,6 @@
 package qb.core;
 
+import com.google.common.base.Preconditions;
 import jakarta.annotation.Nullable;
 
 import java.lang.reflect.Type;
@@ -14,7 +15,9 @@ final class SQLFieldObject extends SqlUserSelection {
         init(setPrefix, asAlias, object);
     }
     @Override public void init(@Nullable String setPrefix, @Nullable String asAlias, @Nullable Object... args) {
-        assert args != null;
+        Preconditions.checkNotNull(args);
+        Preconditions.checkElementIndex(0, args.length);
+        Preconditions.checkNotNull(args[0]);
         this.object = args[0];
         super.setHasPrefix(setPrefix);
         super.setAsAlias(asAlias);

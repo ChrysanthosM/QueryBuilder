@@ -5,7 +5,7 @@ import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 
 final class LikeValueWhere extends AbstractWhere {
-    @Override TypeOfWhere getTypeOfWhere() { return TypeOfWhere.WhereLike; }
+    @Override TypeOfWhere getTypeOfWhere() { return TypeOfWhere.WHERE_LIKE; }
 
     private final String compareValue;
     private final String escapeLeft;

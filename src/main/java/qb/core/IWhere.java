@@ -2,13 +2,13 @@ package qb.core;
 
 public sealed interface IWhere permits AbstractFilter {
     enum TypeOfWhere {
-        WhereValue (null),
-        WhereInValues("IN"),
-        WhereBetween ("BETWEEN"),
-        WhereLike ("LIKE"),
+        WHERE_VALUE(null),
+        WHERE_IN_VALUES("IN"),
+        WHERE_BETWEEN("BETWEEN"),
+        WHERE_LIKE("LIKE"),
 
-        WhereInSubSelect ("IN"),
-        WhereExist ("EXISTS"),
+        WHERE_IN_SUB_SELECT("IN"),
+        WHERE_EXIST("EXISTS"),
         ;
 
         private final String putClause;

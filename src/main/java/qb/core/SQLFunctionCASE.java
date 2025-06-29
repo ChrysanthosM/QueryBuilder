@@ -35,7 +35,7 @@ final class SQLFunctionCASE extends SQLFunction {
         List<String> searchListResolved = whenList.stream()
                 .filter(Objects::nonNull)
                 .map(when -> ((WhenThen) when).getResolveObjectForSQL(forSQLRetrieverForDB))
-                .collect(Collectors.toList());
+                .toList();
         String whenExpression = String.join(StringUtils.SPACE, searchListResolved);
 
         return "CASE " + StringUtils.defaultString(caseExpression).concat(StringUtils.SPACE) +

@@ -1,5 +1,6 @@
 package qb.core;
 
+import com.google.common.base.Preconditions;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import qb.definition.db.sqlite.schema.structure.DbF;
@@ -25,7 +26,11 @@ public final class SQLFieldFromPairOfTableField extends SqlUserSelection {
         init(setPrefix, asAlias, pairOfTableField);
     }
     @Override public void init(@Nullable String setPrefix, @Nullable String asAlias, @Nullable Object... args) {
-        assert args != null;
+        Preconditions.checkNotNull(args);
+        Preconditions.checkElementIndex(0, args.length);
+        Preconditions.checkNotNull(args[0]);
+        Preconditions.checkArgument(args[0] instanceof PairOfTableField);
+
         this.pairOfTableField = (PairOfTableField) args[0];
         this.sqlFieldFromTable = new SQLFieldFromTable(this.pairOfTableField.getDbf(), asAlias, setPrefix);
         super.setHasPrefix(setPrefix);

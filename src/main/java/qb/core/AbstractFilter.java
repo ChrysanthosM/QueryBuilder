@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 
 abstract sealed class AbstractFilter implements IWhere, IResolveObjectForSQL, IFilter
         permits AbstractWhere, GroupOfWheres {
-    @Override public abstract String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB);
 
     private LinSQL.TypeOfLogicalOperator typeOfLogicalOperator = null;
     @Override public LinSQL.TypeOfLogicalOperator getTypeOfLogicalOperator() { return this.typeOfLogicalOperator; }

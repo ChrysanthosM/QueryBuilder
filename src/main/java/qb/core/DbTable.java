@@ -12,7 +12,7 @@ import java.util.List;
 
 @Getter(AccessLevel.PROTECTED)
 abstract sealed class DbTable implements IDbTable permits TTable {
-    public final DbF ALL = DbF.ALL;
+    public static final DbF ALL = DbF.ALL;
 
     protected abstract DbT getDbT();
     protected abstract String getSystemName();

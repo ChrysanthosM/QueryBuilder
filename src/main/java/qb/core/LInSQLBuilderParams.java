@@ -56,8 +56,6 @@ final class LInSQLBuilderParams {
     void setSelectDistinct() { this.selectDistinct = true; }
 
     //-------Table
-//    public DbTable getWorkWithTableOnlyDbTable() { return (DbTable) CommonMethods.getKeyOr(this.workWithDbTableAsAlias, null); }
-//    public String getWorkWithTableOnlyAsAlias() { return (String) CommonMethods.getValueOr(this.workWithDbTableAsAlias, null); }
     public DbTable getWorkWithTableOnlyDbTable() { return Objects.requireNonNullElse(this.workWithDbTableAsAlias.getLeft(), null);  }
     public String getWorkWithTableOnlyAsAlias() { return Objects.requireNonNullElse(this.workWithDbTableAsAlias.getRight(), null); }
     void setWorkWithDbTableAsAlias(DbTable setWorkWithTable, String asAlias) { this.workWithDbTableAsAlias = MutablePair.of(setWorkWithTable, asAlias); }
@@ -67,7 +65,7 @@ final class LInSQLBuilderParams {
         return sqlUserSelections.stream()
                 .filter(SQLFieldFromTable.class::isInstance)
                 .map(s -> ((SQLFieldFromTable) s).getDbFieldEnum())
-                .collect(Collectors.toList());
+                .toList();
     }
     void addUserSelection(Object userSelection, String asAlias) { this.sqlUserSelections.add(LInSQLBuilderShared.getSqlUserSelection(userSelection, asAlias)); }
 
@@ -76,7 +74,7 @@ final class LInSQLBuilderParams {
         List<SqlUserSelection> groupByUserSelections = groupBySelectionsHavingValues.getLeft().stream()
                 .filter(Objects::nonNull)
                 .map(LInSQLBuilderShared::getSqlUserSelection)
-                .collect(Collectors.toList());
+                .toList();
         this.groupBySelectionsHavingValues = MutablePair.of(groupByUserSelections, groupBySelectionsHavingValues.getRight());
     }
 

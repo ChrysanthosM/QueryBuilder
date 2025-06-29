@@ -37,9 +37,7 @@ final class GroupOfWheres extends AbstractFilter {
 
     @Description("create Filters (enclosed in Parenthesis)")
     static IWhere getGroupOfFilters(@Nullable LinSQL.TypeOfLogicalOperator typeOfLogicalOperator, boolean invertSelection, @Nonnull IWhere... filters) {
-        List<IWhere> whereList = Stream.of(filters)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+        List<IWhere> whereList = Stream.of(filters).filter(Objects::nonNull).toList();
         if (CollectionUtils.isEmpty(whereList)) return null;
         GroupOfWheres wheres = new GroupOfWheres(whereList);
         if (typeOfLogicalOperator != null) wheres.setTypeOfLogicalOperator(typeOfLogicalOperator);

@@ -15,7 +15,7 @@ abstract sealed class AbstractWhere extends AbstractFilter
 
     protected AbstractWhere(Object whereObject) {
         this.whereObject = whereObject;
-        if (this.whereObject instanceof IProvideDataTypeForSQL) this.inQuotesRequirement = ((IProvideDataTypeForSQL) this.whereObject).getInQuotesRequirement();
+        if (this.whereObject instanceof IProvideDataTypeForSQL iprovidedatatypeforsql) this.inQuotesRequirement = iprovidedatatypeforsql.getInQuotesRequirement();
 
     }
 

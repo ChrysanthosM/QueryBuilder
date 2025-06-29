@@ -4,7 +4,7 @@ import jakarta.annotation.Nonnull;
 import org.apache.commons.lang3.StringUtils;
 
 final class InSubSelectWhere extends AbstractWhere {
-    @Override TypeOfWhere getTypeOfWhere() { return TypeOfWhere.WhereInSubSelect; }
+    @Override TypeOfWhere getTypeOfWhere() { return TypeOfWhere.WHERE_IN_SUB_SELECT; }
 
     private final String inSubSelect;
 

@@ -1,9 +1,11 @@
 package qb.core;
 
 import jakarta.annotation.Nonnull;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 
-final class LinSQLCommons {
+@UtilityClass
+class LinSQLCommons {
     static final String QUOTE =  "'";
     static final String ASTERISK =  "*";
 

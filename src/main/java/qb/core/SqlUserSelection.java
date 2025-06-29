@@ -3,8 +3,6 @@ package qb.core;
 import jakarta.annotation.Nullable;
 import lombok.Getter;
 
-import java.lang.reflect.Type;
-
 abstract non-sealed class SqlUserSelection implements ISqlUserSelection {
     @Getter private boolean ignoreTableAsAlias = false;
     void setIgnoreTableAsAlias() { this.ignoreTableAsAlias = true; }

@@ -1,5 +1,6 @@
 package qb.core;
 
+import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
@@ -12,7 +13,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Getter
 final class LInSQLBuilderParams {
@@ -102,6 +102,7 @@ final class LInSQLBuilderParams {
 
     //-------Update Fields - Set Values
     void addUpdateFieldSetValue(Object updField, Object setValue) {
+        Preconditions.checkNotNull(((PairOfTableField) updField).getDbf().getFieldDataType());
         this.updateFieldsSetValues.add(MutablePair.of(
                 LInSQLBuilderShared.getSqlUserSelection(updField),
                 LInSQLBuilderShared.getSqlUserSelection(setValue, ((PairOfTableField) updField).getDbf().getFieldDataType().getInQuotesRequirement())));

@@ -1,5 +1,6 @@
 package qb.core;
 
+import com.google.common.base.Joiner;
 import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -50,8 +51,8 @@ final class BuildSQLJoinWith extends BuildSQLCore {
             joinWithTablesOnFieldsList.add(joinWithTable + joinOn);
         }
         if (CollectionUtils.isNotEmpty(selectedJoinFieldsList)) this.selectedJoinFieldsForSQL = ", " + String.join(", ", selectedJoinFieldsList);
-        if (CollectionUtils.isNotEmpty(joinWithTablesOnFieldsList)) this.joinWithTablesOnFieldsForSQL = String.join(StringUtils.SPACE, joinWithTablesOnFieldsList);
-        if (CollectionUtils.isNotEmpty(whereJoinFiltersList)) this.whereJoinFiltersForSQL = String.join(" AND ", whereJoinFiltersList);
+        if (CollectionUtils.isNotEmpty(joinWithTablesOnFieldsList)) this.joinWithTablesOnFieldsForSQL = Joiner.on(StringUtils.SPACE).join(joinWithTablesOnFieldsList);
+        if (CollectionUtils.isNotEmpty(whereJoinFiltersList)) this.whereJoinFiltersForSQL = Joiner.on(" AND ").join(whereJoinFiltersList);
     }
 
     public String getSelectedJoinFieldsForSQL() { return this.selectedJoinFieldsForSQL.concat(StringUtils.SPACE); }

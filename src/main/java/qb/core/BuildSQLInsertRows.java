@@ -1,11 +1,12 @@
 package qb.core;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import qb.definition.db.sqlite.schema.structure.DbF;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ final class BuildSQLInsertRows extends BuildSQLCore {
     private BuildSQLInsertRows(SQLRetrieverForDBs forSQLRetrieverForDB) {
         boolean putAutoStamp = forSQLRetrieverForDB.getWorkBuildSQLWorkTable().getDbTable().getPutAutoStamp();
 
-        final List<DbF> intoDbFs = new ArrayList<>();
+        final List<DbF> intoDbFs = Lists.newArrayList();
         if (Boolean.FALSE.equals(forSQLRetrieverForDB.getWorkBuildSQLWorkTable().getDbTable().getAutoIncrease())) {
             intoDbFs.addAll(forSQLRetrieverForDB.getWorkBuildSQLWorkTable().getDbTable().getHasKeys());
         }
@@ -29,12 +30,12 @@ final class BuildSQLInsertRows extends BuildSQLCore {
 
         final List<List<Object>> insertRowsFieldValues = forSQLRetrieverForDB.getWorkLInSQLBuilderParams().getInsertRowsFieldValues();
         if (CollectionUtils.isEmpty(insertRowsFieldValues)) {
-            insertRowsFieldValues.add(List.of(Collections.nCopies(intoDbFs.size(), "?")));
+            insertRowsFieldValues.add(Lists.newArrayList(Collections.nCopies(intoDbFs.size(), "?")));
         }
         String[] insertRowsForSQL = new String[insertRowsFieldValues.size()];
         IntStream.range(0, insertRowsForSQL.length).parallel()
                 .forEach(i -> insertRowsForSQL[i] = getInsertRowForSQL(forSQLRetrieverForDB, intoDbFs, putAutoStamp, insertRowsFieldValues.get(i)));
-        super.setStringForSQL(String.join(", ", insertRowsForSQL));
+        super.setStringForSQL(Joiner.on(", ").join(insertRowsForSQL));
 
         if (putAutoStamp) {
             intoDbFs.add(DbF.USER_STAMP);
@@ -42,7 +43,7 @@ final class BuildSQLInsertRows extends BuildSQLCore {
         }
 
         String tableHasPrefixForFields = StringUtils.defaultString(forSQLRetrieverForDB.getWorkBuildSQLWorkTable().getDbTable().getTablePrefixForFields());
-        final List<String> tempInsertIntoFieldsForSQL = new ArrayList<>();
+        final List<String> tempInsertIntoFieldsForSQL = Lists.newArrayList();
         intoDbFs.forEach(f -> tempInsertIntoFieldsForSQL.add(forSQLRetrieverForDB.isNamingIsNormalized() ? f.name() : tableHasPrefixForFields.concat(f.getSystemName())));
         this.insertIntoFieldsForSQL = tempInsertIntoFieldsForSQL.stream().collect(Collectors.joining(", ", "(", ")"));
     }

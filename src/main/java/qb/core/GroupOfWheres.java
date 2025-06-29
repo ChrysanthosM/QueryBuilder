@@ -1,5 +1,6 @@
 package qb.core;
 
+import com.google.common.base.Joiner;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import org.apache.commons.collections4.CollectionUtils;
@@ -30,7 +31,7 @@ final class GroupOfWheres extends AbstractFilter {
         StringBuilder returnValue = new StringBuilder();
         if (super.getTypeOfLogicalOperator() != null) returnValue.append(super.getTypeOfLogicalOperator().name()).append(StringUtils.SPACE);
         if (super.isInvertSelection()) returnValue.append("NOT").append(StringUtils.SPACE);
-        returnValue.append(String.join(StringUtils.SPACE, whereFiltersForSQL));
+        returnValue.append(Joiner.on(StringUtils.SPACE).join(whereFiltersForSQL));
         return returnValue.toString();
     }
 

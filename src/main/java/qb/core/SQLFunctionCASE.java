@@ -1,5 +1,6 @@
 package qb.core;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -35,7 +36,7 @@ final class SQLFunctionCASE extends SQLFunction {
                 .filter(Objects::nonNull)
                 .map(when -> ((WhenThen) when).getResolveObjectForSQL(forSQLRetrieverForDB))
                 .toList();
-        String whenExpression = String.join(StringUtils.SPACE, searchListResolved);
+        String whenExpression = Joiner.on(StringUtils.SPACE).join(searchListResolved);
 
         return "CASE " + StringUtils.defaultString(caseExpression).concat(StringUtils.SPACE) +
                 whenExpression + " ELSE " + elseExpression + " END";

@@ -1,7 +1,5 @@
 package qb.core;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableMap;
 import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -12,30 +10,30 @@ import java.util.Map;
 
 final class SQLRetrieverForDB_MSSQL extends SQLRetrieverForDBs {
     private static final Map<LinSQL.TypeOfComparison, String> comparisonType =
-            new ImmutableMap.Builder<LinSQL.TypeOfComparison, String>()
-                    .put(LinSQL.TypeOfComparison.IS_NULL, "IS NULL")
-                    .put(LinSQL.TypeOfComparison.LT , "<")
-                    .put(LinSQL.TypeOfComparison.LE, "<=")
-                    .put(LinSQL.TypeOfComparison.EQ, "=")
-                    .put(LinSQL.TypeOfComparison.GE, ">=")
-                    .put(LinSQL.TypeOfComparison.GT, ">")
-                    .put(LinSQL.TypeOfComparison.NE, "<>")
-                    .build();
+            Map.of(
+                    LinSQL.TypeOfComparison.IS_NULL, "IS NULL",
+                    LinSQL.TypeOfComparison.LT, "<",
+                    LinSQL.TypeOfComparison.LE, "<=",
+                    LinSQL.TypeOfComparison.EQ, "=",
+                    LinSQL.TypeOfComparison.GE, ">=",
+                    LinSQL.TypeOfComparison.GT, ">",
+                    LinSQL.TypeOfComparison.NE, "<>"
+            );
     private static final Map<SortOrder, String> orderByType =
-            new ImmutableMap.Builder<SortOrder, String>()
-                    .put(SortOrder.ASCENDING, "ASC")
-                    .put(SortOrder.DESCENDING , "DESC")
-                    .build();
+            Map.of(
+                    SortOrder.ASCENDING, "ASC",
+                    SortOrder.DESCENDING, "DESC"
+            );
     private static final Map<LinSQL.TypeOfJoin, String> joinType =
-            new ImmutableMap.Builder<LinSQL.TypeOfJoin, String>()
-                    .put(LinSQL.TypeOfJoin.FULL, "FULL JOIN")
-                    .put(LinSQL.TypeOfJoin.JOIN , "INNER JOIN")
-                    .put(LinSQL.TypeOfJoin.LEFT , "LEFT JOIN")
-                    .put(LinSQL.TypeOfJoin.RIGHT , "RIGHT JOIN")
-                    .build();
+            Map.of(
+                    LinSQL.TypeOfJoin.FULL, "FULL JOIN",
+                    LinSQL.TypeOfJoin.JOIN, "INNER JOIN",
+                    LinSQL.TypeOfJoin.LEFT, "LEFT JOIN",
+                    LinSQL.TypeOfJoin.RIGHT, "RIGHT JOIN"
+            );
 
     SQLRetrieverForDB_MSSQL(LinSQL.TypeOfNamingSystemOrNormalized namingSystemOrNormalized, @Nullable String dbPrefixForTable) {
-        super(namingSystemOrNormalized, Strings.nullToEmpty(dbPrefixForTable));
+        super(namingSystemOrNormalized, StringUtils.defaultString(dbPrefixForTable));
     }
 
     @Override public String getNullWord() { return "NULL"; }
@@ -59,12 +57,11 @@ final class SQLRetrieverForDB_MSSQL extends SQLRetrieverForDBs {
         InitializationStatus initSts = initSQLStatementForSelect(this);
         if (initSts.getSts() == InitializationStatus.ReturnSts.ERROR_EXISTS) throw new RuntimeException(initSts.getExc());
 
-        String returnStmt = super.getWorkBuildSQLSelectFields().getStringForSQL().trim() +
+        return super.getWorkBuildSQLSelectFields().getStringForSQL().trim() +
                 StringUtils.defaultIfBlank(super.getWorkBuildSQLJoinWith().getSelectedJoinFieldsForSQL(), StringUtils.SPACE) +
                 super.getSQLStatementFromWhereGroupByOrderBy() +
                 getLimitOffsetForSQL(super.getWorkLInSQLBuilderParams().getLimitOffset()) +
                 getOffsetFetchForSQL(super.getWorkLInSQLBuilderParams().getOffsetFetch());
-        return returnStmt;
     }
 
 

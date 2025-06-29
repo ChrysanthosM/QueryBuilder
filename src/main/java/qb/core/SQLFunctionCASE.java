@@ -1,6 +1,6 @@
 package qb.core;
 
-import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +20,9 @@ final class SQLFunctionCASE extends SQLFunction {
 
     @Override
     public String defaultResolver(SQLRetrieverForDBs forSQLRetrieverForDB) {
+        Preconditions.checkElementIndex(0, super.getParams().size());
+        Preconditions.checkElementIndex(1, super.getParams().size());
+
         Boolean inQuotesRequirement = (Boolean) super.getParams().get(0);
 
         Optional<Object> caseOpt = (Optional<Object>) super.getParams().get(1);
@@ -33,7 +36,7 @@ final class SQLFunctionCASE extends SQLFunction {
                 .filter(Objects::nonNull)
                 .map(when -> ((WhenThen) when).getResolveObjectForSQL(forSQLRetrieverForDB))
                 .collect(Collectors.toList());
-        String whenExpression = Joiner.on(StringUtils.SPACE).join(searchListResolved);
+        String whenExpression = String.join(StringUtils.SPACE, searchListResolved);
 
         return "CASE " + StringUtils.defaultString(caseExpression).concat(StringUtils.SPACE) +
                 whenExpression + " ELSE " + elseExpression + " END";

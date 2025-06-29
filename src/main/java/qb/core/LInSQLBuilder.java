@@ -1,9 +1,9 @@
 package qb.core;
 
-import j2q.db.datasource.WorkWithDataSource;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
+import qb.definition.db.datasource.WorkWithDataSource;
 
 
 final class LInSQLBuilder {

@@ -20,6 +20,7 @@ final class SQLFieldFromConstant extends SqlUserSelection {
     }
     @Override public void init(@Nullable String setPrefix, @Nullable String asAlias, @Nullable Object... args) {
         Preconditions.checkNotNull(args);
+        Preconditions.checkElementIndex(0, args.length);
         this.value = args[0];
         if (this.value instanceof IValueFor enumValue) {
             this.value = enumValue.getValue();

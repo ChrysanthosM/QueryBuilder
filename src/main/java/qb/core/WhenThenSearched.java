@@ -13,8 +13,7 @@ final class WhenThenSearched extends WhenThen {
 
     @Override
     public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) {
-        String returnValue = "WHEN " + BuildSQLWhereFilters.getResolveFilterForSQL(forSQLRetrieverForDB, this.searchCondition, true) +
+        return "WHEN " + BuildSQLWhereFilters.getResolveFilterForSQL(forSQLRetrieverForDB, this.searchCondition, true) +
                 super.getThen(forSQLRetrieverForDB);
-        return returnValue;
     }
 }

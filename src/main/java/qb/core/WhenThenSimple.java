@@ -13,8 +13,7 @@ final class WhenThenSimple extends WhenThen {
 
     @Override
     public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) {
-        String returnValue = "WHEN " + LInSQLBuilderShared.getSqlUserSelection(this.whenCondition).getResolveObjectForSQL(forSQLRetrieverForDB) +
+        return "WHEN " + LInSQLBuilderShared.getSqlUserSelection(this.whenCondition).getResolveObjectForSQL(forSQLRetrieverForDB) +
                 super.getThen(forSQLRetrieverForDB);
-        return returnValue;
     }
 }

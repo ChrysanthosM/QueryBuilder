@@ -8,6 +8,7 @@ import org.apache.commons.lang3.tuple.Triple;
 import qb.definition.db.sqlite.schema.structure.DbF;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +28,7 @@ abstract sealed class SQLRetrieverCore implements IDeployMethods, IDeploySQLStat
     @Getter(AccessLevel.PROTECTED) @Setter(AccessLevel.PROTECTED) private BuildSQLUpdateFields workBuildSQLUpdateFields = null;
     @Getter(AccessLevel.PROTECTED) @Setter(AccessLevel.PROTECTED) private BuildSQLInsertRows workBuildSQLInsertRows = null;
 
-    @Getter private final Set<Triple<DbTable, String, List<DbF>>> availableTablesWithFields = Sets.newHashSet();
+    @Getter private final Set<Triple<DbTable, String, List<DbF>>> availableTablesWithFields = new HashSet<>();
     void addAvailableTableWithFields(Triple<DbTable, String, List<DbF>> tableWithFields) { this.availableTablesWithFields.add(tableWithFields); }
     void addAvailableTableWithFields(Set<Triple<DbTable, String, List<DbF>>> tablesWithFields) { this.availableTablesWithFields.addAll(tablesWithFields); }
     protected void clearAvailableTablesWithFields() { this.availableTablesWithFields.clear(); }

@@ -1,6 +1,6 @@
 package qb.core;
 
-import j2q.db.datasource.WorkWithDataSource;
+import qb.definition.db.datasource.WorkWithDataSource;
 import lombok.Getter;
 
 @Getter

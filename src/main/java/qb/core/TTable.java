@@ -1,10 +1,9 @@
 package qb.core;
 
-import com.google.common.collect.ImmutableList;
-import j2q.setup.definition.design.schema.enums.DbF;
-import j2q.setup.definition.design.schema.enums.DbT;
 import lombok.AccessLevel;
 import lombok.Getter;
+import qb.definition.db.sqlite.schema.structure.DbF;
+import qb.definition.db.sqlite.schema.structure.DbT;
 
 import java.util.List;
 
@@ -23,12 +22,12 @@ public abstract non-sealed class TTable extends DbTable {
         this.dbT = dbT;
         this.systemName = dbT.getSystemName();
         this.tablePrefixForFields = dbT.getTablePrefixForFields();
-        this.hasKeys = ImmutableList.copyOf(dbT.getHasKeys());
+        this.hasKeys = List.copyOf(dbT.getHasKeys());
         this.autoIncrease = dbT.getAutoIncrease();
         this.putAutoStamp = dbT.getPutAutoStamp();
     }
 
-    protected void setDbFs(PairOfTableField... dbFs) { this.dbFs = ImmutableList.copyOf(dbFs); }
+    protected void setDbFs(PairOfTableField... dbFs) { this.dbFs = List.of(dbFs); }
 
     protected PairOfTableField getPairOfTableField(DbF forDbF) { return PairOfTableField.of(getDbT(), forDbF); }
 }

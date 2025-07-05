@@ -27,7 +27,7 @@ class TestSQLStatementsSQLite {
 
     private String checkResult(String stmt, String shouldBe) {
         boolean areSame = StringUtils.equalsIgnoreCase(stmt, shouldBe);
-        return areSame + " - " + stmt.toUpperCase();
+        return areSame + " - " + stmt;
     }
 
     @Test

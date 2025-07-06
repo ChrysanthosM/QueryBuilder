@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
-import qb.definition.db.base.BaseDbF;
+import qb.definition.db.base.BaseDbField;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,9 +28,9 @@ abstract sealed class SQLRetrieverCore implements IDeployMethods, IDeploySQLStat
     @Getter(AccessLevel.PROTECTED) @Setter(AccessLevel.PROTECTED) private BuildSQLUpdateFields workBuildSQLUpdateFields = null;
     @Getter(AccessLevel.PROTECTED) @Setter(AccessLevel.PROTECTED) private BuildSQLInsertRows workBuildSQLInsertRows = null;
 
-    @Getter private final Set<Triple<DbTable, String, List<BaseDbF>>> availableTablesWithFields = new HashSet<>();
-    void addAvailableTableWithFields(Triple<DbTable, String, List<BaseDbF>> tableWithFields) { this.availableTablesWithFields.add(tableWithFields); }
-    void addAvailableTableWithFields(Set<Triple<DbTable, String, List<BaseDbF>>> tablesWithFields) { this.availableTablesWithFields.addAll(tablesWithFields); }
+    @Getter private final Set<Triple<DbTable, String, List<BaseDbField>>> availableTablesWithFields = new HashSet<>();
+    void addAvailableTableWithFields(Triple<DbTable, String, List<BaseDbField>> tableWithFields) { this.availableTablesWithFields.add(tableWithFields); }
+    void addAvailableTableWithFields(Set<Triple<DbTable, String, List<BaseDbField>>> tablesWithFields) { this.availableTablesWithFields.addAll(tablesWithFields); }
     protected void clearAvailableTablesWithFields() { this.availableTablesWithFields.clear(); }
 
     @Getter private final List<String> fieldMapper = new ArrayList<>();

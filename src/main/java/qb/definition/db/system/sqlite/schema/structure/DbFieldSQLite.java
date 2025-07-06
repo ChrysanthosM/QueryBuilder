@@ -2,8 +2,8 @@ package qb.definition.db.system.sqlite.schema.structure;
 
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
-import qb.definition.db.base.BaseDbF;
-import qb.definition.db.base.ConfigDbF;
+import qb.definition.db.base.BaseDbField;
+import qb.definition.db.base.ConfigDbField;
 import qb.definition.db.base.DbFieldDataType;
 
 import java.util.Arrays;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import static qb.definition.db.base.DbFieldDataType.*;
 
 @Getter
-public enum DbF implements BaseDbF {
+public enum DbFieldSQLite implements BaseDbField {
     REC_ID("Sys_RecID", DATATYPE_INTEGER),
     USER_STAMP("Sys_UserStamp", DATATYPE_TEXT),
     DATE_STAMP("Sys_DateStamp", DATATYPE_TEXT),
@@ -30,31 +30,31 @@ public enum DbF implements BaseDbF {
 
     ;
 
-    private final ConfigDbF configDbF;
-    DbF(String systemName) {
-        this.configDbF = new ConfigDbF(systemName, null, null);
+    private final ConfigDbField configDbField;
+    DbFieldSQLite(String systemName) {
+        this.configDbField = new ConfigDbField(systemName, null, null);
     }
-    DbF(String systemName, DbFieldDataType fieldDataType) {
-        this.configDbF = new ConfigDbF(systemName, fieldDataType, Arrays.stream(systemName.toLowerCase().split("_")).map(StringUtils::capitalize).collect(Collectors.joining(StringUtils.SPACE)));
+    DbFieldSQLite(String systemName, DbFieldDataType fieldDataType) {
+        this.configDbField = new ConfigDbField(systemName, fieldDataType, Arrays.stream(systemName.toLowerCase().split("_")).map(StringUtils::capitalize).collect(Collectors.joining(StringUtils.SPACE)));
     }
-    DbF(String systemName, DbFieldDataType fieldDataType, String asAlias) {
-        this.configDbF = new ConfigDbF(systemName, fieldDataType, asAlias);
+    DbFieldSQLite(String systemName, DbFieldDataType fieldDataType, String asAlias) {
+        this.configDbField = new ConfigDbField(systemName, fieldDataType, asAlias);
     }
     @Override
     public String systemName() {
-        return this.configDbF.systemName();
+        return this.configDbField.systemName();
     }
     @Override
     public DbFieldDataType fieldDataType() {
-        return this.configDbF.fieldDataType();
+        return this.configDbField.fieldDataType();
     }
     @Override
     public String asAlias() {
-        return this.configDbF.asAlias();
+        return this.configDbField.asAlias();
     }
 
     @Override
     public Boolean getInQuotesRequirement() {
-        return this.configDbF.fieldDataType().getInQuotesRequirement();
+        return this.configDbField.fieldDataType().getInQuotesRequirement();
     }
 }

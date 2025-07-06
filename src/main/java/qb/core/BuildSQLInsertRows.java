@@ -4,7 +4,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import qb.definition.db.base.BaseDbF;
+import qb.definition.db.base.BaseDbField;
 
 import java.sql.Timestamp;
 import java.util.Collections;
@@ -19,7 +19,7 @@ final class BuildSQLInsertRows extends BuildSQLCore {
     private BuildSQLInsertRows(SQLRetrieverForDBs forSQLRetrieverForDB) {
         boolean putAutoStamp = forSQLRetrieverForDB.getWorkBuildSQLWorkTable().getDbTable().getPutAutoStamp();
 
-        final List<BaseDbF> intoDbFs = Lists.newArrayList();
+        final List<BaseDbField> intoDbFs = Lists.newArrayList();
         if (Boolean.FALSE.equals(forSQLRetrieverForDB.getWorkBuildSQLWorkTable().getDbTable().getAutoIncrease())) {
             intoDbFs.addAll(forSQLRetrieverForDB.getWorkBuildSQLWorkTable().getDbTable().getHasKeys());
         }
@@ -52,7 +52,7 @@ final class BuildSQLInsertRows extends BuildSQLCore {
 
 
     private String getInsertRowForSQL(SQLRetrieverForDBs forSQLRetrieverForDB,
-                                      List<BaseDbF> intoDbF, boolean isAutoStamp, List<Object> rowFieldValues) {
+                                      List<BaseDbField> intoDbF, boolean isAutoStamp, List<Object> rowFieldValues) {
         List<String> fieldValuesForSQL = IntStream.range(0, intoDbF.size())
                 .mapToObj(i -> LInSQLBuilderShared.getSqlUserSelection(rowFieldValues.get(i), intoDbF.get(i).getFieldDataType().getInQuotesRequirement())
                         .getResolveObjectForSQL(forSQLRetrieverForDB))

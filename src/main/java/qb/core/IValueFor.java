@@ -1,9 +1,9 @@
 package qb.core;
 
 
-import qb.definition.db.base.BaseDbF;
+import qb.definition.db.base.BaseDbField;
 
 public interface IValueFor {
-    BaseDbF getForDbF();
+    BaseDbField getForDbField();
     String getValue();
 }

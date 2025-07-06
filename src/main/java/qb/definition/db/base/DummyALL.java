@@ -1,6 +1,6 @@
 package qb.definition.db.base;
 
-public class DummyALL implements BaseDbF {
+public class DummyALL implements BaseDbField {
     @Override
     public String systemName() {
         return "*";

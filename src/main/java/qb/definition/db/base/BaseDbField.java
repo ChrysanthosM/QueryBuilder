@@ -3,13 +3,13 @@ package qb.definition.db.base;
 import qb.core.IDeployFilters;
 import qb.core.IDeployOrdering;
 import qb.core.IProvideDataTypeForSQL;
-import qb.definition.db.system.sqlite.schema.structure.DbFValues;
+import qb.definition.db.system.sqlite.schema.structure.DbFieldValuesSQLite;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
-public interface BaseDbF extends IDeployFilters, IDeployOrdering, IProvideDataTypeForSQL {
+public interface BaseDbField extends IDeployFilters, IDeployOrdering, IProvideDataTypeForSQL {
     String systemName();
     DbFieldDataType fieldDataType();
     String asAlias();
@@ -18,7 +18,7 @@ public interface BaseDbF extends IDeployFilters, IDeployOrdering, IProvideDataTy
     default DbFieldDataType getFieldDataType() { return fieldDataType(); }
     default String getAsAlias() { return asAlias(); }
 
-    default List<String> getAcceptedValues() { return DbFValues.getValues(this); }
+    default List<String> getAcceptedValues() { return DbFieldValuesSQLite.getValues(this); }
 
     default String getName() {
         if (this instanceof Enum<?>) {
@@ -26,34 +26,34 @@ public interface BaseDbF extends IDeployFilters, IDeployOrdering, IProvideDataTy
         }
         return this.getClass().getSimpleName();
     }
-    default BaseDbF[] getValues() {
+    default BaseDbField[] getValues() {
         if (this instanceof Enum<?>) {
             Class<?> enumClass = this.getClass();
             try {
                 Method valuesMethod = enumClass.getMethod("values");
                 Object result = valuesMethod.invoke(null);
-                if (result instanceof BaseDbF[] results) {
+                if (result instanceof BaseDbField[] results) {
                     return results;
                 }
 
                 if (result instanceof Enum[]) {
                     Enum<?>[] enumArray = (Enum<?>[]) result;
                     return Arrays.stream(enumArray)
-                            .map(e -> (BaseDbF) e)
-                            .toArray(BaseDbF[]::new);
+                            .map(e -> (BaseDbField) e)
+                            .toArray(BaseDbField[]::new);
                 }
             } catch (Exception e) {
-                return new BaseDbF[]{this};
+                return new BaseDbField[]{this};
             }
         }
 
-        return new BaseDbF[]{this};
+        return new BaseDbField[]{this};
     }
-    default List<BaseDbF> getValuesList() {
+    default List<BaseDbField> getValuesList() {
         return Arrays.asList(getValues());
     }
 
 
     DummyALL dummyALL = new DummyALL();
-    default BaseDbF ALL() { return dummyALL; }
+    default BaseDbField ALL() { return dummyALL; }
 }

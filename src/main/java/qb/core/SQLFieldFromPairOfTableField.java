@@ -3,7 +3,7 @@ package qb.core;
 import com.google.common.base.Preconditions;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-import qb.definition.db.base.BaseDbF;
+import qb.definition.db.base.BaseDbField;
 
 import java.lang.reflect.Type;
 
@@ -37,7 +37,7 @@ public final class SQLFieldFromPairOfTableField extends SqlUserSelection {
         super.setAsAlias(asAlias);
     }
 
-    public BaseDbF getDbFieldEnum() { return this.pairOfTableField.getDbf(); }
+    public BaseDbField getDbFieldEnum() { return this.pairOfTableField.getDbf(); }
 
     @Override public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) {
         if (isIgnoreTableAsAlias()) this.sqlFieldFromTable.setIgnoreTableAsAlias();

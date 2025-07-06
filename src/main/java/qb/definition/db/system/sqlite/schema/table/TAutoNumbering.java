@@ -1,10 +1,10 @@
-package qb.definition.db.sqlite.schema.table;
+package qb.definition.db.system.sqlite.schema.table;
 
 import org.springframework.stereotype.Component;
 import qb.core.PairOfTableField;
 import qb.core.TTable;
-import qb.definition.db.sqlite.schema.structure.DbF;
-import qb.definition.db.sqlite.schema.structure.DbT;
+import qb.definition.db.system.sqlite.schema.structure.DbF;
+import qb.definition.db.system.sqlite.schema.structure.DbT;
 
 @Component
 public final class TAutoNumbering extends TTable {

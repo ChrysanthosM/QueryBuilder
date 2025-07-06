@@ -7,8 +7,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.MutableTriple;
+import qb.definition.db.base.BaseDbF;
 import qb.definition.db.datasource.WorkWithDataSource;
-import qb.definition.db.sqlite.schema.structure.DbF;
 
 import javax.swing.*;
 import java.math.BigInteger;
@@ -105,7 +105,7 @@ final class LinSQL {
         Stream.of(addSelectedFields).filter(Objects::nonNull).forEach(o -> workLInSQLBuilder.getWorkLInSQLBuilderParams().addUserSelection(o, StringUtils.EMPTY));
     }
     public void selectAll() {
-        workLInSQLBuilder.getWorkLInSQLBuilderParams().addUserSelection(DbF.ALL, StringUtils.EMPTY);
+        workLInSQLBuilder.getWorkLInSQLBuilderParams().addUserSelection(BaseDbF.dummyALL, StringUtils.EMPTY);
     }
 
     public void addFilters(@Nonnull IWhere... filters) {
@@ -177,7 +177,7 @@ final class LinSQL {
     }
 
     public void updateFieldSetValue(@Nonnull PairOfTableField updField, @Nonnull Object setValue) {
-        Preconditions.checkArgument(updField.getDbf() != DbF.ALL);
+        Preconditions.checkArgument(updField.getDbf() != BaseDbF.dummyALL);
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setTypeOfSQL(J2SQLShared.TypeOfSQLStatement.SQL_UPDATE);
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addUpdateFieldSetValue(updField, setValue);
     }

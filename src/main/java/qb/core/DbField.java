@@ -1,14 +1,14 @@
 package qb.core;
 
 import lombok.Getter;
+import qb.definition.db.base.BaseDbF;
 import qb.definition.db.base.DbFieldDataType;
-import qb.definition.db.sqlite.schema.structure.DbF;
 
 import java.util.List;
 
 @Getter
 final class DbField {
-    private final DbF dbfNameEnum;
+    private final BaseDbF dbfNameEnum;
 
     private final String dbfNormalName;
     private final String dbfSystemName;
@@ -19,10 +19,10 @@ final class DbField {
 
     private final List<String> dbfAcceptedValues;
 
-    DbField(DbF dbF) {
+    DbField(BaseDbF dbF) {
         this.dbfNameEnum = dbF;
 
-        this.dbfNormalName = this.dbfNameEnum.name();
+        this.dbfNormalName = this.dbfNameEnum.getName();
         this.dbfSystemName = this.dbfNameEnum.getSystemName();
         this.dbfAsAlias = this.dbfNameEnum.getAsAlias();
 

@@ -2,18 +2,18 @@ package qb.core;
 
 import jakarta.annotation.Nonnull;
 import lombok.Getter;
-import qb.definition.db.sqlite.schema.structure.DbF;
-import qb.definition.db.sqlite.schema.structure.DbT;
+import qb.definition.db.base.BaseDbF;
+import qb.definition.db.base.BaseDbT;
 
 
 @Getter
 public final class PairOfTableField implements IDeployFilters, IDeployOrdering, IProvideDataTypeForSQL {
-    public static PairOfTableField of(DbT dbt, DbF dbf) { return new PairOfTableField(dbt, dbf); }
+    public static PairOfTableField of(BaseDbT dbt, BaseDbF dbf) { return new PairOfTableField(dbt, dbf); }
 
-    private final DbT dbt;
-    private final DbF dbf;
+    private final BaseDbT dbt;
+    private final BaseDbF dbf;
     private final DbField dbField;
-    private PairOfTableField(DbT dbt, DbF dbf) {
+    private PairOfTableField(BaseDbT dbt, BaseDbF dbf) {
         this.dbt = dbt;
         this.dbf = dbf;
         this.dbField = DbFieldInstances.getMapTableInstance(this.dbf);

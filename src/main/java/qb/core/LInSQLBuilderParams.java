@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.MutableTriple;
-import qb.definition.db.sqlite.schema.structure.DbF;
+import qb.definition.db.base.BaseDbF;
 
 import javax.swing.*;
 import java.math.BigInteger;
@@ -61,7 +61,7 @@ final class LInSQLBuilderParams {
     void setWorkWithDbTableAsAlias(DbTable setWorkWithTable, String asAlias) { this.workWithDbTableAsAlias = MutablePair.of(setWorkWithTable, asAlias); }
 
     //-------Select Fields/Constants/Functions/StringsFunctions
-    List<DbF> getUserSelectionsOnlyDbFieldEnum() {
+    List<BaseDbF> getUserSelectionsOnlyDbFieldEnum() {
         return sqlUserSelections.stream()
                 .filter(SQLFieldFromTable.class::isInstance)
                 .map(s -> ((SQLFieldFromTable) s).getDbFieldEnum())

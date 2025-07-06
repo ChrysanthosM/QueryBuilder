@@ -1,7 +1,7 @@
 package qb.core;
 
 import lombok.experimental.UtilityClass;
-import qb.definition.db.sqlite.schema.structure.DbF;
+import qb.definition.db.base.BaseDbF;
 
 @UtilityClass
 class LInSQLBuilderShared {
@@ -21,7 +21,7 @@ class LInSQLBuilderShared {
             case SQLFieldObject obj -> obj;
             case SQLFieldFromTable table -> table;
             case SQLFieldFromPairOfTableField pair -> pair;
-            case DbF dbf -> new SQLFieldFromTable(dbf, asAlias);
+            case BaseDbF dbf -> new SQLFieldFromTable(dbf, asAlias);
             case PairOfTableField pair -> new SQLFieldFromPairOfTableField(pair, asAlias);
             case J2SQLShared.SQLFunctionObject stringsFunction -> {
                 ((SQLFunction) stringsFunction.getSqlFunction()).setAsAlias(asAlias);

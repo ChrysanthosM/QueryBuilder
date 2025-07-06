@@ -1,8 +1,9 @@
 package qb.core;
 
-import qb.definition.db.sqlite.schema.structure.DbF;
+
+import qb.definition.db.base.BaseDbF;
 
 public interface IValueFor {
-    DbF getForDbF();
+    BaseDbF getForDbF();
     String getValue();
 }

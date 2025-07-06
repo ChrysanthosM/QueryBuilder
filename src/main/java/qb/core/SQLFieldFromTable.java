@@ -6,8 +6,8 @@ import jakarta.annotation.Nullable;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
-import qb.definition.db.sqlite.schema.structure.DbF;
-import qb.definition.db.sqlite.schema.structure.DbT;
+import qb.definition.db.base.BaseDbF;
+import qb.definition.db.base.BaseDbT;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -17,18 +17,18 @@ import java.util.Set;
 final class SQLFieldFromTable extends SqlUserSelection {
     @Override public Type getTypeOfSelection() { return this.getClass(); }
 
-    private DbF dbF;
+    private BaseDbF dbF;
     private DbField dbField = null;
 
-    SQLFieldFromTable(@Nonnull DbF dbF) {
+    SQLFieldFromTable(@Nonnull BaseDbF dbF) {
         super();
         init(null, null, dbF);
     }
-    SQLFieldFromTable(@Nonnull DbF dbF, @Nullable String asAlias) {
+    SQLFieldFromTable(@Nonnull BaseDbF dbF, @Nullable String asAlias) {
         super();
         init(null, asAlias, dbF);
     }
-    SQLFieldFromTable(@Nonnull DbF dbF, @Nullable String asAlias, @Nullable String setPrefix) {
+    SQLFieldFromTable(@Nonnull BaseDbF dbF, @Nullable String asAlias, @Nullable String setPrefix) {
         super();
         init(setPrefix, asAlias, dbF);
     }
@@ -36,28 +36,28 @@ final class SQLFieldFromTable extends SqlUserSelection {
         Preconditions.checkNotNull(args);
         Preconditions.checkElementIndex(0, args.length);
         Preconditions.checkNotNull(args[0]);
-        Preconditions.checkArgument(args[0] instanceof DbF);
-        this.dbF = (DbF) args[0];
+        Preconditions.checkArgument(args[0] instanceof BaseDbF);
+        this.dbF = (BaseDbF) args[0];
         this.dbField = DbFieldInstances.getMapTableInstance(this.dbF);
         super.setHasPrefix(setPrefix);
         super.setAsAlias(asAlias);
     }
 
-    DbF getDbFieldEnum() { return this.dbF; }
+    BaseDbF getDbFieldEnum() { return this.dbF; }
 
     @Override public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) {
         return getResolveObjectForSQLMain(forSQLRetrieverForDB, null);
     }
-    String getResolveObjectForSQLMain(SQLRetrieverForDBs forSQLRetrieverForDB, @Nullable DbT forDbt) {
+    String getResolveObjectForSQLMain(SQLRetrieverForDBs forSQLRetrieverForDB, @Nullable BaseDbT forDbt) {
         String returnName = StringUtils.defaultString(this.getHasPrefix());
 
         String tableHasPrefixForFields = (forDbt == null ? StringUtils.EMPTY : StringUtils.defaultString(DbTableInstances.getMapTableInstance(forDbt).getTablePrefixForFields()));
 
-        if (forSQLRetrieverForDB.getTypeOfNamingSystemOrNormalized() == LinSQL.TypeOfNamingSystemOrNormalized.SYSTEM) {
-            returnName = returnName.concat(tableHasPrefixForFields.concat(this.dbField.getDbfSystemName()));
+        if (this.dbF == BaseDbF.dummyALL) {
+            returnName = returnName.concat(LinSQLCommons.ASTERISK);
         } else {
-            if (this.dbField.getDbfNameEnum() == DbF.ALL) {
-                returnName = returnName.concat(LinSQLCommons.ASTERISK);
+            if (forSQLRetrieverForDB.getTypeOfNamingSystemOrNormalized() == LinSQL.TypeOfNamingSystemOrNormalized.SYSTEM) {
+                returnName = returnName.concat(tableHasPrefixForFields.concat(this.dbField.getDbfSystemName()));
             } else {
                 returnName = returnName.concat(this.dbField.getDbfNormalName());
             }
@@ -65,11 +65,11 @@ final class SQLFieldFromTable extends SqlUserSelection {
 
         if (StringUtils.isBlank(this.getHasPrefix())) {
             String tableAsAlias = StringUtils.defaultString(forSQLRetrieverForDB.getWorkLInSQLBuilderParams().getWorkWithTableOnlyAsAlias());
-            Set<Triple<DbTable, String, List<DbF>>> availableTablesWithFields = forSQLRetrieverForDB.getAvailableTablesWithFields();
+            Set<Triple<DbTable, String, List<BaseDbF>>> availableTablesWithFields = forSQLRetrieverForDB.getAvailableTablesWithFields();
             if (CollectionUtils.isNotEmpty(availableTablesWithFields)) {
-                List<Triple<DbTable, String, List<DbF>>> tablesList = new ArrayList<>(availableTablesWithFields.stream().toList());
-                for (Triple<DbTable, String, List<DbF>> availableTableWithFields : tablesList.reversed()) {
-                    List<DbF> tblFields = availableTableWithFields.getRight();
+                List<Triple<DbTable, String, List<BaseDbF>>> tablesList = new ArrayList<>(availableTablesWithFields.stream().toList());
+                for (Triple<DbTable, String, List<BaseDbF>> availableTableWithFields : tablesList.reversed()) {
+                    List<BaseDbF> tblFields = availableTableWithFields.getRight();
                     if (CollectionUtils.isNotEmpty(tblFields)
                             && tblFields.contains(this.dbField.getDbfNameEnum())) {
                         tableAsAlias = availableTableWithFields.getMiddle();
@@ -81,12 +81,13 @@ final class SQLFieldFromTable extends SqlUserSelection {
             if (StringUtils.isNotBlank(tableAsAlias)) returnName = tableAsAlias.concat(".").concat(returnName);
         }
 
-        if (StringUtils.isBlank(super.getAsAlias())
-                && forSQLRetrieverForDB.getWorkLInSQLBuilderParams().isApplyAutoAlias()
-                && !super.isIgnoreTableAsAlias()) {
-            super.setAsAlias(this.dbField.getDbfAsAlias());
+        if (this.dbF != BaseDbF.dummyALL) {
+            if (StringUtils.isBlank(super.getAsAlias())
+                    && forSQLRetrieverForDB.getWorkLInSQLBuilderParams().isApplyAutoAlias()
+                    && !super.isIgnoreTableAsAlias()) {
+                super.setAsAlias(this.dbField.getDbfAsAlias());
+            }
         }
-
 
         return LinSQLCommons.applyAsAlias(returnName, super.getAsAlias(), false, false);
     }

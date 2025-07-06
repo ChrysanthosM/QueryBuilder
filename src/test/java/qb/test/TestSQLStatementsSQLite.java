@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import qb.core.J2SQL;
 import qb.definition.db.datasource.WorkWithDataSource;
-import qb.definition.db.sqlite.schema.structure.DbFValues;
-import qb.definition.db.sqlite.schema.table.TAutoNumbering;
-import qb.definition.db.sqlite.schema.table.TOptions;
+import qb.definition.db.system.sqlite.schema.structure.DbFValues;
+import qb.definition.db.system.sqlite.schema.table.TAutoNumbering;
+import qb.definition.db.system.sqlite.schema.table.TOptions;
 
 import java.util.List;
 

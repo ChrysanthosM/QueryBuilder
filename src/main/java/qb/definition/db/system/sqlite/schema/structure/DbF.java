@@ -1,22 +1,18 @@
-package qb.definition.db.sqlite.schema.structure;
+package qb.definition.db.system.sqlite.schema.structure;
 
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
-import qb.core.IDeployFilters;
-import qb.core.IDeployOrdering;
-import qb.core.IProvideDataTypeForSQL;
+import qb.definition.db.base.BaseDbF;
+import qb.definition.db.base.ConfigDbF;
 import qb.definition.db.base.DbFieldDataType;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static qb.definition.db.base.DbFieldDataType.*;
 
 @Getter
-public enum DbF implements IDeployFilters, IDeployOrdering, IProvideDataTypeForSQL {
-    ALL("*"),
-
+public enum DbF implements BaseDbF {
     REC_ID("Sys_RecID", DATATYPE_INTEGER),
     USER_STAMP("Sys_UserStamp", DATATYPE_TEXT),
     DATE_STAMP("Sys_DateStamp", DATATYPE_TEXT),
@@ -34,32 +30,31 @@ public enum DbF implements IDeployFilters, IDeployOrdering, IProvideDataTypeForS
 
     ;
 
-    private final String systemName;
-    private final DbFieldDataType fieldDataType;
-    private final String asAlias;
-
+    private final ConfigDbF configDbF;
     DbF(String systemName) {
-        this.systemName = systemName;
-        this.fieldDataType = null;
-        this.asAlias = null;
+        this.configDbF = new ConfigDbF(systemName, null, null);
     }
     DbF(String systemName, DbFieldDataType fieldDataType) {
-        this.systemName = systemName;
-        this.fieldDataType = fieldDataType;
-        this.asAlias = Arrays.stream(this.systemName.toLowerCase().split("_")).map(StringUtils::capitalize).collect(Collectors.joining(StringUtils.SPACE));
+        this.configDbF = new ConfigDbF(systemName, fieldDataType, Arrays.stream(systemName.toLowerCase().split("_")).map(StringUtils::capitalize).collect(Collectors.joining(StringUtils.SPACE)));
     }
     DbF(String systemName, DbFieldDataType fieldDataType, String asAlias) {
-        this.systemName = systemName;
-        this.fieldDataType = fieldDataType;
-        this.asAlias = asAlias;
+        this.configDbF = new ConfigDbF(systemName, fieldDataType, asAlias);
     }
-
-    public List<String> getAcceptedValues() {
-        return DbFValues.getValues(this);
+    @Override
+    public String systemName() {
+        return this.configDbF.systemName();
+    }
+    @Override
+    public DbFieldDataType fieldDataType() {
+        return this.configDbF.fieldDataType();
+    }
+    @Override
+    public String asAlias() {
+        return this.configDbF.asAlias();
     }
 
     @Override
     public Boolean getInQuotesRequirement() {
-        return this.getFieldDataType().getInQuotesRequirement();
+        return this.configDbF.fieldDataType().getInQuotesRequirement();
     }
 }

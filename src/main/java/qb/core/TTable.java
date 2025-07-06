@@ -2,32 +2,32 @@ package qb.core;
 
 import lombok.AccessLevel;
 import lombok.Getter;
-import qb.definition.db.sqlite.schema.structure.DbF;
-import qb.definition.db.sqlite.schema.structure.DbT;
+import qb.definition.db.base.BaseDbF;
+import qb.definition.db.base.BaseDbT;
 
 import java.util.List;
 
 @Getter(AccessLevel.PROTECTED)
 public abstract non-sealed class TTable extends DbTable {
-    private final DbT dbT;
+    private final BaseDbT dbT;
     private final String systemName;
     private final String tablePrefixForFields;
-    private final List<DbF> hasKeys;
+    private final List<BaseDbF> hasKeys;
     @Getter private final Boolean autoIncrease;
     private final Boolean putAutoStamp;
 
     private List<PairOfTableField> dbFs;
 
-    protected TTable(DbT dbT) {
+    protected TTable(BaseDbT dbT) {
         this.dbT = dbT;
         this.systemName = dbT.getSystemName();
-        this.tablePrefixForFields = dbT.getTablePrefixForFields();
-        this.hasKeys = List.copyOf(dbT.getHasKeys());
-        this.autoIncrease = dbT.getAutoIncrease();
-        this.putAutoStamp = dbT.getPutAutoStamp();
+        this.tablePrefixForFields = dbT.getTablePrefix();
+        this.hasKeys = List.copyOf(dbT.getKeys());
+        this.autoIncrease = dbT.autoIncrease();
+        this.putAutoStamp = dbT.putAutoStamp();
     }
 
     protected void setDbFs(PairOfTableField... dbFs) { this.dbFs = List.of(dbFs); }
 
-    protected PairOfTableField getPairOfTableField(DbF forDbF) { return PairOfTableField.of(getDbT(), forDbF); }
+    protected PairOfTableField getPairOfTableField(BaseDbF forDbF) { return PairOfTableField.of(getDbT(), forDbF); }
 }

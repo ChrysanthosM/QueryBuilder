@@ -1,4 +1,4 @@
-package qb.definition.db.sqlite.schema.structure;
+package qb.definition.db.system.sqlite.schema.structure;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.PostConstruct;
@@ -7,6 +7,7 @@ import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 import qb.core.IValueFor;
+import qb.definition.db.base.BaseDbF;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,8 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class DbFValues {
-    private static final ConcurrentHashMap<DbF, List<String>> bufferValues = new ConcurrentHashMap<>();
-    public static List<String> getValues(@Nonnull DbF forField) {
+    private static final ConcurrentHashMap<BaseDbF, List<String>> bufferValues = new ConcurrentHashMap<>();
+    public static List<String> getValues(@Nonnull BaseDbF forField) {
         return bufferValues.getOrDefault(forField, null);
     }
 

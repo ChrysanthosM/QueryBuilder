@@ -5,19 +5,19 @@ import jakarta.annotation.PostConstruct;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.apache.commons.lang3.tuple.Pair;
-import qb.definition.db.sqlite.schema.structure.DbF;
-import qb.definition.db.sqlite.schema.structure.DbT;
+import qb.definition.db.base.BaseDbF;
+import qb.definition.db.base.BaseDbT;
 
 import java.util.List;
 
 @Getter(AccessLevel.PROTECTED)
 abstract sealed class DbTable implements IDbTable permits TTable {
-    public static final DbF ALL = DbF.ALL;
+    public static final BaseDbF ALL = BaseDbF.dummyALL;
 
-    protected abstract DbT getDbT();
+    protected abstract BaseDbT getDbT();
     protected abstract String getSystemName();
     protected abstract String getTablePrefixForFields();
-    protected abstract List<DbF> getHasKeys();
+    protected abstract List<BaseDbF> getHasKeys();
     protected abstract Boolean getAutoIncrease();
     protected abstract Boolean getPutAutoStamp();
 

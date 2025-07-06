@@ -18,6 +18,6 @@ public class DummyALL implements BaseDbField {
 
     @Override
     public Boolean getInQuotesRequirement() {
-        return null;
+        return Boolean.FALSE;
     }
 }

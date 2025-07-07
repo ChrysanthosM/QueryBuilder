@@ -11,10 +11,10 @@ import qb.definition.db.base.BaseDbTable;
 import java.util.List;
 
 @Getter(AccessLevel.PROTECTED)
-abstract sealed class DbTable implements IDbTable permits TTable {
+abstract sealed class DbTable implements IDbTable permits AbstractTable {
     public static final BaseDbField ALL = BaseDbField.dummyALL;
 
-    protected abstract BaseDbTable getDbT();
+    protected abstract BaseDbTable getBaseDbTable();
     protected abstract String getSystemName();
     protected abstract String getTablePrefixForFields();
     protected abstract List<BaseDbField> getHasKeys();

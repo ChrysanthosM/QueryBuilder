@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Component
-public class EnumStructureFinder {
+public final class EnumStructureFinder {
 
     @SuppressWarnings("unchecked")
     public Set<Class<? extends Enum<?>>> findEnumClassesImplementing(Class<?> interfaceClass) {

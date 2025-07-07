@@ -2,12 +2,12 @@ package qb.definition.db.system.sqlite.schema.table;
 
 import org.springframework.stereotype.Component;
 import qb.core.PairOfTableField;
-import qb.core.TTable;
+import qb.core.AbstractTable;
 import qb.definition.db.system.sqlite.schema.structure.DbFieldSQLite;
 import qb.definition.db.system.sqlite.schema.structure.DbTableSQLite;
 
 @Component
-public final class UsersTable extends TTable {
+public final class UsersTable extends AbstractTable {
     public UsersTable() {
         super(DbTableSQLite.USERS);
         setDbFs(REC_ID, USER_NAME, USER_PASSWORD);

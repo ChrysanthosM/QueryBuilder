@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DataSourceResolver {
+public final class DataSourceResolver {
     private @Autowired DataSourceProviderForSQLite dataSourceForSQLite;
     private @Autowired DataSourceProviderForMSSQL dataSourceForMSSQL;
     private @Autowired DataSourceProviderForDB2i dataSourceProviderForDB2i;

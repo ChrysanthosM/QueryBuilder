@@ -41,7 +41,7 @@ final class DbTableInfo {
     private final Map<? extends BaseDbField, ? extends Boolean> dbtHasFieldsNameEnum_InQuotesRequirement;
 
     DbTableInfo(DbTable dbTable) {
-        this.dbtNameEnum = dbTable.getDbT();
+        this.dbtNameEnum = dbTable.getBaseDbTable();
 
         this.dbtNormalName = this.dbtNameEnum.getName();
         this.dbtSystemName = dbTable.getSystemName();

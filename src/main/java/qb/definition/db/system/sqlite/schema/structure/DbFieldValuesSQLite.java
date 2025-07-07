@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-public class DbFieldValuesSQLite {
+public final class DbFieldValuesSQLite {
     private static final ConcurrentHashMap<BaseDbField, List<String>> bufferValues = new ConcurrentHashMap<>();
     public static List<String> getValues(@Nonnull BaseDbField forField) {
         return bufferValues.getOrDefault(forField, null);

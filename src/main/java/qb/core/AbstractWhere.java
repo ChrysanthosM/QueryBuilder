@@ -8,10 +8,8 @@ abstract sealed class AbstractWhere extends AbstractFilter
         permits BetweenValuesWhere, ExistsWhere, InSubSelectWhere, InValuesWhere, LikeValueWhere, ValueWhere {
     abstract TypeOfWhere getTypeOfWhere();
 
-    private J2SQLShared.PFX wherePrefix = null;
     private final Object whereObject;
     private Boolean inQuotesRequirement = null;
-
 
     protected AbstractWhere(Object whereObject) {
         this.whereObject = whereObject;
@@ -19,8 +17,6 @@ abstract sealed class AbstractWhere extends AbstractFilter
 
     }
 
-    protected void setWherePrefix(J2SQLShared.PFX wherePrefix) { this.wherePrefix = wherePrefix; }
-    protected Object getWhereObject() { return whereObject; }
     protected Boolean getInQuotesRequirement() { return this.inQuotesRequirement; }
 
     protected String resolveParenthesisLeft() { return (super.getParenthesisLeft() > 0) ? Strings.repeat("(", super.getParenthesisLeft()) : StringUtils.EMPTY; }

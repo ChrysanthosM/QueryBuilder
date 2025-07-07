@@ -2,12 +2,12 @@ package qb.definition.db.system.sqlite.schema.table;
 
 import org.springframework.stereotype.Component;
 import qb.core.PairOfTableField;
-import qb.core.TTable;
+import qb.core.AbstractTable;
 import qb.definition.db.system.sqlite.schema.structure.DbFieldSQLite;
 import qb.definition.db.system.sqlite.schema.structure.DbTableSQLite;
 
 @Component
-public final class OptionsTable extends TTable {
+public final class OptionsTable extends AbstractTable {
     public OptionsTable() {
         super(DbTableSQLite.OPTIONS);
         setDbFs(REC_ID, OPTION_TYPE, OPTION_NAME, OPTION_VALUE, OPTION_DETAILS);

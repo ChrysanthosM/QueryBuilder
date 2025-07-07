@@ -7,8 +7,8 @@ import qb.definition.db.system.sqlite.schema.structure.DbFieldSQLite;
 import qb.definition.db.system.sqlite.schema.structure.DbTableSQLite;
 
 @Component
-public final class TAutoNumbering extends TTable {
-    private TAutoNumbering() {
+public final class AutoNumberingTable extends TTable {
+    private AutoNumberingTable() {
         super(DbTableSQLite.AUTO_NUMBERING);
         setDbFs(REC_ID, ENTITY_TYPE, ENTITY_NUMBER);
     }

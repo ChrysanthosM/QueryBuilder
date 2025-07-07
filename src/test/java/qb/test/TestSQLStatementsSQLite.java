@@ -8,8 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import qb.core.J2SQL;
 import qb.definition.db.datasource.WorkWithDataSource;
 import qb.definition.db.system.sqlite.schema.structure.DbFieldValuesSQLite;
-import qb.definition.db.system.sqlite.schema.table.TAutoNumbering;
-import qb.definition.db.system.sqlite.schema.table.TOptions;
+import qb.definition.db.system.sqlite.schema.table.AutoNumberingTable;
+import qb.definition.db.system.sqlite.schema.table.OptionsTable;
 
 import java.util.List;
 
@@ -22,8 +22,8 @@ import static qb.core.J2SQLShared.PFX.*;
 class TestSQLStatementsSQLite {
     private final List<String> stmts = Lists.newArrayList();
     private @Autowired WorkWithDataSource workDataSource;
-    private @Autowired TAutoNumbering tAutoNumbering;
-    private @Autowired TOptions tOptions;
+    private @Autowired AutoNumberingTable autoNumberingTable;
+    private @Autowired OptionsTable optionsTable;
 
     private String checkResult(String stmt, String shouldBe) {
         boolean areSame = StringUtils.equalsIgnoreCase(stmt, shouldBe);
@@ -42,64 +42,64 @@ class TestSQLStatementsSQLite {
     private void testSQLStatementsMain(boolean normalizeNames) {
         stmts.add("****************************** Start Test with normalizeNames: " + normalizeNames + " ******************************");
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).setApplyAutoAlias().insertInto(tAutoNumbering).insertRow("AAA", 1)
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).setApplyAutoAlias().insertInto(autoNumberingTable).insertRow("AAA", 1)
                         .getSQL(),
                 normalizeNames
                         ? "INSERT INTO AUTO_NUMBERING (ENTITY_TYPE, ENTITY_NUMBER) VALUES ('AAA', 1)"
                         : "INSERT INTO Sys_AutoNumbering (AASys_EntityType, AASys_EntityNumber) VALUES ('AAA', 1)"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).insertInto(tAutoNumbering).insertRows(List.of("AAA", 1), List.of("BBB", 2), List.of("CCC", 3))
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).insertInto(autoNumberingTable).insertRows(List.of("AAA", 1), List.of("BBB", 2), List.of("CCC", 3))
                         .getSQL(),
                 normalizeNames
                         ? "INSERT INTO AUTO_NUMBERING (ENTITY_TYPE, ENTITY_NUMBER) VALUES ('AAA', 1), ('BBB', 2), ('CCC', 3)"
                         : "INSERT INTO Sys_AutoNumbering (AASys_EntityType, AASys_EntityNumber) VALUES ('AAA', 1), ('BBB', 2), ('CCC', 3)"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).insertInto(tAutoNumbering).insertRowsFrom(
-                        J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering).select(tAutoNumbering.ENTITY_TYPE, tAutoNumbering.ENTITY_NUMBER).where(tAutoNumbering.ENTITY_NUMBER.eq(1)))
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).insertInto(autoNumberingTable).insertRowsFrom(
+                        J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable).select(autoNumberingTable.ENTITY_TYPE, autoNumberingTable.ENTITY_NUMBER).where(autoNumberingTable.ENTITY_NUMBER.eq(1)))
                         .getSQL(),
                 normalizeNames
                         ? "INSERT INTO AUTO_NUMBERING SELECT ENTITY_TYPE, ENTITY_NUMBER FROM AUTO_NUMBERING WHERE (ENTITY_NUMBER = 1)"
                         : "INSERT INTO Sys_AutoNumbering SELECT AASys_EntityType, AASys_EntityNumber FROM Sys_AutoNumbering WHERE (AASys_EntityNumber = 1)"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering).distinct().setApplyAutoAlias()
-                        .where(tAutoNumbering.ENTITY_TYPE.eq(1))
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable).distinct().setApplyAutoAlias()
+                        .where(autoNumberingTable.ENTITY_TYPE.eq(1))
                         .getSQL(),
                 normalizeNames
                         ? "SELECT DISTINCT REC_ID AS \"Sys_Recid\", ENTITY_TYPE AS \"Sys_Entitytype\", ENTITY_NUMBER AS \"Sys_Entitynumber\" FROM AUTO_NUMBERING WHERE (ENTITY_TYPE = '1')"
                         : "SELECT DISTINCT AASys_RecID AS \"Sys_Recid\", AASys_EntityType AS \"Sys_Entitytype\", AASys_EntityNumber AS \"Sys_Entitynumber\" FROM Sys_AutoNumbering WHERE (AASys_EntityType = '1')"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering).select(tAutoNumbering.ENTITY_TYPE, tAutoNumbering.ENTITY_NUMBER, operation(tAutoNumbering.ENTITY_NUMBER, "+1")).setApplyAutoAlias()
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable).select(autoNumberingTable.ENTITY_TYPE, autoNumberingTable.ENTITY_NUMBER, operation(autoNumberingTable.ENTITY_NUMBER, "+1")).setApplyAutoAlias()
                         .getSQL(),
                 normalizeNames
                         ? "SELECT ENTITY_TYPE AS \"Sys_Entitytype\", ENTITY_NUMBER AS \"Sys_Entitynumber\", ENTITY_NUMBER +1 FROM AUTO_NUMBERING"
                         : "SELECT AASys_EntityType AS \"Sys_Entitytype\", AASys_EntityNumber AS \"Sys_Entitynumber\", AASys_EntityNumber +1 FROM Sys_AutoNumbering"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering).select(tAutoNumbering.ENTITY_TYPE.as("asTheAlias"))
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable).select(autoNumberingTable.ENTITY_TYPE.as("asTheAlias"))
                         .getSQL(),
                 normalizeNames
                         ? "SELECT ENTITY_TYPE AS \"asTheAlias\" FROM AUTO_NUMBERING"
                         : "SELECT AASys_EntityType AS \"asTheAlias\" FROM Sys_AutoNumbering"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering.as(T0)).selectAll()
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable.as(T0)).selectAll()
                         .getSQL(),
                 normalizeNames
                         ? "SELECT T0.* FROM AUTO_NUMBERING AS T0"
                         : "SELECT T0.* FROM Sys_AutoNumbering AS T0"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering.as(T0)).select(tAutoNumbering.ALL)
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable.as(T0)).select(autoNumberingTable.ALL)
                         .getSQL(),
                 normalizeNames
                         ? "SELECT T0.* FROM AUTO_NUMBERING AS T0"
                         : "SELECT T0.* FROM Sys_AutoNumbering AS T0"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).deleteFrom(tAutoNumbering).where(tAutoNumbering.ENTITY_NUMBER.eq(1))
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).deleteFrom(autoNumberingTable).where(autoNumberingTable.ENTITY_NUMBER.eq(1))
                         .getSQL(),
                 normalizeNames
                         ? "DELETE FROM AUTO_NUMBERING WHERE (ENTITY_NUMBER = 1)"
                         : "DELETE FROM Sys_AutoNumbering WHERE (AASys_EntityNumber = 1)"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering.as(T0))
-                        .whereExists(J2SQL.create(workDataSource, normalizeNames).from(tOptions.as(A1)).selectAll().where(t0(tAutoNumbering.ENTITY_TYPE).eq(a1(tOptions.OPTION_TYPE)))).setApplyAutoAlias()
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable.as(T0))
+                        .whereExists(J2SQL.create(workDataSource, normalizeNames).from(optionsTable.as(A1)).selectAll().where(t0(autoNumberingTable.ENTITY_TYPE).eq(a1(optionsTable.OPTION_TYPE)))).setApplyAutoAlias()
                         .getSQL(),
                 normalizeNames
                         ? "SELECT T0.REC_ID AS \"Sys_Recid\", T0.ENTITY_TYPE AS \"Sys_Entitytype\", T0.ENTITY_NUMBER AS \"Sys_Entitynumber\" FROM AUTO_NUMBERING AS T0 " +
@@ -108,9 +108,9 @@ class TestSQLStatementsSQLite {
                         "WHERE EXISTS (SELECT A1.* FROM Sys_Options AS A1 WHERE (T0.AASys_EntityType = A1.ABSys_OptionType))"));
 
         stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames)
-                        .from(tAutoNumbering)
-                        .select(tAutoNumbering.ENTITY_TYPE, tAutoNumbering.ENTITY_NUMBER.as("asAlias"), "const1", 2, 4.5,
-                                asAlias(5, "asAlias5"), CONCAT(tAutoNumbering.ENTITY_TYPE, "AAA", 1, LTRIM(tAutoNumbering.ENTITY_TYPE)))
+                        .from(autoNumberingTable)
+                        .select(autoNumberingTable.ENTITY_TYPE, autoNumberingTable.ENTITY_NUMBER.as("asAlias"), "const1", 2, 4.5,
+                                asAlias(5, "asAlias5"), CONCAT(autoNumberingTable.ENTITY_TYPE, "AAA", 1, LTRIM(autoNumberingTable.ENTITY_TYPE)))
                         .setApplyAutoAlias()
                         .getSQL(),
                 normalizeNames
@@ -122,54 +122,54 @@ class TestSQLStatementsSQLite {
                         "FROM Sys_AutoNumbering"));
 
         stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames)
-                        .from(tAutoNumbering.as("T"))
-                        .select(asAlias(MIN(tAutoNumbering.ENTITY_TYPE), "functionAsAlias"))
-                        .orderBy(tAutoNumbering.ENTITY_TYPE).limitOffset(1, 2)
+                        .from(autoNumberingTable.as("T"))
+                        .select(asAlias(MIN(autoNumberingTable.ENTITY_TYPE), "functionAsAlias"))
+                        .orderBy(autoNumberingTable.ENTITY_TYPE).limitOffset(1, 2)
                         .getSQL(),
                 normalizeNames
                         ? "SELECT (MIN(T.ENTITY_TYPE) AS \"functionAsAlias\") FROM AUTO_NUMBERING AS T ORDER BY T.ENTITY_TYPE ASC LIMIT 1 OFFSET 2"
                         : "SELECT (MIN(T.AASys_EntityType) AS \"functionAsAlias\") FROM Sys_AutoNumbering AS T ORDER BY T.AASys_EntityType ASC LIMIT 1 OFFSET 2"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering)
-                        .select(tAutoNumbering.ENTITY_TYPE, COUNT())
-                        .groupBy(tAutoNumbering.ENTITY_TYPE).having(COUNT().gt(1))
-                        .orderBy(tAutoNumbering.ENTITY_TYPE.desc(), tAutoNumbering.ENTITY_NUMBER.asc())
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable)
+                        .select(autoNumberingTable.ENTITY_TYPE, COUNT())
+                        .groupBy(autoNumberingTable.ENTITY_TYPE).having(COUNT().gt(1))
+                        .orderBy(autoNumberingTable.ENTITY_TYPE.desc(), autoNumberingTable.ENTITY_NUMBER.asc())
                         .setApplyAutoAlias()
                         .getSQL(),
                 normalizeNames
                         ? "SELECT ENTITY_TYPE AS \"Sys_Entitytype\", COUNT(*) FROM AUTO_NUMBERING GROUP BY ENTITY_TYPE HAVING COUNT(*) > 1 ORDER BY ENTITY_TYPE DESC, ENTITY_NUMBER ASC"
                         : "SELECT AASys_EntityType AS \"Sys_Entitytype\", COUNT(*) FROM Sys_AutoNumbering GROUP BY AASys_EntityType HAVING COUNT(*) > 1 ORDER BY AASys_EntityType DESC, AASys_EntityNumber ASC"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering.as(T0)).selectAll()
-                        .leftJoin(tOptions.as(J1)).fromJoinSelectOnly(tOptions.ALL).on(j1(tAutoNumbering.ENTITY_TYPE).eq(t0(tOptions.OPTION_TYPE)))
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable.as(T0)).selectAll()
+                        .leftJoin(optionsTable.as(J1)).fromJoinSelectOnly(optionsTable.ALL).on(j1(autoNumberingTable.ENTITY_TYPE).eq(t0(optionsTable.OPTION_TYPE)))
                         .setApplyAutoAlias()
                         .getSQL(),
                 normalizeNames
                         ? "SELECT T0.*, J1.* FROM AUTO_NUMBERING AS T0 LEFT JOIN OPTIONS AS J1 ON (J1.ENTITY_TYPE = T0.OPTION_TYPE)"
                         : "SELECT T0.*, J1.* FROM Sys_AutoNumbering AS T0 LEFT JOIN Sys_Options AS J1 ON (J1.AASys_EntityType = T0.ABSys_OptionType)"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering.as(T0))
-                        .leftJoin(tOptions.as(J1)).on(j1(tAutoNumbering.ENTITY_TYPE).eq(t0(tOptions.OPTION_TYPE)))
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable.as(T0))
+                        .leftJoin(optionsTable.as(J1)).on(j1(autoNumberingTable.ENTITY_TYPE).eq(t0(optionsTable.OPTION_TYPE)))
                         .setApplyAutoAlias()
                         .getSQL(),
                 normalizeNames
                         ? "SELECT T0.REC_ID AS \"Sys_Recid\", T0.ENTITY_TYPE AS \"Sys_Entitytype\", T0.ENTITY_NUMBER AS \"Sys_Entitynumber\", J1.REC_ID AS \"Sys_Recid\", J1.OPTION_TYPE AS \"Sys_Optiontype\", J1.OPTION_NAME AS \"Sys_Optionname\", J1.OPTION_VALUE AS \"Sys_Optionvalue\", J1.OPTION_DETAILS AS \"Sys_Optiondetails\" FROM AUTO_NUMBERING AS T0 LEFT JOIN OPTIONS AS J1 ON (J1.ENTITY_TYPE = T0.OPTION_TYPE)"
                         : "SELECT T0.AASys_RecID AS \"Sys_Recid\", T0.AASys_EntityType AS \"Sys_Entitytype\", T0.AASys_EntityNumber AS \"Sys_Entitynumber\", J1.ABSys_RecID AS \"Sys_Recid\", J1.ABSys_OptionType AS \"Sys_Optiontype\", J1.ABSys_OptionName AS \"Sys_Optionname\", J1.ABSys_OptionValue AS \"Sys_Optionvalue\", J1.ABSys_OptionDetails AS \"Sys_Optiondetails\" FROM Sys_AutoNumbering AS T0 LEFT JOIN Sys_Options AS J1 ON (J1.AASys_EntityType = T0.ABSys_OptionType)"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering.as(T0)).select(tAutoNumbering.ALL)
-                        .leftJoin(tOptions.as(J1)).fromJoinSelectOnly(tOptions.ALL).on(j1(tAutoNumbering.ENTITY_TYPE).eq(t0(tOptions.OPTION_TYPE))).addJoinFilters(tOptions.OPTION_TYPE.gt(1).and(tOptions.OPTION_TYPE.lt(1000)))
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable.as(T0)).select(autoNumberingTable.ALL)
+                        .leftJoin(optionsTable.as(J1)).fromJoinSelectOnly(optionsTable.ALL).on(j1(autoNumberingTable.ENTITY_TYPE).eq(t0(optionsTable.OPTION_TYPE))).addJoinFilters(optionsTable.OPTION_TYPE.gt(1).and(optionsTable.OPTION_TYPE.lt(1000)))
                         .setApplyAutoAlias()
                         .getSQL(),
                 normalizeNames
                         ? "SELECT T0.*, J1.* FROM AUTO_NUMBERING AS T0 LEFT JOIN OPTIONS AS J1 ON (J1.ENTITY_TYPE = T0.OPTION_TYPE) WHERE (J1.OPTION_TYPE > '1' AND J1.OPTION_TYPE < '1000')"
                         : "SELECT T0.*, J1.* FROM Sys_AutoNumbering AS T0 LEFT JOIN Sys_Options AS J1 ON (J1.AASys_EntityType = T0.ABSys_OptionType) WHERE (J1.ABSys_OptionType > '1' AND J1.ABSys_OptionType < '1000')"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering.as(T0)).select(tAutoNumbering.ALL)
-                        .leftJoin(tOptions.as(J1)).fromJoinSelectOnly(tOptions.ALL).on(j1(tAutoNumbering.ENTITY_TYPE).eq(t0(tOptions.OPTION_TYPE))).addJoinFilters(tOptions.OPTION_TYPE.gt(1).and(tOptions.OPTION_TYPE.lt(1000)))
-                        .leftJoin(tOptions.as(J2)).fromJoinSelectOnly(tOptions.ALL).on(j2(tAutoNumbering.ENTITY_TYPE).eq(t0(tOptions.OPTION_TYPE))).addJoinFilters(tOptions.OPTION_TYPE.gt(1001).and(tOptions.OPTION_TYPE.lt(2000)))
-                        .leftJoin(tOptions.as(J3)).fromJoinSelectOnly(tOptions.ALL).on(j3(tAutoNumbering.ENTITY_TYPE).eq(t0(tOptions.OPTION_TYPE))).addJoinFilters(tOptions.OPTION_TYPE.gt(2001).and(tOptions.OPTION_TYPE.lt(3000)))
-                        .leftJoin(tOptions.as(J4)).fromJoinSelectOnly(tOptions.ALL).on(j4(tAutoNumbering.ENTITY_TYPE).eq(t0(tOptions.OPTION_TYPE))).addJoinFilters(tOptions.OPTION_TYPE.gt(3001).and(tOptions.OPTION_TYPE.lt(4000)))
-                        .where(tAutoNumbering.ENTITY_NUMBER.gt(0))
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable.as(T0)).select(autoNumberingTable.ALL)
+                        .leftJoin(optionsTable.as(J1)).fromJoinSelectOnly(optionsTable.ALL).on(j1(autoNumberingTable.ENTITY_TYPE).eq(t0(optionsTable.OPTION_TYPE))).addJoinFilters(optionsTable.OPTION_TYPE.gt(1).and(optionsTable.OPTION_TYPE.lt(1000)))
+                        .leftJoin(optionsTable.as(J2)).fromJoinSelectOnly(optionsTable.ALL).on(j2(autoNumberingTable.ENTITY_TYPE).eq(t0(optionsTable.OPTION_TYPE))).addJoinFilters(optionsTable.OPTION_TYPE.gt(1001).and(optionsTable.OPTION_TYPE.lt(2000)))
+                        .leftJoin(optionsTable.as(J3)).fromJoinSelectOnly(optionsTable.ALL).on(j3(autoNumberingTable.ENTITY_TYPE).eq(t0(optionsTable.OPTION_TYPE))).addJoinFilters(optionsTable.OPTION_TYPE.gt(2001).and(optionsTable.OPTION_TYPE.lt(3000)))
+                        .leftJoin(optionsTable.as(J4)).fromJoinSelectOnly(optionsTable.ALL).on(j4(autoNumberingTable.ENTITY_TYPE).eq(t0(optionsTable.OPTION_TYPE))).addJoinFilters(optionsTable.OPTION_TYPE.gt(3001).and(optionsTable.OPTION_TYPE.lt(4000)))
+                        .where(autoNumberingTable.ENTITY_NUMBER.gt(0))
                         .setApplyAutoAlias()
                         .getSQL(),
                 normalizeNames
@@ -186,15 +186,15 @@ class TestSQLStatementsSQLite {
                         "LEFT JOIN Sys_Options AS J4 ON (J4.AASys_EntityType = T0.ABSys_OptionType) " +
                         "WHERE (T0.AASys_EntityNumber > 0) AND ((J1.ABSys_OptionType > '1' AND J1.ABSys_OptionType < '1000') AND (J2.ABSys_OptionType > '1001' AND J2.ABSys_OptionType < '2000') AND (J3.ABSys_OptionType > '2001' AND J3.ABSys_OptionType < '3000') AND (J4.ABSys_OptionType > '3001' AND J4.ABSys_OptionType < '4000'))"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering).where(tAutoNumbering.ENTITY_TYPE.eq("?")).setApplyAutoAlias()
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable).where(autoNumberingTable.ENTITY_TYPE.eq("?")).setApplyAutoAlias()
                         .getSQL(),
                 normalizeNames
                         ? "SELECT REC_ID AS \"Sys_Recid\", ENTITY_TYPE AS \"Sys_Entitytype\", ENTITY_NUMBER AS \"Sys_Entitynumber\" FROM AUTO_NUMBERING WHERE (ENTITY_TYPE = ?)"
                         : "SELECT AASys_RecID AS \"Sys_Recid\", AASys_EntityType AS \"Sys_Entitytype\", AASys_EntityNumber AS \"Sys_Entitynumber\" FROM Sys_AutoNumbering WHERE (AASys_EntityType = ?)"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering).select(tAutoNumbering.ENTITY_TYPE)
-                        .UNION(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering).select(tAutoNumbering.ENTITY_TYPE))
-                        .UNION(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering).select(tAutoNumbering.ENTITY_TYPE))
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable).select(autoNumberingTable.ENTITY_TYPE)
+                        .UNION(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable).select(autoNumberingTable.ENTITY_TYPE))
+                        .UNION(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable).select(autoNumberingTable.ENTITY_TYPE))
                         .setApplyAutoAlias()
                         .getSQL(),
                 normalizeNames
@@ -205,25 +205,25 @@ class TestSQLStatementsSQLite {
                         "UNION SELECT AASys_EntityType AS \"Sys_Entitytype\" FROM Sys_AutoNumbering " +
                         "UNION SELECT AASys_EntityType AS \"Sys_Entitytype\" FROM Sys_AutoNumbering"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering.as(T0)).select(tAutoNumbering.ALL).attachComments("sample comment")
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable.as(T0)).select(autoNumberingTable.ALL).attachComments("sample comment")
                         .setApplyAutoAlias().getSQL(),
                 normalizeNames
                         ? "SELECT T0.* FROM AUTO_NUMBERING AS T0 /*sample comment*/"
                         : "SELECT T0.* FROM Sys_AutoNumbering AS T0 /*sample comment*/"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).distinct().from(tAutoNumbering).where(tAutoNumbering.ENTITY_NUMBER.eq(1)).setApplyAutoAlias()
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).distinct().from(autoNumberingTable).where(autoNumberingTable.ENTITY_NUMBER.eq(1)).setApplyAutoAlias()
                         .getSQL(),
                 normalizeNames
                         ? "SELECT DISTINCT REC_ID AS \"Sys_Recid\", ENTITY_TYPE AS \"Sys_Entitytype\", ENTITY_NUMBER AS \"Sys_Entitynumber\" FROM AUTO_NUMBERING WHERE (ENTITY_NUMBER = 1)"
                         : "SELECT DISTINCT AASys_RecID AS \"Sys_Recid\", AASys_EntityType AS \"Sys_Entitytype\", AASys_EntityNumber AS \"Sys_Entitynumber\" FROM Sys_AutoNumbering WHERE (AASys_EntityNumber = 1)"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering)
-                        .where(tAutoNumbering.ENTITY_TYPE.eq(DbFieldValuesSQLite.ValuesForEntityType.SURROGATE_NUM))
-                        .and(tAutoNumbering.ENTITY_TYPE.inSubSelect(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering).select(tAutoNumbering.ENTITY_TYPE).getSQL()))
-                        .and(not(tAutoNumbering.ENTITY_TYPE.like("AB%")))
-                        .and(tAutoNumbering.ENTITY_TYPE.between(11, 22).or(tAutoNumbering.ENTITY_NUMBER.between(1, 2)))
-                        .or(tAutoNumbering.ENTITY_TYPE.in(List.of(1, 2)))
-                        .or(tAutoNumbering.ENTITY_TYPE.in(3, 4))
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable)
+                        .where(autoNumberingTable.ENTITY_TYPE.eq(DbFieldValuesSQLite.ValuesForEntityType.SURROGATE_NUM))
+                        .and(autoNumberingTable.ENTITY_TYPE.inSubSelect(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable).select(autoNumberingTable.ENTITY_TYPE).getSQL()))
+                        .and(not(autoNumberingTable.ENTITY_TYPE.like("AB%")))
+                        .and(autoNumberingTable.ENTITY_TYPE.between(11, 22).or(autoNumberingTable.ENTITY_NUMBER.between(1, 2)))
+                        .or(autoNumberingTable.ENTITY_TYPE.in(List.of(1, 2)))
+                        .or(autoNumberingTable.ENTITY_TYPE.in(3, 4))
                         .setApplyAutoAlias()
                         .getSQL(),
                 normalizeNames
@@ -243,12 +243,12 @@ class TestSQLStatementsSQLite {
                         "OR (AASys_EntityType IN ('3', '4'))"));
 
         stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames)
-                        .from(tAutoNumbering.as(T0))
-                        .select(tAutoNumbering.ENTITY_NUMBER.as("asEntNum"))
-                        .where(tAutoNumbering.ENTITY_NUMBER.gt(1)).andNot(tAutoNumbering.ENTITY_TYPE.like("Α%")).and(tAutoNumbering.ENTITY_TYPE.notLike("B%"))
-                        .and(tAutoNumbering.ENTITY_NUMBER.between(2, 2000))
-                        .and(tAutoNumbering.ENTITY_TYPE.inSubSelect(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering).select(tAutoNumbering.ENTITY_TYPE).getSQL()))
-                        .and(tAutoNumbering.ENTITY_NUMBER.eq(1), tAutoNumbering.ENTITY_NUMBER.eq(2), tAutoNumbering.ENTITY_NUMBER.eq(3), tAutoNumbering.ENTITY_NUMBER.eq(4))
+                        .from(autoNumberingTable.as(T0))
+                        .select(autoNumberingTable.ENTITY_NUMBER.as("asEntNum"))
+                        .where(autoNumberingTable.ENTITY_NUMBER.gt(1)).andNot(autoNumberingTable.ENTITY_TYPE.like("Α%")).and(autoNumberingTable.ENTITY_TYPE.notLike("B%"))
+                        .and(autoNumberingTable.ENTITY_NUMBER.between(2, 2000))
+                        .and(autoNumberingTable.ENTITY_TYPE.inSubSelect(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable).select(autoNumberingTable.ENTITY_TYPE).getSQL()))
+                        .and(autoNumberingTable.ENTITY_NUMBER.eq(1), autoNumberingTable.ENTITY_NUMBER.eq(2), autoNumberingTable.ENTITY_NUMBER.eq(3), autoNumberingTable.ENTITY_NUMBER.eq(4))
                         .setApplyAutoAlias()
                         .getSQL(),
                 normalizeNames
@@ -268,10 +268,10 @@ class TestSQLStatementsSQLite {
                         "AND (T0.AASys_EntityNumber = 1 AND T0.AASys_EntityNumber = 2 AND T0.AASys_EntityNumber = 3 AND T0.AASys_EntityNumber = 4)"));
 
         stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames)
-                        .from(tAutoNumbering.as(T0))
-                        .select(tAutoNumbering.ENTITY_NUMBER.as("asEntNum"))
-                        .where(tAutoNumbering.ENTITY_TYPE.like("Α%").or(tAutoNumbering.ENTITY_TYPE.like("B%").or(tAutoNumbering.ENTITY_TYPE.like("C%").or(tAutoNumbering.ENTITY_TYPE.like("D%").or(tAutoNumbering.ENTITY_TYPE.like("E%"))))))
-                        .or(tAutoNumbering.ENTITY_TYPE.eq(1).or(tAutoNumbering.ENTITY_TYPE.eq(2).and(tAutoNumbering.ENTITY_NUMBER.gt(0))))
+                        .from(autoNumberingTable.as(T0))
+                        .select(autoNumberingTable.ENTITY_NUMBER.as("asEntNum"))
+                        .where(autoNumberingTable.ENTITY_TYPE.like("Α%").or(autoNumberingTable.ENTITY_TYPE.like("B%").or(autoNumberingTable.ENTITY_TYPE.like("C%").or(autoNumberingTable.ENTITY_TYPE.like("D%").or(autoNumberingTable.ENTITY_TYPE.like("E%"))))))
+                        .or(autoNumberingTable.ENTITY_TYPE.eq(1).or(autoNumberingTable.ENTITY_TYPE.eq(2).and(autoNumberingTable.ENTITY_NUMBER.gt(0))))
                         .getSQL(),
                 normalizeNames
                         ? "SELECT T0.ENTITY_NUMBER AS \"asEntNum\" FROM AUTO_NUMBERING AS T0 " +
@@ -281,11 +281,11 @@ class TestSQLStatementsSQLite {
                         "WHERE (T0.AASys_EntityType LIKE 'Α%' OR T0.AASys_EntityType LIKE 'B%' OR T0.AASys_EntityType LIKE 'C%' OR T0.AASys_EntityType LIKE 'D%' OR T0.AASys_EntityType LIKE 'E%') " +
                         "OR (T0.AASys_EntityType = '1' OR T0.AASys_EntityType = '2' AND T0.AASys_EntityNumber > 0)"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(tAutoNumbering)
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).from(autoNumberingTable)
                         .select(CASE1n(11,
-                                WHEN(tAutoNumbering.ENTITY_TYPE.eq(DbFieldValuesSQLite.ValuesForEntityType.SURROGATE_NUM), 22),
-                                WHEN(tAutoNumbering.ENTITY_TYPE.lt(DbFieldValuesSQLite.ValuesForEntityType.SURROGATE_NUM), 33)))
-                        .select(CASE2s(tAutoNumbering.ENTITY_TYPE, "11",
+                                WHEN(autoNumberingTable.ENTITY_TYPE.eq(DbFieldValuesSQLite.ValuesForEntityType.SURROGATE_NUM), 22),
+                                WHEN(autoNumberingTable.ENTITY_TYPE.lt(DbFieldValuesSQLite.ValuesForEntityType.SURROGATE_NUM), 33)))
+                        .select(CASE2s(autoNumberingTable.ENTITY_TYPE, "11",
                                 WHEN(2, "22"),
                                 WHEN(3, "33")))
                         .setApplyAutoAlias()
@@ -308,19 +308,19 @@ class TestSQLStatementsSQLite {
                             "WHEN '3' THEN '33' " +
                             "ELSE '11' END FROM Sys_AutoNumbering"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).updateInto(tAutoNumbering).updateFieldSetValue(tAutoNumbering.ENTITY_NUMBER, tOptions.OPTION_VALUE)
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).updateInto(autoNumberingTable).updateFieldSetValue(autoNumberingTable.ENTITY_NUMBER, optionsTable.OPTION_VALUE)
                         .getSQL(),
                 normalizeNames
                         ? "UPDATE AUTO_NUMBERING SET ENTITY_NUMBER = OPTION_VALUE"
                         : "UPDATE Sys_AutoNumbering SET AASys_EntityNumber = ABSys_OptionValue"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).updateInto(tAutoNumbering).updateFieldSetValue(tAutoNumbering.ENTITY_NUMBER, 1)
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).updateInto(autoNumberingTable).updateFieldSetValue(autoNumberingTable.ENTITY_NUMBER, 1)
                         .getSQL(),
                 normalizeNames
                         ? "UPDATE AUTO_NUMBERING SET ENTITY_NUMBER = 1"
                         : "UPDATE Sys_AutoNumbering SET AASys_EntityNumber = 1"));
 
-        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).updateInto(tAutoNumbering).updateFieldSetValue(tAutoNumbering.ENTITY_NUMBER, operation(tAutoNumbering.ENTITY_NUMBER, "+1"))
+        stmts.add(checkResult(J2SQL.create(workDataSource, normalizeNames).updateInto(autoNumberingTable).updateFieldSetValue(autoNumberingTable.ENTITY_NUMBER, operation(autoNumberingTable.ENTITY_NUMBER, "+1"))
                         .getSQL(),
                 normalizeNames
                         ? "UPDATE AUTO_NUMBERING SET ENTITY_NUMBER = ENTITY_NUMBER +1"

@@ -7,8 +7,8 @@ import qb.definition.db.system.sqlite.schema.structure.DbFieldSQLite;
 import qb.definition.db.system.sqlite.schema.structure.DbTableSQLite;
 
 @Component
-public final class TUsers extends TTable {
-    public TUsers() {
+public final class UsersTable extends TTable {
+    public UsersTable() {
         super(DbTableSQLite.USERS);
         setDbFs(REC_ID, USER_NAME, USER_PASSWORD);
     }

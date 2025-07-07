@@ -7,8 +7,8 @@ import qb.definition.db.system.sqlite.schema.structure.DbFieldSQLite;
 import qb.definition.db.system.sqlite.schema.structure.DbTableSQLite;
 
 @Component
-public final class TOptions extends TTable {
-    public TOptions() {
+public final class OptionsTable extends TTable {
+    public OptionsTable() {
         super(DbTableSQLite.OPTIONS);
         setDbFs(REC_ID, OPTION_TYPE, OPTION_NAME, OPTION_VALUE, OPTION_DETAILS);
     }

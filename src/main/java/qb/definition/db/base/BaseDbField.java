@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public interface BaseDbField extends IDeployFilters, IDeployOrdering, IProvideDataTypeForSQL {
+    static BaseDbField ALL() { return DummyALL.getDummyALL(); }
+
     String systemName();
     DbFieldDataType fieldDataType();
     String asAlias();
@@ -52,8 +54,4 @@ public interface BaseDbField extends IDeployFilters, IDeployOrdering, IProvideDa
     default List<BaseDbField> getValuesList() {
         return Arrays.asList(getValues());
     }
-
-
-    DummyALL dummyALL = new DummyALL();
-    default BaseDbField ALL() { return dummyALL; }
 }

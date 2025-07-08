@@ -53,7 +53,7 @@ final class SQLFieldFromTable extends SqlUserSelection {
 
         String tableHasPrefixForFields = (forDbt == null ? StringUtils.EMPTY : StringUtils.defaultString(DbTableInstances.getMapTableInstance(forDbt).getTablePrefixForFields()));
 
-        if (this.dbF == BaseDbField.dummyALL) {
+        if (this.dbF == BaseDbField.ALL()) {
             returnName = returnName.concat(LinSQLCommons.ASTERISK);
         } else {
             if (forSQLRetrieverForDB.getTypeOfNamingSystemOrNormalized() == LinSQL.TypeOfNamingSystemOrNormalized.SYSTEM) {
@@ -81,7 +81,7 @@ final class SQLFieldFromTable extends SqlUserSelection {
             if (StringUtils.isNotBlank(tableAsAlias)) returnName = tableAsAlias.concat(".").concat(returnName);
         }
 
-        if (this.dbF != BaseDbField.dummyALL) {
+        if (this.dbF != BaseDbField.ALL()) {
             if (StringUtils.isBlank(super.getAsAlias())
                     && forSQLRetrieverForDB.getWorkLInSQLBuilderParams().isApplyAutoAlias()
                     && !super.isIgnoreTableAsAlias()) {

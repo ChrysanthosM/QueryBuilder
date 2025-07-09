@@ -12,6 +12,22 @@ public final class WorkWithDataSource {
     @Value("${datasource.type}")
     private String datasourceType;
 
+    private final DataSourceResolver dataSourceResolver;
+    @Getter
+    private DataSourceType defaultDataSourceType;
+    @Getter
+    private DataSourceProvider defaultDataSourceProvider;
+
+    public WorkWithDataSource(DataSourceResolver dataSourceResolver) {
+        this.dataSourceResolver = dataSourceResolver;
+    }
+
+    @PostConstruct
+    private void init() {
+        defaultDataSourceType = DataSourceType.getByPropertyName(datasourceType);
+        defaultDataSourceProvider = dataSourceResolver.getDefaultDataSource(defaultDataSourceType);
+    }
+
     @AllArgsConstructor
     @Getter
     public enum DataSourceType {
@@ -30,17 +46,5 @@ public final class WorkWithDataSource {
         }
     }
 
-    @Getter
-    private DataSourceType defaultDataSourceType;
-    @Getter
-    private DataSourceProvider defaultDataSourceProvider;
-
-    private @Autowired DataSourceResolver dataSourceResolver;
-
-    @PostConstruct
-    private void init() {
-        defaultDataSourceType = DataSourceType.getByPropertyName(datasourceType);
-        defaultDataSourceProvider = dataSourceResolver.getDefaultDataSource(defaultDataSourceType);
-    }
 
 }

@@ -1,6 +1,6 @@
 package qb.core;
 
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import jakarta.annotation.Nullable;
 
 
@@ -9,7 +9,7 @@ final class SQLFunction2Params extends SQLFunction {
     @Override
     public IDeploySQLFunctions.TypeOfSQLFunction getTypeOfSQLFunction() { return this.typeOfSQLFunction; }
 
-    SQLFunction2Params(IDeploySQLFunctions.TypeOfSQLFunction typeOfSQLFunction, @Nonnull Object... args) {
+    SQLFunction2Params(IDeploySQLFunctions.TypeOfSQLFunction typeOfSQLFunction, @NonNull Object... args) {
         this.typeOfSQLFunction = typeOfSQLFunction;
         super.init(null, null, args);
     }

@@ -1,6 +1,6 @@
 package qb.core;
 
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 
 final class ExistsWhere extends AbstractWhere {
@@ -8,7 +8,7 @@ final class ExistsWhere extends AbstractWhere {
 
     private final String inSubSelect;
 
-    ExistsWhere(@Nonnull String inSubSelect) {
+    ExistsWhere(@NonNull String inSubSelect) {
         super(null);
         this.inSubSelect = inSubSelect;
     }

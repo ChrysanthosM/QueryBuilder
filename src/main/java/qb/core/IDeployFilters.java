@@ -1,6 +1,6 @@
 package qb.core;
 
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import jakarta.annotation.Nullable;
 
 import java.util.Arrays;
@@ -32,16 +32,16 @@ public interface IDeployFilters {
     default IWhere notGreaterThan(@Nullable Object compareValue) { return notGt(compareValue); }
     default IWhere notGt(@Nullable Object compareValue) { return J2SQLShared.not(J2SQLShared.Filter.whereValue(this, LinSQL.TypeOfComparison.GT, compareValue)); }
 
-    default IWhere in(@Nonnull Object... inValues) { return in(Arrays.asList(inValues)); }
-    default IWhere in(@Nonnull List<Object> inValues) { return J2SQLShared.Filter.whereInValues(this, inValues); }
-    default IWhere notIn(@Nonnull Object... inValues) { return notIn(Arrays.asList(inValues)); }
-    default IWhere notIn(@Nonnull List<Object> inValues) { return J2SQLShared.not(J2SQLShared.Filter.whereInValues(this, inValues)); }
+    default IWhere in(@NonNull Object... inValues) { return in(Arrays.asList(inValues)); }
+    default IWhere in(@NonNull List<Object> inValues) { return J2SQLShared.Filter.whereInValues(this, inValues); }
+    default IWhere notIn(@NonNull Object... inValues) { return notIn(Arrays.asList(inValues)); }
+    default IWhere notIn(@NonNull List<Object> inValues) { return J2SQLShared.not(J2SQLShared.Filter.whereInValues(this, inValues)); }
 
-    default IWhere inSubSelect(@Nonnull String inSubSelect) { return J2SQLShared.Filter.whereInSubSelect(this, inSubSelect); }
-    default IWhere notInSubSelect(@Nonnull String inSubSelect) { return J2SQLShared.not(J2SQLShared.Filter.whereInSubSelect(this, inSubSelect)); }
+    default IWhere inSubSelect(@NonNull String inSubSelect) { return J2SQLShared.Filter.whereInSubSelect(this, inSubSelect); }
+    default IWhere notInSubSelect(@NonNull String inSubSelect) { return J2SQLShared.not(J2SQLShared.Filter.whereInSubSelect(this, inSubSelect)); }
 
-    default IWhere between(@Nonnull Object fromObject, @Nonnull Object toObject) { return J2SQLShared.Filter.whereBetweenValues(this, fromObject, toObject); }
-    default IWhere notBetween(@Nonnull Object fromObject, @Nonnull Object toObject) { return J2SQLShared.not(J2SQLShared.Filter.whereBetweenValues(this, fromObject, toObject)); }
+    default IWhere between(@NonNull Object fromObject, @NonNull Object toObject) { return J2SQLShared.Filter.whereBetweenValues(this, fromObject, toObject); }
+    default IWhere notBetween(@NonNull Object fromObject, @NonNull Object toObject) { return J2SQLShared.not(J2SQLShared.Filter.whereBetweenValues(this, fromObject, toObject)); }
 
     default IWhere like(@Nullable String compareValue) { return like(compareValue, null, null); }
     default IWhere like(@Nullable String compareValue, @Nullable String escapeLeft, @Nullable String escapeRight) { return J2SQLShared.Filter.whereLikeValue(this, compareValue, escapeLeft, escapeRight); }

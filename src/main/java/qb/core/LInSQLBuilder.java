@@ -1,6 +1,6 @@
 package qb.core;
 
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
@@ -54,7 +54,7 @@ final class LInSQLBuilder {
         this.sqlStatement = formatSql(this.sqlStatement);
         return this.sqlStatement;
     }
-    private static String formatSql(@Nonnull String sqlStatement) {
+    private static String formatSql(@NonNull String sqlStatement) {
         return StringUtils.trimToEmpty(sqlStatement.replaceAll("\\s+", StringUtils.SPACE).replaceAll("\\s+,", ","));
     }
 

@@ -1,12 +1,12 @@
 package qb.core;
 
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import jakarta.annotation.Nullable;
 
 final class WhenThenSimple extends WhenThen {
     private final Object whenCondition;
 
-    WhenThenSimple(@Nonnull Object whenCondition, @Nullable Object thenExpression) {
+    WhenThenSimple(@NonNull Object whenCondition, @Nullable Object thenExpression) {
         super(thenExpression);
         this.whenCondition = whenCondition;
     }

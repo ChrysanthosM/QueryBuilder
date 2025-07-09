@@ -1,6 +1,6 @@
 package qb.core;
 
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 
@@ -9,7 +9,7 @@ final class SQLFunctionAggregates extends SQLFunction {
     @Override
     public IDeploySQLFunctions.TypeOfSQLFunction getTypeOfSQLFunction() { return this.typeOfSQLFunction; }
 
-    SQLFunctionAggregates(IDeploySQLFunctions.TypeOfSQLFunction typeOfSQLFunction, @Nonnull Object... args) {
+    SQLFunctionAggregates(IDeploySQLFunctions.TypeOfSQLFunction typeOfSQLFunction, @NonNull Object... args) {
         this.typeOfSQLFunction = typeOfSQLFunction;
         super.init(null,null, args);
     }

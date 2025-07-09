@@ -1,7 +1,7 @@
 package qb.core;
 
 import com.google.common.base.Preconditions;
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import jakarta.annotation.Nullable;
 import qb.definition.db.base.BaseDbField;
 
@@ -13,15 +13,15 @@ public final class SQLFieldFromPairOfTableField extends SqlUserSelection {
     private PairOfTableField pairOfTableField;
     private SQLFieldFromTable sqlFieldFromTable;
 
-    public SQLFieldFromPairOfTableField(@Nonnull PairOfTableField pairOfTableField) {
+    public SQLFieldFromPairOfTableField(@NonNull PairOfTableField pairOfTableField) {
         super();
         init(null, null, pairOfTableField);
     }
-    public SQLFieldFromPairOfTableField(@Nonnull PairOfTableField pairOfTableField, @Nullable String asAlias) {
+    public SQLFieldFromPairOfTableField(@NonNull PairOfTableField pairOfTableField, @Nullable String asAlias) {
         super();
         init(null, asAlias, pairOfTableField);
     }
-    public SQLFieldFromPairOfTableField(@Nonnull PairOfTableField pairOfTableField, @Nullable String asAlias, @Nullable String setPrefix) {
+    public SQLFieldFromPairOfTableField(@NonNull PairOfTableField pairOfTableField, @Nullable String asAlias, @Nullable String setPrefix) {
         super();
         init(setPrefix, asAlias, pairOfTableField);
     }

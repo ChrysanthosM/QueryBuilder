@@ -1,7 +1,7 @@
 package qb.core;
 
 import com.google.common.base.Joiner;
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import jakarta.annotation.Nullable;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 final class GroupOfWheres extends AbstractFilter {
     private final List<IWhere> whereFilters;
 
-    GroupOfWheres(@Nonnull List<IWhere> whereFilters) {
+    GroupOfWheres(@NonNull List<IWhere> whereFilters) {
         this.whereFilters = whereFilters;
     }
 
@@ -36,7 +36,7 @@ final class GroupOfWheres extends AbstractFilter {
     }
 
     @Description("create Filters (enclosed in Parenthesis)")
-    static IWhere getGroupOfFilters(@Nullable LinSQL.TypeOfLogicalOperator typeOfLogicalOperator, boolean invertSelection, @Nonnull IWhere... filters) {
+    static IWhere getGroupOfFilters(@Nullable LinSQL.TypeOfLogicalOperator typeOfLogicalOperator, boolean invertSelection, @NonNull IWhere... filters) {
         List<IWhere> whereList = Stream.of(filters).filter(Objects::nonNull).toList();
         if (CollectionUtils.isEmpty(whereList)) return null;
         GroupOfWheres wheres = new GroupOfWheres(whereList);

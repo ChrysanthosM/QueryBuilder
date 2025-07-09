@@ -1,6 +1,6 @@
 package qb.core;
 
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import jakarta.annotation.Nullable;
 
 final class ValueWhere extends AbstractWhere {
@@ -9,7 +9,7 @@ final class ValueWhere extends AbstractWhere {
     private final LinSQL.TypeOfComparison typeOfComparison;
     private final Object compareValue;
 
-    ValueWhere(@Nonnull Object whereObject, @Nullable LinSQL.TypeOfComparison typeOfComparison, @Nullable Object compareValue) {
+    ValueWhere(@NonNull Object whereObject, @Nullable LinSQL.TypeOfComparison typeOfComparison, @Nullable Object compareValue) {
         super(whereObject);
         this.typeOfComparison = typeOfComparison;
         this.compareValue = compareValue;

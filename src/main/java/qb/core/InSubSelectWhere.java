@@ -1,6 +1,6 @@
 package qb.core;
 
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 
 final class InSubSelectWhere extends AbstractWhere {
@@ -8,7 +8,7 @@ final class InSubSelectWhere extends AbstractWhere {
 
     private final String inSubSelect;
 
-    InSubSelectWhere(@Nonnull Object whereObject, @Nonnull String inSubSelect) {
+    InSubSelectWhere(@NonNull Object whereObject, @NonNull String inSubSelect) {
         super(whereObject);
         this.inSubSelect = inSubSelect;
     }

@@ -1,6 +1,6 @@
 package qb.core;
 
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import org.apache.commons.lang3.tuple.Pair;
 
 final class BetweenValuesWhere extends AbstractWhere {
@@ -8,7 +8,7 @@ final class BetweenValuesWhere extends AbstractWhere {
 
     private final Pair<Object, Object> betweenValues;
 
-    BetweenValuesWhere(@Nonnull Object whereObject, @Nonnull Pair<Object, Object> betweenValues) {
+    BetweenValuesWhere(@NonNull Object whereObject, @NonNull Pair<Object, Object> betweenValues) {
         super(whereObject);
         this.betweenValues = betweenValues;
     }

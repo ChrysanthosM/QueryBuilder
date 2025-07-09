@@ -1,6 +1,6 @@
 package qb.core;
 
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import lombok.Getter;
 import qb.definition.db.base.BaseDbField;
 import qb.definition.db.base.BaseDbTable;
@@ -19,7 +19,7 @@ public final class PairOfTableField implements IDeployFilters, IDeployOrdering, 
         this.dbField = DbFieldInstances.getMapTableInstance(this.baseDbField);
     }
 
-    public SQLFieldObject as(@Nonnull String asAlias) { return new SQLFieldObject(this, asAlias, null); }
+    public SQLFieldObject as(@NonNull String asAlias) { return new SQLFieldObject(this, asAlias, null); }
 
     @Override
     public Boolean getInQuotesRequirement() {

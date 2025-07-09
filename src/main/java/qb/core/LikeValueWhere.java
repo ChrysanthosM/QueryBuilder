@@ -1,6 +1,6 @@
 package qb.core;
 
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 
@@ -11,7 +11,7 @@ final class LikeValueWhere extends AbstractWhere {
     private final String escapeLeft;
     private final String escapeRight;
 
-    LikeValueWhere(@Nonnull Object whereObject, @Nullable String compareValue, @Nullable String escapeLeft, @Nullable String escapeRight) {
+    LikeValueWhere(@NonNull Object whereObject, @Nullable String compareValue, @Nullable String escapeLeft, @Nullable String escapeRight) {
         super(whereObject);
         this.compareValue = compareValue;
         this.escapeLeft = escapeLeft;

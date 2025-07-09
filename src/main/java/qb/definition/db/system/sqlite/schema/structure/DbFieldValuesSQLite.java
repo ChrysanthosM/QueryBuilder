@@ -1,6 +1,6 @@
 package qb.definition.db.system.sqlite.schema.structure;
 
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public final class DbFieldValuesSQLite {
     private static final ConcurrentHashMap<BaseDbField, List<String>> bufferValues = new ConcurrentHashMap<>();
-    public static List<String> getValues(@Nonnull BaseDbField forField) {
+    public static List<String> getValues(@NonNull BaseDbField forField) {
         return bufferValues.getOrDefault(forField, null);
     }
 

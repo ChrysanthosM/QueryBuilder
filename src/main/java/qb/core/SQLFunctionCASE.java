@@ -2,7 +2,7 @@ package qb.core;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 
@@ -14,7 +14,7 @@ final class SQLFunctionCASE extends SQLFunction {
     @Override
     public IDeploySQLFunctions.TypeOfSQLFunction getTypeOfSQLFunction() { return IDeploySQLFunctions.TypeOfSQLFunction.CASE; }
 
-    SQLFunctionCASE(@Nonnull Object... args) { super.init(null,null, args); }
+    SQLFunctionCASE(@NonNull Object... args) { super.init(null,null, args); }
 
     @Override public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) { return forSQLRetrieverForDB.resolveSQLStringsFunction(this); }
 

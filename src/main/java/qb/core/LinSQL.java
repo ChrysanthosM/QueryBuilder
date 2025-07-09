@@ -1,7 +1,7 @@
 package qb.core;
 
 import com.google.common.base.Preconditions;
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import jakarta.annotation.Nullable;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -55,7 +55,7 @@ final class LinSQL {
 
     public String getFromInsertOnlyTheValues() { return workLInSQLBuilder.getFromInsertOnlyTheValues(); }
 
-    public void attachComments(@Nonnull String comments) {
+    public void attachComments(@NonNull String comments) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setComments(comments);
     }
 
@@ -78,116 +78,116 @@ final class LinSQL {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setOffsetFetch(MutablePair.of(BigInteger.valueOf(setOffset), BigInteger.valueOf(setFetch)));
     }
 
-    public void insertInto(@Nonnull DbTable setWorkWithTable) {
+    public void insertInto(@NonNull DbTable setWorkWithTable) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setTypeOfSQL(J2SQLShared.TypeOfSQLStatement.SQL_INSERT);
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setWorkWithDbTableAsAlias(setWorkWithTable, StringUtils.EMPTY);
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setApplyAutoAlias(false);
     }
 
-    public void updateInto(@Nonnull DbTable setWorkWithTable) {
+    public void updateInto(@NonNull DbTable setWorkWithTable) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setTypeOfSQL(J2SQLShared.TypeOfSQLStatement.SQL_UPDATE);
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setWorkWithDbTableAsAlias(setWorkWithTable, StringUtils.EMPTY);
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setApplyAutoAlias(false);
     }
 
-    public void deleteFrom(@Nonnull DbTable setWorkWithTable) {
+    public void deleteFrom(@NonNull DbTable setWorkWithTable) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setTypeOfSQL(J2SQLShared.TypeOfSQLStatement.SQL_DELETE);
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setWorkWithDbTableAsAlias(setWorkWithTable, StringUtils.EMPTY);
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setApplyAutoAlias(false);
     }
 
-    public void from(@Nonnull DbTable setWorkWithTable, @Nullable String asAlias) {
+    public void from(@NonNull DbTable setWorkWithTable, @Nullable String asAlias) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setTypeOfSQL(J2SQLShared.TypeOfSQLStatement.SQL_SELECT);
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setWorkWithDbTableAsAlias(setWorkWithTable, StringUtils.defaultString(asAlias));
     }
 
-    public void select(@Nonnull Object... addSelectedFields) {
+    public void select(@NonNull Object... addSelectedFields) {
         Stream.of(addSelectedFields).filter(Objects::nonNull).forEach(o -> workLInSQLBuilder.getWorkLInSQLBuilderParams().addUserSelection(o, StringUtils.EMPTY));
     }
     public void selectAll() {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addUserSelection(BaseDbField.ALL(), StringUtils.EMPTY);
     }
 
-    public void addFilters(@Nonnull IWhere... filters) {
+    public void addFilters(@NonNull IWhere... filters) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addWhereClause(GroupOfWheres.getGroupOfFilters(TypeOfLogicalOperator.AND, false, filters));
     }
-    public void where(@Nonnull IWhere... filters) {
+    public void where(@NonNull IWhere... filters) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addWhereClause(GroupOfWheres.getGroupOfFilters(null, false, filters));
     }
-    public void andNot(@Nonnull IWhere... filters) {
+    public void andNot(@NonNull IWhere... filters) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addWhereClause(GroupOfWheres.getGroupOfFilters(TypeOfLogicalOperator.AND, true, filters));
     }
-    public void or(@Nonnull IWhere... filters) {
+    public void or(@NonNull IWhere... filters) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addWhereClause(GroupOfWheres.getGroupOfFilters(TypeOfLogicalOperator.OR, false, filters));
     }
-    public void orNot(@Nonnull IWhere... filters) {
+    public void orNot(@NonNull IWhere... filters) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addWhereClause(GroupOfWheres.getGroupOfFilters(TypeOfLogicalOperator.OR, true, filters));
     }
-    public void whereExists(@Nonnull LinSQL existQuery) {
+    public void whereExists(@NonNull LinSQL existQuery) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addWhereClause(J2SQLShared.Filter.whereExists(existQuery));
     }
-    public void whereExists(@Nonnull String existQuery) {
+    public void whereExists(@NonNull String existQuery) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addWhereClause(J2SQLShared.Filter.whereExists(existQuery));
     }
 
-    public void orderBy(@Nonnull SortOrder sortOrder, @Nonnull Object... addOrderBy) {
+    public void orderBy(@NonNull SortOrder sortOrder, @NonNull Object... addOrderBy) {
         Preconditions.checkArgument(sortOrder == SortOrder.ASCENDING || sortOrder == SortOrder.DESCENDING);
         Stream.of(addOrderBy).filter(Objects::nonNull).forEach(s -> workLInSQLBuilder.getWorkLInSQLBuilderParams().addOrdering(s, sortOrder));
     }
     @SafeVarargs
-    public final void orderBy(@Nonnull MutablePair<Object, SortOrder>... addOrderBy) {
+    public final void orderBy(@NonNull MutablePair<Object, SortOrder>... addOrderBy) {
         Stream.of(addOrderBy).filter(Objects::nonNull).forEach(o -> workLInSQLBuilder.getWorkLInSQLBuilderParams().addOrdering(o.left, o.right));
     }
-    public void orderBy(@Nonnull List<MutablePair<Object, SortOrder>> addOrderBy) {
+    public void orderBy(@NonNull List<MutablePair<Object, SortOrder>> addOrderBy) {
         addOrderBy.stream().filter(Objects::nonNull).forEach(o -> workLInSQLBuilder.getWorkLInSQLBuilderParams().addOrdering(o.left, o.right));
     }
 
-    public void groupBy(@Nonnull Object... setGroupBy) {
+    public void groupBy(@NonNull Object... setGroupBy) {
         List<Object> groupBy = Stream.of(setGroupBy).filter(Objects::nonNull).toList();
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setGroupBySelectionsHavingValues(MutablePair.of(groupBy, new ArrayList<>()));
     }
-    public void having(@Nonnull IWhere... filters) {
+    public void having(@NonNull IWhere... filters) {
         List<IWhere> whereList = Stream.of(filters).filter(Objects::nonNull).toList();
         workLInSQLBuilder.getWorkLInSQLBuilderParams().getGroupBySelectionsHavingValues().getRight().addAll(whereList);
     }
 
 
-    public void joinWith(@Nonnull TypeOfJoin typeOfJoin, @Nonnull LinSQL joinWith, @Nullable IWhere... joinOn) {
+    public void joinWith(@NonNull TypeOfJoin typeOfJoin, @NonNull LinSQL joinWith, @Nullable IWhere... joinOn) {
         List<IWhere> joinOnList = new ArrayList<>();
         if (joinOn != null) Stream.of(joinOn).filter(Objects::nonNull).forEach(joinOnList::add);
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addJoinWith(MutableTriple.of(typeOfJoin, joinWith, joinOnList));
     }
-    public LinSQL on(@Nonnull IWhere... joinOn) {
+    public LinSQL on(@NonNull IWhere... joinOn) {
         List<IWhere> joinOnList = Stream.of(joinOn).filter(Objects::nonNull).toList();
         workLInSQLBuilder.getWorkLInSQLBuilderParams().getLastJoin().setRight(joinOnList);
         return this;
     }
-    public void addJoinFilters(@Nonnull IWhere... addWhereFiltersToMainQuery) {
+    public void addJoinFilters(@NonNull IWhere... addWhereFiltersToMainQuery) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().getLastJoin().getMiddle().addFilters(addWhereFiltersToMainQuery);
     }
-    public void fromJoinSelectOnly(@Nonnull Object... addSelectFields) {
+    public void fromJoinSelectOnly(@NonNull Object... addSelectFields) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().getLastJoin().getMiddle().select(addSelectFields);
     }
-    public void fromJoinSelectOnlyAsAlias(@Nonnull Object addSelectField, @Nullable String asAlias) {
+    public void fromJoinSelectOnlyAsAlias(@NonNull Object addSelectField, @Nullable String asAlias) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().getLastJoin().getMiddle().select(addSelectField, asAlias);
     }
 
-    public void UNION(@Nonnull LinSQL unionWithLinSQL) {
+    public void UNION(@NonNull LinSQL unionWithLinSQL) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addUnionWithQuery(unionWithLinSQL);
     }
 
-    public void updateFieldSetValue(@Nonnull PairOfTableField updField, @Nonnull Object setValue) {
+    public void updateFieldSetValue(@NonNull PairOfTableField updField, @NonNull Object setValue) {
         Preconditions.checkArgument(updField.getBaseDbField() != BaseDbField.ALL());
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setTypeOfSQL(J2SQLShared.TypeOfSQLStatement.SQL_UPDATE);
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addUpdateFieldSetValue(updField, setValue);
     }
 
     @SafeVarargs
-    public final void insertRows(@Nonnull List<Object>... setRows) {
+    public final void insertRows(@NonNull List<Object>... setRows) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setTypeOfSQL(J2SQLShared.TypeOfSQLStatement.SQL_INSERT);
         Stream.of(setRows).filter(CollectionUtils::isNotEmpty).forEach(rowValues -> workLInSQLBuilder.getWorkLInSQLBuilderParams().addInsertRowsFieldValues(rowValues));
     }
-    public void insertRowsFrom(@Nonnull String fromQuery) {
+    public void insertRowsFrom(@NonNull String fromQuery) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setTypeOfSQL(J2SQLShared.TypeOfSQLStatement.SQL_INSERT);
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setInsertRowsFromQuery(fromQuery);
     }

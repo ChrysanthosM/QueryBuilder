@@ -1,6 +1,7 @@
 package qb.core;
 
-import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 
@@ -12,18 +13,18 @@ class LinSQLCommons {
     private static final String UNDERSCORE =  "_";
 
     // Functions
-    static String applyAsAlias(@Nonnull String toResult, String applyAlias, boolean inParenthesis, boolean inQuotes) {
+    static String applyAsAlias(@NonNull String toResult, @Nullable String applyAlias, boolean inParenthesis, boolean inQuotes) {
         if (StringUtils.isBlank(toResult)) return toResult;
         if (inQuotes) toResult = StringUtils.wrap(toResult.replace(QUOTE, StringUtils.EMPTY), QUOTE);
         if (StringUtils.isBlank(applyAlias)) return toResult;
         return (inParenthesis ? "(" : StringUtils.EMPTY) + toResult + asAliasMain(applyAlias) + (inParenthesis ? ")" : StringUtils.EMPTY);
     }
-    static String asAliasMain(@Nonnull String applyAlias) {
+    static String asAliasMain(@Nullable String applyAlias) {
         if (StringUtils.isBlank(applyAlias)) return StringUtils.EMPTY;
         applyAlias = fixAsAliasName(applyAlias);
         return " AS \"" + applyAlias.trim() + "\"";
     }
-    static String fixAsAliasName(@Nonnull String applyAlias) { return applyAlias.replaceAll(StringUtils.SPACE, UNDERSCORE); }
+    static String fixAsAliasName(@NonNull String applyAlias) { return applyAlias.replaceAll(StringUtils.SPACE, UNDERSCORE); }
 
 
 }

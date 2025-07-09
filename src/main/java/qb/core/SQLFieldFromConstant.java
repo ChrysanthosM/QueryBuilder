@@ -1,7 +1,7 @@
 package qb.core;
 
 import com.google.common.base.Preconditions;
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import jakarta.annotation.Nullable;
 
 import java.lang.reflect.Type;
@@ -14,7 +14,7 @@ final class SQLFieldFromConstant extends SqlUserSelection {
     private Object value;
     private final Optional<Boolean> inQuotesRequirement;
 
-    SQLFieldFromConstant(@Nonnull Object value, @Nullable String asAlias, @Nullable Boolean inQuotesRequirement) {
+    SQLFieldFromConstant(@NonNull Object value, @Nullable String asAlias, @Nullable Boolean inQuotesRequirement) {
         init(null, asAlias, value);
         this.inQuotesRequirement = Optional.ofNullable(inQuotesRequirement);
     }

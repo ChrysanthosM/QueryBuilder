@@ -1,12 +1,12 @@
 package qb.core;
 
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import jakarta.annotation.Nullable;
 
 final class WhenThenSearched extends WhenThen {
     private final IWhere searchCondition;
 
-    WhenThenSearched(@Nonnull IWhere searchCondition, @Nullable Object thenExpression) {
+    WhenThenSearched(@NonNull IWhere searchCondition, @Nullable Object thenExpression) {
         super(thenExpression);
         this.searchCondition = searchCondition;
     }

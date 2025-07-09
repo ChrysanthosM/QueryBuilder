@@ -1,6 +1,6 @@
 package qb.core;
 
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import jakarta.annotation.Nullable;
 
 import java.util.List;
@@ -9,7 +9,7 @@ final class SQLFunctionTRANSLATE extends SQLFunction {
     @Override
     public IDeploySQLFunctions.TypeOfSQLFunction getTypeOfSQLFunction() { return IDeploySQLFunctions.TypeOfSQLFunction.TRANSLATE; }
 
-    SQLFunctionTRANSLATE(@Nonnull Object... args) { super.init(null, null, args); }
+    SQLFunctionTRANSLATE(@NonNull Object... args) { super.init(null, null, args); }
 
     @Override public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) { return forSQLRetrieverForDB.resolveSQLStringsFunction(this); }
 

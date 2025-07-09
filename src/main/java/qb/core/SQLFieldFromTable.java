@@ -1,7 +1,7 @@
 package qb.core;
 
 import com.google.common.base.Preconditions;
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import jakarta.annotation.Nullable;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -20,15 +20,15 @@ final class SQLFieldFromTable extends SqlUserSelection {
     private BaseDbField dbF;
     private DbField dbField = null;
 
-    SQLFieldFromTable(@Nonnull BaseDbField dbF) {
+    SQLFieldFromTable(@NonNull BaseDbField dbF) {
         super();
         init(null, null, dbF);
     }
-    SQLFieldFromTable(@Nonnull BaseDbField dbF, @Nullable String asAlias) {
+    SQLFieldFromTable(@NonNull BaseDbField dbF, @Nullable String asAlias) {
         super();
         init(null, asAlias, dbF);
     }
-    SQLFieldFromTable(@Nonnull BaseDbField dbF, @Nullable String asAlias, @Nullable String setPrefix) {
+    SQLFieldFromTable(@NonNull BaseDbField dbF, @Nullable String asAlias, @Nullable String setPrefix) {
         super();
         init(setPrefix, asAlias, dbF);
     }

@@ -1,6 +1,6 @@
 package qb.core;
 
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
@@ -13,7 +13,7 @@ final class InValuesWhere extends AbstractWhere {
 
     private final List<Object> inValues;
 
-    InValuesWhere(@Nonnull Object whereObject, @Nonnull List<Object> inValues) {
+    InValuesWhere(@NonNull Object whereObject, @NonNull List<Object> inValues) {
         super(whereObject);
         this.inValues = inValues;
     }

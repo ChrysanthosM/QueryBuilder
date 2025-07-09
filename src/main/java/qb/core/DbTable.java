@@ -1,6 +1,6 @@
 package qb.core;
 
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
 import jakarta.annotation.PostConstruct;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -30,6 +30,6 @@ abstract sealed class DbTable implements IDbTable permits AbstractTable {
         dbTableInfo = new DbTableInfo(this);
     }
 
-    public Pair<DbTable, String> as(@Nonnull J2SQLShared.PFX asAlias) { return as(asAlias.name()); }
-    public Pair<DbTable, String> as(@Nonnull String asAlias) { return Pair.of(this, asAlias); }
+    public Pair<DbTable, String> as(@NonNull J2SQLShared.PFX asAlias) { return as(asAlias.name()); }
+    public Pair<DbTable, String> as(@NonNull String asAlias) { return Pair.of(this, asAlias); }
 }

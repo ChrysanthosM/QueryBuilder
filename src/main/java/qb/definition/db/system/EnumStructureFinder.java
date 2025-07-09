@@ -23,9 +23,6 @@ public final class EnumStructureFinder {
         return enumClassCache.getOrDefault(interfaceClass, Collections.emptySet());
     }
 
-    /**
-     * Loads all enum classes and builds the interface cache in one step
-     */
     private void loadAndCacheEnumClasses() {
         try {
             String packageName = this.getClass().getPackage().getName();
@@ -66,9 +63,6 @@ public final class EnumStructureFinder {
         }
     }
 
-    /**
-     * Caches all interfaces implemented by the enum class
-     */
     private void cacheEnumInterfaces(Class<? extends Enum<?>> enumClass) {
         Class<?>[] interfaces = enumClass.getInterfaces();
         for (Class<?> interfaceClass : interfaces) {
@@ -76,10 +70,6 @@ public final class EnumStructureFinder {
         }
         addSuperInterfaces(enumClass, enumClass);
     }
-
-    /**
-     * Recursively adds all superinterfaces to the cache
-     */
     private void addSuperInterfaces(Class<? extends Enum<?>> enumClass, Class<?> currentClass) {
         for (Class<?> interfaceClass : currentClass.getInterfaces()) {
             enumClassCache.computeIfAbsent(interfaceClass, k -> new HashSet<>()).add(enumClass);

@@ -19,5 +19,5 @@ final class SQLFunction1Param extends SQLFunction {
         return resolverAllParamsInParenthesis(forSQLRetrieverForDB, typeOfSQLFunction);
     }
     @Override
-    public String alternateResolver(SQLRetrieverForDBs forSQLRetrieverForDB, @Nullable Object... args) { throw new IllegalCallerException(getNonSupportedMsg()); }
+    public String alternateResolver(SQLRetrieverForDBs forSQLRetrieverForDB, @Nullable Object... args) { throw new IllegalCallerException(NON_SUPPORTED_MSG); }
 }

@@ -102,10 +102,10 @@ final class LInSQLBuilderParams {
 
     //-------Update Fields - Set Values
     void addUpdateFieldSetValue(Object updField, Object setValue) {
-        Preconditions.checkNotNull(((PairOfTableField) updField).getDbf().getFieldDataType());
+        Preconditions.checkNotNull(((PairOfTableField) updField).getBaseDbField().getFieldDataType());
         this.updateFieldsSetValues.add(MutablePair.of(
                 LInSQLBuilderShared.getSqlUserSelection(updField),
-                LInSQLBuilderShared.getSqlUserSelection(setValue, ((PairOfTableField) updField).getDbf().getFieldDataType().getInQuotesRequirement())));
+                LInSQLBuilderShared.getSqlUserSelection(setValue, ((PairOfTableField) updField).getBaseDbField().getFieldDataType().getInQuotesRequirement())));
     }
 
     //-------Insert Rows, set Field Values

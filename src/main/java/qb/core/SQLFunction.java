@@ -15,7 +15,7 @@ abstract sealed class SQLFunction extends SqlUserSelection
         permits SQLFunction1Param, SQLFunction2Params, SQLFunction3Params,
         SQLFunctionAggregates, SQLFunctionAggregatesWithPossibleALL,
         SQLFunctionCASE, SQLFunctionCONCAT, SQLFunctionTRANSLATE {
-    static String getNonSupportedMsg() { return "Non Supported Method"; }
+    static final String NON_SUPPORTED_MSG = "Non Supported Method";
 
     @Override public Type getTypeOfSelection() { return this.getClass(); }
     abstract IDeploySQLFunctions.TypeOfSQLFunction getTypeOfSQLFunction();

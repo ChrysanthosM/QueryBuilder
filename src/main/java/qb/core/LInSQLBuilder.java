@@ -1,5 +1,6 @@
 package qb.core;
 
+import jakarta.annotation.Nonnull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
@@ -43,17 +44,19 @@ final class LInSQLBuilder {
             case SQL_DELETE -> this.sqlStatementRetrieve.getSQLStatementForDelete();
         };
 
-        this.sqlStatement = StringUtils.trimToEmpty(this.sqlStatement.replaceAll("\\s+", StringUtils.SPACE).replaceAll("\\s+,", ","));
+        this.sqlStatement = formatSql(this.sqlStatement);
         return this.sqlStatement;
     }
     String getFromInsertOnlyTheValues() {
         if (StringUtils.isNotBlank(this.sqlStatement)) return this.sqlStatement;
         this.sqlStatementRetrieve.setWorkLInSQLBuilderParams(this.workLInSQLBuilderParams);
         this.sqlStatement = this.sqlStatementRetrieve.getSQLStatementForInsertGetOnlyValues();
-        this.sqlStatement = StringUtils.trimToEmpty(this.sqlStatement.replaceAll("\\s+", StringUtils.SPACE).replaceAll("\\s+,", ","));
+        this.sqlStatement = formatSql(this.sqlStatement);
         return this.sqlStatement;
     }
-
+    private static String formatSql(@Nonnull String sqlStatement) {
+        return StringUtils.trimToEmpty(sqlStatement.replaceAll("\\s+", StringUtils.SPACE).replaceAll("\\s+,", ","));
+    }
 
     BuildSQLWorkTable getWorkBuildSQLWorkTable() { return this.sqlStatementRetrieve.getWorkBuildSQLWorkTable(); }
     BuildSQLJoinWith getWorkBuildSQLJoinWith() { return this.sqlStatementRetrieve.getWorkBuildSQLJoinWith(); }

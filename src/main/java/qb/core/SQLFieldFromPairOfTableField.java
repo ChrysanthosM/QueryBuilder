@@ -32,15 +32,15 @@ public final class SQLFieldFromPairOfTableField extends SqlUserSelection {
         Preconditions.checkArgument(args[0] instanceof PairOfTableField);
 
         this.pairOfTableField = (PairOfTableField) args[0];
-        this.sqlFieldFromTable = new SQLFieldFromTable(this.pairOfTableField.getDbf(), asAlias, setPrefix);
+        this.sqlFieldFromTable = new SQLFieldFromTable(this.pairOfTableField.getBaseDbField(), asAlias, setPrefix);
         super.setHasPrefix(setPrefix);
         super.setAsAlias(asAlias);
     }
 
-    public BaseDbField getDbFieldEnum() { return this.pairOfTableField.getDbf(); }
+    public BaseDbField getDbFieldEnum() { return this.pairOfTableField.getBaseDbField(); }
 
     @Override public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) {
         if (isIgnoreTableAsAlias()) this.sqlFieldFromTable.setIgnoreTableAsAlias();
-        return sqlFieldFromTable.getResolveObjectForSQLMain(forSQLRetrieverForDB, this.pairOfTableField.getDbt());
+        return sqlFieldFromTable.getResolveObjectForSQLMain(forSQLRetrieverForDB, this.pairOfTableField.getBaseDbTable());
     }
 }

@@ -177,7 +177,7 @@ final class LinSQL {
     }
 
     public void updateFieldSetValue(@Nonnull PairOfTableField updField, @Nonnull Object setValue) {
-        Preconditions.checkArgument(updField.getDbf() != BaseDbField.ALL());
+        Preconditions.checkArgument(updField.getBaseDbField() != BaseDbField.ALL());
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setTypeOfSQL(J2SQLShared.TypeOfSQLStatement.SQL_UPDATE);
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addUpdateFieldSetValue(updField, setValue);
     }

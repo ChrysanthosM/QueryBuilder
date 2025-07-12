@@ -1,6 +1,6 @@
 package qb.core;
 
-sealed interface IBuildSQLCore permits BuildSQLCore {
+sealed interface BuildSQLCoreBase permits BuildSQLCore {
     String getStringForSQL();
     void setStringForSQL(String setString);
 }

@@ -1,6 +1,6 @@
 package qb.core;
 
-public sealed interface IWhere permits AbstractFilter {
+public sealed interface WhereBase permits AbstractFilter {
     enum TypeOfWhere {
         WHERE_VALUE(null),
         WHERE_IN_VALUES("IN"),
@@ -18,7 +18,7 @@ public sealed interface IWhere permits AbstractFilter {
         String getPutClause() { return this.putClause; }
     }
 
-    IWhere and(IWhere attachFilter);
-    IWhere or(IWhere attachFilter);
-    IWhere getAttachedFilters();
+    WhereBase and(WhereBase attachFilter);
+    WhereBase or(WhereBase attachFilter);
+    WhereBase getAttachedFilters();
 }

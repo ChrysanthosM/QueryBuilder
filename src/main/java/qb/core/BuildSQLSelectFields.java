@@ -11,8 +11,8 @@ import java.util.List;
 final class BuildSQLSelectFields extends BuildSQLCore {
     @Getter(AccessLevel.PACKAGE) private String selectedFieldsString;
 
-    static BuildSQLSelectFields createFor(SQLRetrieverForDBs forSQLRetrieverForDB) { return new BuildSQLSelectFields(forSQLRetrieverForDB); }
-    private BuildSQLSelectFields(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    static BuildSQLSelectFields createFor(SQLRetrieverForDbAbstract forSQLRetrieverForDB) { return new BuildSQLSelectFields(forSQLRetrieverForDB); }
+    private BuildSQLSelectFields(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         final List<SqlUserSelection> selectFields = new ArrayList<>();
         if (CollectionUtils.isEmpty(forSQLRetrieverForDB.getWorkLInSQLBuilderParams().getSqlUserSelections())) {
             forSQLRetrieverForDB.getWorkBuildSQLWorkTable().getDbTable().getDbFs().forEach(p -> selectFields.add(new SQLFieldFromPairOfTableField(p)));

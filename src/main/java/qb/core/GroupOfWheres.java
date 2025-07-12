@@ -12,17 +12,17 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 final class GroupOfWheres extends AbstractFilter {
-    private final List<IWhere> whereFilters;
+    private final List<WhereBase> whereFilters;
 
-    GroupOfWheres(@NonNull List<IWhere> whereFilters) {
+    GroupOfWheres(@NonNull List<WhereBase> whereFilters) {
         this.whereFilters = whereFilters;
     }
 
-    @Override public void addParenthesisLeft() { ((IFilter) this.whereFilters.getFirst()).addParenthesisLeft(); }
-    @Override public void addParenthesisRight() { ((IFilter) this.whereFilters.getLast()).addParenthesisRight(); }
+    @Override public void addParenthesisLeft() { ((FilterBase) this.whereFilters.getFirst()).addParenthesisLeft(); }
+    @Override public void addParenthesisRight() { ((FilterBase) this.whereFilters.getLast()).addParenthesisRight(); }
 
     @Override
-    public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    public String getResolveObjectForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         addParenthesisLeft();
         addParenthesisRight();
         List<String> whereFiltersForSQL = BuildSQLWhereFilters.getResolveFiltersForSQL(forSQLRetrieverForDB, this.whereFilters, true);
@@ -36,8 +36,8 @@ final class GroupOfWheres extends AbstractFilter {
     }
 
     @Description("create Filters (enclosed in Parenthesis)")
-    static IWhere getGroupOfFilters(@Nullable LinSQL.TypeOfLogicalOperator typeOfLogicalOperator, boolean invertSelection, @NonNull IWhere... filters) {
-        List<IWhere> whereList = Stream.of(filters).filter(Objects::nonNull).toList();
+    static WhereBase getGroupOfFilters(@Nullable LinSQL.TypeOfLogicalOperator typeOfLogicalOperator, boolean invertSelection, @NonNull WhereBase... filters) {
+        List<WhereBase> whereList = Stream.of(filters).filter(Objects::nonNull).toList();
         if (CollectionUtils.isEmpty(whereList)) return null;
         GroupOfWheres wheres = new GroupOfWheres(whereList);
         if (typeOfLogicalOperator != null) wheres.setTypeOfLogicalOperator(typeOfLogicalOperator);

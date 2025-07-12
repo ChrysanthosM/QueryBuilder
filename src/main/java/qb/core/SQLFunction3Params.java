@@ -4,20 +4,20 @@ import jakarta.annotation.Nullable;
 import lombok.NonNull;
 
 final class SQLFunction3Params extends SQLFunction {
-    private final IDeploySQLFunctions.TypeOfSQLFunction typeOfSQLFunction;
+    private final DeploySQLFunctionsBase.TypeOfSQLFunction typeOfSQLFunction;
     @Override
-    public IDeploySQLFunctions.TypeOfSQLFunction getTypeOfSQLFunction() { return this.typeOfSQLFunction; }
+    public DeploySQLFunctionsBase.TypeOfSQLFunction getTypeOfSQLFunction() { return this.typeOfSQLFunction; }
 
-    SQLFunction3Params(IDeploySQLFunctions.TypeOfSQLFunction typeOfSQLFunction, @NonNull Object... args) {
+    SQLFunction3Params(DeploySQLFunctionsBase.TypeOfSQLFunction typeOfSQLFunction, @NonNull Object... args) {
         this.typeOfSQLFunction = typeOfSQLFunction;
         super.init(null,null, args);
     }
 
-    @Override public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) { return forSQLRetrieverForDB.resolveSQLStringsFunction(this); }
+    @Override public String getResolveObjectForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB) { return forSQLRetrieverForDB.resolveSQLStringsFunction(this); }
     @Override
-    public String defaultResolver(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    public String defaultResolver(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         return resolverAllParamsInParenthesis(forSQLRetrieverForDB, typeOfSQLFunction);
     }
     @Override
-    public String alternateResolver(SQLRetrieverForDBs forSQLRetrieverForDB, @Nullable Object... args) { throw new IllegalCallerException(NON_SUPPORTED_MSG); }
+    public String alternateResolver(SQLRetrieverForDbAbstract forSQLRetrieverForDB, @Nullable Object... args) { throw new IllegalCallerException(NON_SUPPORTED_MSG); }
 }

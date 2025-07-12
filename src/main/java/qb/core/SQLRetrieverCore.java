@@ -12,8 +12,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-abstract sealed class SQLRetrieverCore implements IDeployMethods, IDeploySQLStatements, IDeploySQLFunctions
-        permits SQLRetrieverForDBs {
+abstract sealed class SQLRetrieverCore implements DeployMethodsBase, DeploySQLStatementsBase, DeploySQLFunctionsBase
+        permits SQLRetrieverForDbAbstract {
     protected abstract String getDbPrefixForTableLocation();
     protected abstract LinSQL.TypeOfNamingSystemOrNormalized getTypeOfNamingSystemOrNormalized();
 
@@ -37,7 +37,7 @@ abstract sealed class SQLRetrieverCore implements IDeployMethods, IDeploySQLStat
     void addFieldMapper(String fieldMapper) { this.fieldMapper.add(fieldMapper); }
     protected void clearFieldMapper() { this.fieldMapper.clear(); }
 
-    private static void initSQLStatementCommons(SQLRetrieverForDBs initSQLRetrieverForDB) {
+    private static void initSQLStatementCommons(SQLRetrieverForDbAbstract initSQLRetrieverForDB) {
         initSQLRetrieverForDB.setWorkBuildSQLWorkTable(null);
         initSQLRetrieverForDB.setWorkBuildSQLSelectFields(null);
         initSQLRetrieverForDB.setWorkBuildSQLWhereFilters(null);
@@ -54,7 +54,7 @@ abstract sealed class SQLRetrieverCore implements IDeployMethods, IDeploySQLStat
         initSQLRetrieverForDB.setWorkBuildSQLWorkTable(BuildSQLWorkTable.createFor(initSQLRetrieverForDB));
     }
 
-    protected static InitializationStatus initSQLStatementForSelect(SQLRetrieverForDBs initSQLRetrieverForDB) {
+    protected static InitializationStatus initSQLStatementForSelect(SQLRetrieverForDbAbstract initSQLRetrieverForDB) {
         try {
             initSQLStatementCommons(initSQLRetrieverForDB);
             initSQLRetrieverForDB.setWorkBuildSQLSelectFields(BuildSQLSelectFields.createFor(initSQLRetrieverForDB));
@@ -68,7 +68,7 @@ abstract sealed class SQLRetrieverCore implements IDeployMethods, IDeploySQLStat
             return InitializationStatus.returnException(e);
         }
     }
-    protected static InitializationStatus initSQLStatementForDelete(SQLRetrieverForDBs initSQLRetrieverForDB) {
+    protected static InitializationStatus initSQLStatementForDelete(SQLRetrieverForDbAbstract initSQLRetrieverForDB) {
         try {
             initSQLStatementCommons(initSQLRetrieverForDB);
             initSQLRetrieverForDB.setWorkBuildSQLWhereFilters(BuildSQLWhereFilters.createFor(initSQLRetrieverForDB));
@@ -78,7 +78,7 @@ abstract sealed class SQLRetrieverCore implements IDeployMethods, IDeploySQLStat
             return InitializationStatus.returnException(e);
         }
     }
-    protected static InitializationStatus initSQLStatementForUpdate(SQLRetrieverForDBs initSQLRetrieverForDB) {
+    protected static InitializationStatus initSQLStatementForUpdate(SQLRetrieverForDbAbstract initSQLRetrieverForDB) {
         try {
             initSQLStatementCommons(initSQLRetrieverForDB);
             initSQLRetrieverForDB.setWorkBuildSQLUpdateFields(BuildSQLUpdateFields.createFor(initSQLRetrieverForDB));
@@ -88,7 +88,7 @@ abstract sealed class SQLRetrieverCore implements IDeployMethods, IDeploySQLStat
             return InitializationStatus.returnException(e);
         }
     }
-    protected static InitializationStatus initSQLStatementForInsert(SQLRetrieverForDBs initSQLRetrieverForDB) {
+    protected static InitializationStatus initSQLStatementForInsert(SQLRetrieverForDbAbstract initSQLRetrieverForDB) {
         try {
             initSQLStatementCommons(initSQLRetrieverForDB);
             initSQLRetrieverForDB.setWorkBuildSQLInsertRows(BuildSQLInsertRows.createFor(initSQLRetrieverForDB));

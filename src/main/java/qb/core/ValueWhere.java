@@ -16,7 +16,7 @@ final class ValueWhere extends AbstractWhere {
     }
 
     @Override
-    public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    public String getResolveObjectForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         StringBuilder returnValue = new StringBuilder(super.whereObjectForSQL(forSQLRetrieverForDB, (this.typeOfComparison == null) ? null : forSQLRetrieverForDB.getComparisonType().get(this.typeOfComparison)));
         if (this.compareValue != null) {
             SqlUserSelection valueWhere = LInSQLBuilderShared.getSqlUserSelection(this.compareValue, super.getInQuotesRequirement());

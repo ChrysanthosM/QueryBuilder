@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 
 final class BuildSQLGroupByHavingValues extends BuildSQLCore {
 
-    static BuildSQLGroupByHavingValues createFor(SQLRetrieverForDBs forSQLRetrieverForDB) { return new BuildSQLGroupByHavingValues(forSQLRetrieverForDB); }
-    private BuildSQLGroupByHavingValues(SQLRetrieverForDBs forSQLRetrieverForDB) {
-        MutablePair<List<SqlUserSelection>, List<IWhere>> groupBySelectionsHavingValues = forSQLRetrieverForDB.getWorkLInSQLBuilderParams().getGroupBySelectionsHavingValues();
+    static BuildSQLGroupByHavingValues createFor(SQLRetrieverForDbAbstract forSQLRetrieverForDB) { return new BuildSQLGroupByHavingValues(forSQLRetrieverForDB); }
+    private BuildSQLGroupByHavingValues(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
+        MutablePair<List<SqlUserSelection>, List<WhereBase>> groupBySelectionsHavingValues = forSQLRetrieverForDB.getWorkLInSQLBuilderParams().getGroupBySelectionsHavingValues();
         if (groupBySelectionsHavingValues == null) return;
         List<SqlUserSelection> groupByFields = groupBySelectionsHavingValues.left;
         if (CollectionUtils.isEmpty(groupByFields)) return;
@@ -28,7 +28,7 @@ final class BuildSQLGroupByHavingValues extends BuildSQLCore {
         if (CollectionUtils.isEmpty(groupByList)) return;
         super.setStringForSQL(groupByList.stream().collect(Collectors.joining(", ", "GROUP BY ", StringUtils.EMPTY)));
 
-        List<IWhere> havingValues = groupBySelectionsHavingValues.right;
+        List<WhereBase> havingValues = groupBySelectionsHavingValues.right;
         if (CollectionUtils.isEmpty(havingValues)) return;
         List<String> havingValuesForSQL = BuildSQLWhereFilters.getResolveFiltersForSQL(forSQLRetrieverForDB, havingValues, true);
         if (CollectionUtils.isEmpty(havingValuesForSQL)) return;

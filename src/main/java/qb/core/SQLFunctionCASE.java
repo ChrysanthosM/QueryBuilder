@@ -12,14 +12,14 @@ import java.util.Optional;
 
 final class SQLFunctionCASE extends SQLFunction {
     @Override
-    public IDeploySQLFunctions.TypeOfSQLFunction getTypeOfSQLFunction() { return IDeploySQLFunctions.TypeOfSQLFunction.CASE; }
+    public DeploySQLFunctionsBase.TypeOfSQLFunction getTypeOfSQLFunction() { return DeploySQLFunctionsBase.TypeOfSQLFunction.CASE; }
 
     SQLFunctionCASE(@NonNull Object... args) { super.init(null,null, args); }
 
-    @Override public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) { return forSQLRetrieverForDB.resolveSQLStringsFunction(this); }
+    @Override public String getResolveObjectForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB) { return forSQLRetrieverForDB.resolveSQLStringsFunction(this); }
 
     @Override
-    public String defaultResolver(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    public String defaultResolver(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         Preconditions.checkElementIndex(0, super.getParams().size());
         Preconditions.checkElementIndex(1, super.getParams().size());
 
@@ -43,5 +43,5 @@ final class SQLFunctionCASE extends SQLFunction {
     }
 
     @Override
-    public String alternateResolver(SQLRetrieverForDBs forSQLRetrieverForDB, @Nullable Object... args) { throw new IllegalCallerException(NON_SUPPORTED_MSG); }
+    public String alternateResolver(SQLRetrieverForDbAbstract forSQLRetrieverForDB, @Nullable Object... args) { throw new IllegalCallerException(NON_SUPPORTED_MSG); }
 }

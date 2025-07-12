@@ -1,6 +1,6 @@
 package qb.definition.db.system.sqlite.schema.structure;
 
-import qb.core.IValueFor;
+import qb.core.ValueForBase;
 import qb.definition.db.base.BaseDbField;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
@@ -24,26 +24,26 @@ public final class DbFieldValuesSQLite {
     public void init() {
         List<Class<?>> dbfWithValues = Arrays.asList(DbFieldValuesSQLite.class.getDeclaredClasses());
         if (CollectionUtils.isNotEmpty(dbfWithValues)) {
-            dbfWithValues.parallelStream().filter(e -> e.isEnum() && IValueFor.class.isAssignableFrom(e)).forEach(e -> {
+            dbfWithValues.parallelStream().filter(e -> e.isEnum() && ValueForBase.class.isAssignableFrom(e)).forEach(e -> {
                 List<?> dbfValuesList = Arrays.asList(e.getEnumConstants());
                 if (CollectionUtils.isNotEmpty(dbfValuesList)) {
                     dbfValuesList.parallelStream().forEach(dbf -> bufferValues.put(
-                            ((IValueFor) dbf).getForDbField(),
-                            dbfValuesList.stream().map(v -> ((IValueFor) v).getValue()).toList()));
+                            ((ValueForBase) dbf).getForDbField(),
+                            dbfValuesList.stream().map(v -> ((ValueForBase) v).getValue()).toList()));
                 }
             });
         }
     }
 
     @Getter @AllArgsConstructor
-    public enum ValuesForEntityType implements IValueFor {
+    public enum ValuesForEntityType implements ValueForBase {
         TEMP_STUCK("E01"), SURROGATE_NUM("E02");
         private final DbFieldSQLite forDbField = DbFieldSQLite.ENTITY_TYPE;
         private final String value;
     }
 
     @Getter @AllArgsConstructor
-    public enum ValuesForOptionType implements IValueFor {
+    public enum ValuesForOptionType implements ValueForBase {
         SYS_PARAM("O01"), FORM_SETTING("O02");
         private final DbFieldSQLite forDbField = DbFieldSQLite.OPTION_TYPE;
         private final String value;

@@ -5,18 +5,18 @@ import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 
 final class SQLFunctionAggregatesWithPossibleALL extends SQLFunction {
-    private final IDeploySQLFunctions.TypeOfSQLFunction typeOfSQLFunction;
+    private final DeploySQLFunctionsBase.TypeOfSQLFunction typeOfSQLFunction;
     @Override
-    public IDeploySQLFunctions.TypeOfSQLFunction getTypeOfSQLFunction() { return this.typeOfSQLFunction; }
+    public DeploySQLFunctionsBase.TypeOfSQLFunction getTypeOfSQLFunction() { return this.typeOfSQLFunction; }
 
-    SQLFunctionAggregatesWithPossibleALL(IDeploySQLFunctions.TypeOfSQLFunction typeOfSQLFunction, @NonNull Object... args) {
+    SQLFunctionAggregatesWithPossibleALL(DeploySQLFunctionsBase.TypeOfSQLFunction typeOfSQLFunction, @NonNull Object... args) {
         this.typeOfSQLFunction = typeOfSQLFunction;
         super.init(null,null, args);
     }
 
-    @Override public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) { return forSQLRetrieverForDB.resolveSQLStringsFunction(this); }
+    @Override public String getResolveObjectForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB) { return forSQLRetrieverForDB.resolveSQLStringsFunction(this); }
     @Override
-    public String defaultResolver(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    public String defaultResolver(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         String funcParam = StringUtils.EMPTY;
         if (super.getParams().size() == 1) {
             funcParam = LinSQLCommons.ASTERISK;
@@ -32,5 +32,5 @@ final class SQLFunctionAggregatesWithPossibleALL extends SQLFunction {
         return getFinalValueAsAlias(result, getAsAlias());
     }
     @Override
-    public String alternateResolver(SQLRetrieverForDBs forSQLRetrieverForDB, @Nullable Object... args) { throw new IllegalCallerException(NON_SUPPORTED_MSG); }
+    public String alternateResolver(SQLRetrieverForDbAbstract forSQLRetrieverForDB, @Nullable Object... args) { throw new IllegalCallerException(NON_SUPPORTED_MSG); }
 }

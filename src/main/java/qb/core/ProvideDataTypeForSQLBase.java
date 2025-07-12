@@ -1,5 +1,5 @@
 package qb.core;
 
-public interface IProvideDataTypeForSQL {
+public interface ProvideDataTypeForSQLBase {
     Boolean getInQuotesRequirement();
 }

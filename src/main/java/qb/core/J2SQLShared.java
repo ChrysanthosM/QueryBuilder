@@ -142,7 +142,7 @@ public interface J2SQLShared {
     static MutablePair<Object, SortOrder> desc(@NonNull Object addOrderBy) { return MutablePair.of(addOrderBy, SortOrder.DESCENDING); }
 
 
-    static IWhere not(@NonNull IWhere filter) {
+    static WhereBase not(@NonNull WhereBase filter) {
         ((AbstractFilter) filter).setInvertSelection(true);
         return filter;
     }
@@ -151,44 +151,44 @@ public interface J2SQLShared {
     @UtilityClass
     class Filter {
         @Description("Filter Where Value")
-        public static IWhere whereValue(@NonNull Object whereObject, @Nullable LinSQL.TypeOfComparison typeOfComparison, @Nullable Object compareValue) {
+        public static WhereBase whereValue(@NonNull Object whereObject, @Nullable LinSQL.TypeOfComparison typeOfComparison, @Nullable Object compareValue) {
             return new ValueWhere(whereObject, typeOfComparison, compareValue);
         }
 
         @Description("Filter Where IN Values")
-        public static IWhere whereInValues(@NonNull Object whereObject, @NonNull List<Object> inValues) {
+        public static WhereBase whereInValues(@NonNull Object whereObject, @NonNull List<Object> inValues) {
             return new InValuesWhere(whereObject, inValues);
         }
         @Description("Filter Where IN Values")
-        public static IWhere whereInValues(@NonNull Object whereObject, @NonNull Object... inValues) {
+        public static WhereBase whereInValues(@NonNull Object whereObject, @NonNull Object... inValues) {
             return new InValuesWhere(whereObject, List.of(inValues));
         }
 
         @Description("Filter Where BETWEEN Values")
-        public static IWhere whereBetweenValues(@NonNull Object whereObject, @NonNull Object fromObject, @NonNull Object toObject) {
+        public static WhereBase whereBetweenValues(@NonNull Object whereObject, @NonNull Object fromObject, @NonNull Object toObject) {
             return new BetweenValuesWhere(whereObject, MutablePair.of(fromObject, toObject));
         }
 
         @Description("Filter Where LIKE Values")
-        public static IWhere whereLikeValue(@NonNull Object whereObject, @Nullable String compareValue) {
+        public static WhereBase whereLikeValue(@NonNull Object whereObject, @Nullable String compareValue) {
             return new LikeValueWhere(whereObject, compareValue, null, null);
         }
         @Description("Filter Where LIKE Values")
-        public static IWhere whereLikeValue(@NonNull Object whereObject, @Nullable String compareValue, @Nullable String escapeLeft, @Nullable String escapeRight) {
+        public static WhereBase whereLikeValue(@NonNull Object whereObject, @Nullable String compareValue, @Nullable String escapeLeft, @Nullable String escapeRight) {
             return new LikeValueWhere(whereObject, compareValue, escapeLeft, escapeRight);
         }
 
         @Description("Filter Where IN SubSelect")
-        public static IWhere whereInSubSelect(@NonNull Object whereObject, @NonNull String inSubSelect) {
+        public static WhereBase whereInSubSelect(@NonNull Object whereObject, @NonNull String inSubSelect) {
             return new InSubSelectWhere(whereObject, inSubSelect);
         }
 
         @Description("Filter Where EXISTS")
-        public static IWhere whereExists(@NonNull String existQuery) {
+        public static WhereBase whereExists(@NonNull String existQuery) {
             return new ExistsWhere(existQuery);
         }
         @Description("Filter Where EXISTS")
-        public static IWhere whereExists(@NonNull LinSQL existQuery) {
+        public static WhereBase whereExists(@NonNull LinSQL existQuery) {
             return new ExistsWhere(existQuery.getSQL());
         }
     }
@@ -196,7 +196,7 @@ public interface J2SQLShared {
 
     //-------SQLFunctions
     @AllArgsConstructor
-    final class SQLFunctionObject implements IDeployFilters, IProvideDataTypeForSQL {
+    final class SQLFunctionObject implements DeployFiltersBase, ProvideDataTypeForSQLBase {
         private final SQLFunction sqlFunction;
         private static SQLFunctionObject of(SQLFunction sqlFunction) { return new SQLFunctionObject(sqlFunction); }
         public Object getSqlFunction() { return sqlFunction; }
@@ -207,74 +207,74 @@ public interface J2SQLShared {
         }
     }
 
-    static SQLFunctionObject TRIM(@NonNull Object arg) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.TRIM, arg)); }
-    static SQLFunctionObject LTRIM(@NonNull Object arg) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.LTRIM, arg)); }
-    static SQLFunctionObject RTRIM(@NonNull Object arg) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.RTRIM, arg)); }
-    static SQLFunctionObject LENGTH(@NonNull Object arg) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.LENGTH, arg)); }
-    static SQLFunctionObject UPPER(@NonNull Object arg) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.UPPER, arg)); }
-    static SQLFunctionObject LOWER(@NonNull Object arg) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.LOWER, arg)); }
-    static SQLFunctionObject INITCAP(@NonNull Object arg) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.INITCAP, arg)); }
+    static SQLFunctionObject TRIM(@NonNull Object arg) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.TRIM, arg)); }
+    static SQLFunctionObject LTRIM(@NonNull Object arg) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.LTRIM, arg)); }
+    static SQLFunctionObject RTRIM(@NonNull Object arg) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.RTRIM, arg)); }
+    static SQLFunctionObject LENGTH(@NonNull Object arg) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.LENGTH, arg)); }
+    static SQLFunctionObject UPPER(@NonNull Object arg) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.UPPER, arg)); }
+    static SQLFunctionObject LOWER(@NonNull Object arg) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.LOWER, arg)); }
+    static SQLFunctionObject INITCAP(@NonNull Object arg) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.INITCAP, arg)); }
     static SQLFunctionObject SPACE(int numOfSpaces) {
         Preconditions.checkArgument(numOfSpaces >= 0);
-        return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.SPACE, numOfSpaces));
+        return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.SPACE, numOfSpaces));
     }
-    static SQLFunctionObject INSTR(@NonNull Object arg, @NonNull Object find) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.INSTR, Stream.of(arg, find).toArray())); }
+    static SQLFunctionObject INSTR(@NonNull Object arg, @NonNull Object find) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.INSTR, Stream.of(arg, find).toArray())); }
     static SQLFunctionObject LEFT(@NonNull Object arg, int len) {
         Preconditions.checkArgument(len > 0);
-        return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.LEFT, Stream.of(arg, len).toArray()));
+        return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.LEFT, Stream.of(arg, len).toArray()));
     }
     static SQLFunctionObject RIGHT(@NonNull Object arg, int len) {
         Preconditions.checkArgument(len > 0);
-        return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.RIGHT, Stream.of(arg, len).toArray()));
+        return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.RIGHT, Stream.of(arg, len).toArray()));
     }
     static SQLFunctionObject REPEAT(@NonNull Object arg, int times) {
         Preconditions.checkArgument(times > 0);
-        return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.REPEAT, Stream.of(arg, times).toArray()));
+        return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.REPEAT, Stream.of(arg, times).toArray()));
     }
-    static SQLFunctionObject REPLACE(@NonNull Object arg, @NonNull Object find, @NonNull Object replaceWith) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.REPLACE, Stream.of(arg, find, replaceWith).toArray())); }
+    static SQLFunctionObject REPLACE(@NonNull Object arg, @NonNull Object find, @NonNull Object replaceWith) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.REPLACE, Stream.of(arg, find, replaceWith).toArray())); }
     static SQLFunctionObject SUBSTR(@NonNull Object arg, int from, int len) {
         Preconditions.checkArgument(from > 0);
         Preconditions.checkArgument(len > 0);
-        return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.SUBSTR, Stream.of(arg, from, len).toArray()));
+        return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.SUBSTR, Stream.of(arg, from, len).toArray()));
     }
-    static SQLFunctionObject LPAD(@NonNull Object arg, @NonNull Object totalLength, @NonNull Object leadingChar) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.RPAD, Stream.of(arg, totalLength, leadingChar).toArray())); }
-    static SQLFunctionObject RPAD(@NonNull Object arg, @NonNull Object totalLength, @NonNull Object trailingChar) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.RPAD, Stream.of(arg, totalLength, trailingChar).toArray())); }
-    static SQLFunctionObject CONCAT(@NonNull Object... args) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.CONCAT, args)); }
-    static SQLFunctionObject TRANSLATE(@NonNull Object arg, @NonNull Object find, @NonNull Object replaceWith, @Nullable Object pad) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.TRANSLATE, Stream.of(arg, find, replaceWith, pad).toArray())); }
+    static SQLFunctionObject LPAD(@NonNull Object arg, @NonNull Object totalLength, @NonNull Object leadingChar) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.RPAD, Stream.of(arg, totalLength, leadingChar).toArray())); }
+    static SQLFunctionObject RPAD(@NonNull Object arg, @NonNull Object totalLength, @NonNull Object trailingChar) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.RPAD, Stream.of(arg, totalLength, trailingChar).toArray())); }
+    static SQLFunctionObject CONCAT(@NonNull Object... args) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.CONCAT, args)); }
+    static SQLFunctionObject TRANSLATE(@NonNull Object arg, @NonNull Object find, @NonNull Object replaceWith, @Nullable Object pad) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.TRANSLATE, Stream.of(arg, find, replaceWith, pad).toArray())); }
 
-    static SQLFunctionObject CASE(Boolean inQuotesRequirement, Object caseExpression, Object elseExpression, IWhen... args) {
+    static SQLFunctionObject CASE(Boolean inQuotesRequirement, Object caseExpression, Object elseExpression, WhenBase... args) {
         List<Object> argList = new ArrayList<>(List.of(inQuotesRequirement, Optional.ofNullable(caseExpression), elseExpression));
         argList.addAll(Arrays.asList(args));
-        return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.CASE, argList.toArray()));
+        return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.CASE, argList.toArray()));
     }
-    static SQLFunctionObject CASE1s(@Nullable Object elseExpression, @NonNull IWhen... args) { return CASE(true, null, elseExpression, args); }
-    static SQLFunctionObject CASE1n(@Nullable Object elseExpression, @NonNull IWhen... args) { return CASE(false, null, elseExpression, args); }
-    static IWhen WHEN(@NonNull IWhere searchCondition, @NonNull Object thenExpression) { return new WhenThenSearched(searchCondition, thenExpression); }
-    static SQLFunctionObject CASE2s(@NonNull Object caseExpression, @Nullable Object elseExpression, @NonNull IWhen... args) { return CASE(true, caseExpression, elseExpression, args); }
-    static SQLFunctionObject CASE2n(@NonNull Object caseExpression, @Nullable Object elseExpression, @NonNull IWhen... args) { return CASE(false, caseExpression, elseExpression, args); }
-    static IWhen WHEN(@NonNull Object whenExpression, @NonNull Object thenExpression) { return new WhenThenSimple(whenExpression, thenExpression); }
+    static SQLFunctionObject CASE1s(@Nullable Object elseExpression, @NonNull WhenBase... args) { return CASE(true, null, elseExpression, args); }
+    static SQLFunctionObject CASE1n(@Nullable Object elseExpression, @NonNull WhenBase... args) { return CASE(false, null, elseExpression, args); }
+    static WhenBase WHEN(@NonNull WhereBase searchCondition, @NonNull Object thenExpression) { return new WhenThenSearched(searchCondition, thenExpression); }
+    static SQLFunctionObject CASE2s(@NonNull Object caseExpression, @Nullable Object elseExpression, @NonNull WhenBase... args) { return CASE(true, caseExpression, elseExpression, args); }
+    static SQLFunctionObject CASE2n(@NonNull Object caseExpression, @Nullable Object elseExpression, @NonNull WhenBase... args) { return CASE(false, caseExpression, elseExpression, args); }
+    static WhenBase WHEN(@NonNull Object whenExpression, @NonNull Object thenExpression) { return new WhenThenSimple(whenExpression, thenExpression); }
 
-    static SQLFunctionObject MIN(@Nullable Object arg, boolean distinct) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.MIN, Stream.of(distinct, arg).toArray())); }
+    static SQLFunctionObject MIN(@Nullable Object arg, boolean distinct) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.MIN, Stream.of(distinct, arg).toArray())); }
     static SQLFunctionObject MIN(boolean distinct) { return MIN(null, distinct); }
     static SQLFunctionObject MIN(@Nullable Object arg) { return MIN(arg, false); }
     static SQLFunctionObject MIN() { return MIN(null, false); }
-    static SQLFunctionObject MAX(@Nullable Object arg, boolean distinct) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.MAX, Stream.of(distinct, arg).toArray())); }
+    static SQLFunctionObject MAX(@Nullable Object arg, boolean distinct) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.MAX, Stream.of(distinct, arg).toArray())); }
     static SQLFunctionObject MAX(boolean distinct) { return MAX(null, distinct); }
     static SQLFunctionObject MAX(@Nullable Object arg) { return MAX(arg, false); }
     static SQLFunctionObject MAX() { return MAX(null, false); }
-    static SQLFunctionObject AVG(@Nullable Object arg, boolean distinct) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.AVG, Stream.of(distinct, arg).toArray())); }
+    static SQLFunctionObject AVG(@Nullable Object arg, boolean distinct) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.AVG, Stream.of(distinct, arg).toArray())); }
     static SQLFunctionObject AVG(boolean distinct) { return AVG(null, distinct); }
     static SQLFunctionObject AVG(@Nullable Object arg) { return AVG(arg, false); }
     static SQLFunctionObject AVG() { return AVG(null, false); }
-    static SQLFunctionObject COUNT(@Nullable Object arg, boolean distinct) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.COUNT, Stream.of(distinct, arg).toArray())); }
+    static SQLFunctionObject COUNT(@Nullable Object arg, boolean distinct) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.COUNT, Stream.of(distinct, arg).toArray())); }
     static SQLFunctionObject COUNT(boolean distinct) { return COUNT(null, distinct); }
     static SQLFunctionObject COUNT(@Nullable Object arg) { return COUNT(arg, false); }
     static SQLFunctionObject COUNT() { return COUNT(null, false); }
-    static SQLFunctionObject COUNT_BIG(@Nullable Object arg, boolean distinct) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.COUNT_BIG, Stream.of(distinct, arg).toArray())); }
+    static SQLFunctionObject COUNT_BIG(@Nullable Object arg, boolean distinct) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.COUNT_BIG, Stream.of(distinct, arg).toArray())); }
     static SQLFunctionObject COUNT_BIG(boolean distinct) { return COUNT_BIG(null, distinct); }
     static SQLFunctionObject COUNT_BIG(@Nullable Object arg) { return COUNT_BIG(arg, false); }
     static SQLFunctionObject COUNT_BIG() { return COUNT_BIG(null, false); }
-    static SQLFunctionObject SUM(@Nullable Object arg, boolean distinct) { return SQLFunctionObject.of(IDeploySQLFunctions.create(IDeploySQLFunctions.TypeOfSQLFunction.SUM, Stream.of(distinct, arg).toArray())); }
+    static SQLFunctionObject SUM(@Nullable Object arg, boolean distinct) { return SQLFunctionObject.of(DeploySQLFunctionsBase.create(DeploySQLFunctionsBase.TypeOfSQLFunction.SUM, Stream.of(distinct, arg).toArray())); }
     static SQLFunctionObject SUM(boolean distinct) { return SUM(null, distinct); }
     static SQLFunctionObject SUM(@Nullable Object arg) { return SUM(arg, false); }
     static SQLFunctionObject SUM() { return SUM(null, false); }

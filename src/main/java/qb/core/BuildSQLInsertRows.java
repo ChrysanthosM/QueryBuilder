@@ -15,8 +15,8 @@ import java.util.stream.IntStream;
 final class BuildSQLInsertRows extends BuildSQLCore {
     private String insertIntoFieldsForSQL = null;
 
-    static BuildSQLInsertRows createFor(SQLRetrieverForDBs forSQLRetrieverForDB) { return new BuildSQLInsertRows(forSQLRetrieverForDB); }
-    private BuildSQLInsertRows(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    static BuildSQLInsertRows createFor(SQLRetrieverForDbAbstract forSQLRetrieverForDB) { return new BuildSQLInsertRows(forSQLRetrieverForDB); }
+    private BuildSQLInsertRows(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         boolean putAutoStamp = forSQLRetrieverForDB.getWorkBuildSQLWorkTable().getDbTable().getPutAutoStamp();
 
         final List<BaseDbField> intoDbFs = Lists.newArrayList();
@@ -51,7 +51,7 @@ final class BuildSQLInsertRows extends BuildSQLCore {
     public String getInsertIntoFieldsForSQL() { return this.insertIntoFieldsForSQL.concat(StringUtils.SPACE); }
 
 
-    private String getInsertRowForSQL(SQLRetrieverForDBs forSQLRetrieverForDB,
+    private String getInsertRowForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB,
                                       List<BaseDbField> intoDbF, boolean isAutoStamp, List<Object> rowFieldValues) {
         List<String> fieldValuesForSQL = IntStream.range(0, intoDbF.size())
                 .mapToObj(i -> LInSQLBuilderShared.getSqlUserSelection(rowFieldValues.get(i), intoDbF.get(i).getFieldDataType().getInQuotesRequirement())

@@ -11,7 +11,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.List;
 
 @Getter(AccessLevel.PROTECTED)
-abstract sealed class DbTable implements IDbTable permits AbstractTable {
+abstract sealed class DbTable implements DbTableBase permits AbstractTable {
     public static final BaseDbField ALL = BaseDbField.ALL();
 
     protected abstract BaseDbTable getBaseDbTable();

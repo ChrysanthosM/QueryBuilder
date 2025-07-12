@@ -11,7 +11,7 @@ final class LInSQLBuilder {
     @Getter(AccessLevel.PACKAGE) private final LInSQLBuilderParams workLInSQLBuilderParams = new LInSQLBuilderParams();
 
     private final SQLStatementRetrieve sqlStatementRetrieve;
-    SQLRetrieverForDBs getSqlRetrieverForDB() { return this.sqlStatementRetrieve.getSqlRetrieverForDB(); }
+    SQLRetrieverForDbAbstract getSqlRetrieverForDB() { return this.sqlStatementRetrieve.getSqlRetrieverForDB(); }
 
     static LInSQLBuilder createDefault(WorkWithDataSource.DataSourceType dataSourceType, LinSQL.TypeOfNamingSystemOrNormalized typeOfNamingSystemOrNormalized) {
         return new LInSQLBuilder(dataSourceType, typeOfNamingSystemOrNormalized, StringUtils.EMPTY);

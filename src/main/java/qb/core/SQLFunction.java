@@ -18,7 +18,7 @@ abstract sealed class SQLFunction extends SqlUserSelection
     static final String NON_SUPPORTED_MSG = "Non Supported Method";
 
     @Override public Type getTypeOfSelection() { return this.getClass(); }
-    abstract IDeploySQLFunctions.TypeOfSQLFunction getTypeOfSQLFunction();
+    abstract DeploySQLFunctionsBase.TypeOfSQLFunction getTypeOfSQLFunction();
 
     private List<Object> params = new ArrayList<>();
     protected List<Object> getParams() { return this.params; }
@@ -26,26 +26,26 @@ abstract sealed class SQLFunction extends SqlUserSelection
     protected void setParams(List<Object> params) { this.params = params; }
     protected void addParam(Object param) { this.params.add(param); }
     private List<String> paramsSelectedFieldForSQL = null;
-    protected List<String> getParamsSelectedFieldForSQL(SQLRetrieverForDBs forSQLRetrieverForDB, @Nullable Boolean inQuotesRequirement) {
+    protected List<String> getParamsSelectedFieldForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB, @Nullable Boolean inQuotesRequirement) {
         if (CollectionUtils.isNotEmpty(this.paramsSelectedFieldForSQL)) return this.paramsSelectedFieldForSQL;
         this.paramsSelectedFieldForSQL = new ArrayList<>();
         this.params.stream().filter(Objects::nonNull)
                 .forEach(arg -> this.paramsSelectedFieldForSQL.add(LInSQLBuilderShared.getSqlUserSelection(arg, inQuotesRequirement).getResolveObjectForSQL(forSQLRetrieverForDB)));
         return this.paramsSelectedFieldForSQL;
     }
-    protected String getFirstParamSelectedFieldForSQL(SQLRetrieverForDBs forSQLRetrieverForDB, @Nullable Boolean inQuotesRequirement) {
+    protected String getFirstParamSelectedFieldForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB, @Nullable Boolean inQuotesRequirement) {
         return LInSQLBuilderShared.getSqlUserSelection(this.params.getFirst(), inQuotesRequirement).getResolveObjectForSQL(forSQLRetrieverForDB);
     }
-    protected String getLastParamSelectedFieldForSQL(SQLRetrieverForDBs forSQLRetrieverForDB, @Nullable Boolean inQuotesRequirement) {
+    protected String getLastParamSelectedFieldForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB, @Nullable Boolean inQuotesRequirement) {
         SqlUserSelection mainParam = LInSQLBuilderShared.getSqlUserSelection(this.params.getLast(), inQuotesRequirement);
         mainParam.setIgnoreTableAsAlias();
         return mainParam.getResolveObjectForSQL(forSQLRetrieverForDB);
     }
 
-    abstract String defaultResolver(SQLRetrieverForDBs forSQLRetrieverForDB);
-    abstract String alternateResolver(SQLRetrieverForDBs forSQLRetrieverForDB, @Nullable Object... args);
+    abstract String defaultResolver(SQLRetrieverForDbAbstract forSQLRetrieverForDB);
+    abstract String alternateResolver(SQLRetrieverForDbAbstract forSQLRetrieverForDB, @Nullable Object... args);
 
-    protected String resolverAllParamsInParenthesis(SQLRetrieverForDBs forSQLRetrieverForDB, IDeploySQLFunctions.TypeOfSQLFunction typeOfSQLFunction) {
+    protected String resolverAllParamsInParenthesis(SQLRetrieverForDbAbstract forSQLRetrieverForDB, DeploySQLFunctionsBase.TypeOfSQLFunction typeOfSQLFunction) {
         List<?> workParams = getParamsSelectedFieldForSQL(forSQLRetrieverForDB, null);
         String result = workParams.stream()
                 .map(Object::toString)

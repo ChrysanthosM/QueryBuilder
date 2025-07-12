@@ -22,7 +22,7 @@ final class SQLFieldOperation extends SqlUserSelection {
         this.operation = expression;
     }
 
-    @Override public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    @Override public String getResolveObjectForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         SqlUserSelection sqlUserSelection = LInSQLBuilderShared.getSqlUserSelection(this.object, false);
         String keepAlias = sqlUserSelection.getAsAlias();
         sqlUserSelection.setAsAlias(null);

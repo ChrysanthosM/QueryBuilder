@@ -9,9 +9,9 @@ import java.util.Objects;
 
 final class BuildSQLWhereFilters extends BuildSQLCore {
 
-    static BuildSQLWhereFilters createFor(SQLRetrieverForDBs forSQLRetrieverForDB) { return new BuildSQLWhereFilters(forSQLRetrieverForDB); }
-    private BuildSQLWhereFilters(SQLRetrieverForDBs forSQLRetrieverForDB) {
-        List<IWhere> whereFilters = forSQLRetrieverForDB.getWorkLInSQLBuilderParams().getWhereClauses().stream().dropWhile(Objects::isNull).toList();
+    static BuildSQLWhereFilters createFor(SQLRetrieverForDbAbstract forSQLRetrieverForDB) { return new BuildSQLWhereFilters(forSQLRetrieverForDB); }
+    private BuildSQLWhereFilters(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
+        List<WhereBase> whereFilters = forSQLRetrieverForDB.getWorkLInSQLBuilderParams().getWhereClauses().stream().dropWhile(Objects::isNull).toList();
         if (CollectionUtils.isEmpty(whereFilters)) return;
 
         List<String> whereFiltersForSQL = getResolveFiltersForSQL(forSQLRetrieverForDB, whereFilters, true);
@@ -32,13 +32,13 @@ final class BuildSQLWhereFilters extends BuildSQLCore {
     }
 
 
-    static String getResolveFilterForSQL(SQLRetrieverForDBs forSQLRetrieverForDB, IWhere whereFilter, boolean resetFirstOperator) { return getResolveFiltersForSQL(forSQLRetrieverForDB, List.of(whereFilter), resetFirstOperator).getFirst(); }
-    static List<String> getResolveFiltersForSQL(SQLRetrieverForDBs forSQLRetrieverForDB, List<IWhere> whereFilters, boolean resetFirstOperator) {
-        whereFilters.stream().filter(w -> ((IFilter) w).getTypeOfLogicalOperator() == null).forEach(w -> ((IFilter) w).setTypeOfLogicalOperator(LinSQL.TypeOfLogicalOperator.AND));
-        if (resetFirstOperator) ((IFilter) whereFilters.getFirst()).setTypeOfLogicalOperator(null);
+    static String getResolveFilterForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB, WhereBase whereFilter, boolean resetFirstOperator) { return getResolveFiltersForSQL(forSQLRetrieverForDB, List.of(whereFilter), resetFirstOperator).getFirst(); }
+    static List<String> getResolveFiltersForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB, List<WhereBase> whereFilters, boolean resetFirstOperator) {
+        whereFilters.stream().filter(w -> ((FilterBase) w).getTypeOfLogicalOperator() == null).forEach(w -> ((FilterBase) w).setTypeOfLogicalOperator(LinSQL.TypeOfLogicalOperator.AND));
+        if (resetFirstOperator) ((FilterBase) whereFilters.getFirst()).setTypeOfLogicalOperator(null);
 
         return whereFilters.stream()
-                .map(where -> ((IResolveObjectForSQL) where).getResolveObjectForSQL(forSQLRetrieverForDB))
+                .map(where -> ((ResolveObjectForSQLBase) where).getResolveObjectForSQL(forSQLRetrieverForDB))
                 .filter(StringUtils::isNotBlank)
                 .toList();
     }

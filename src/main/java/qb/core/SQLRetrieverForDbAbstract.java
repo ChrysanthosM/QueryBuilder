@@ -5,13 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
-abstract sealed class SQLRetrieverForDBs extends SQLRetrieverCore implements IDefaultsSQLRetrieverForDBs
-        permits SQLRetrieverForDB_DB2_I, SQLRetrieverForDB_MSSQL, SQLRetrieverForDB_SQLite {
+abstract sealed class SQLRetrieverForDbAbstract extends SQLRetrieverCore implements DefaultsSQLRetrieverForDBsBase
+        permits SQLRetrieverForDbDB2i, SQLRetrieverForDbMSSQL, SQLRetrieverForDbSQLite {
 
     private final LinSQL.TypeOfNamingSystemOrNormalized typeOfNamingSystemOrNormalized;
     private final String dbPrefixForTableLocation;
 
-    SQLRetrieverForDBs(LinSQL.TypeOfNamingSystemOrNormalized typeOfNamingSystemOrNormalized, String dbPrefixForTableLocation) {
+    SQLRetrieverForDbAbstract(LinSQL.TypeOfNamingSystemOrNormalized typeOfNamingSystemOrNormalized, String dbPrefixForTableLocation) {
         this.typeOfNamingSystemOrNormalized = typeOfNamingSystemOrNormalized;
         this.dbPrefixForTableLocation = dbPrefixForTableLocation;
     }

@@ -39,7 +39,7 @@ public final class SQLFieldFromPairOfTableField extends SqlUserSelection {
 
     public BaseDbField getDbFieldEnum() { return this.pairOfTableField.getBaseDbField(); }
 
-    @Override public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    @Override public String getResolveObjectForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         if (isIgnoreTableAsAlias()) this.sqlFieldFromTable.setIgnoreTableAsAlias();
         return sqlFieldFromTable.getResolveObjectForSQLMain(forSQLRetrieverForDB, this.pairOfTableField.getBaseDbTable());
     }

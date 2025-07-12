@@ -19,7 +19,7 @@ final class InValuesWhere extends AbstractWhere {
     }
 
     @Override
-    public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    public String getResolveObjectForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         StringBuilder returnValue = new StringBuilder(super.whereObjectForSQL(forSQLRetrieverForDB));
         if (CollectionUtils.isNotEmpty(this.inValues)) {
             List<String> newInValues = this.inValues.stream()

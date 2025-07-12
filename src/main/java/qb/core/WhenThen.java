@@ -2,7 +2,7 @@ package qb.core;
 
 import lombok.Setter;
 
-abstract sealed class WhenThen implements IWhen, IResolveObjectForSQL
+abstract sealed class WhenThen implements WhenBase, ResolveObjectForSQLBase
         permits WhenThenSearched, WhenThenSimple {
 
     private final Object thenExpression;
@@ -12,7 +12,7 @@ abstract sealed class WhenThen implements IWhen, IResolveObjectForSQL
         this.thenExpression = thenExpression;
     }
 
-    protected String getThen(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    protected String getThen(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         return " THEN " + LInSQLBuilderShared.getSqlUserSelection(this.thenExpression, this.inQuotesRequirement).getResolveObjectForSQL(forSQLRetrieverForDB);
     }
 }

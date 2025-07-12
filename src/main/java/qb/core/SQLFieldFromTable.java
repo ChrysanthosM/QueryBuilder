@@ -45,10 +45,10 @@ final class SQLFieldFromTable extends SqlUserSelection {
 
     BaseDbField getDbFieldEnum() { return this.dbF; }
 
-    @Override public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    @Override public String getResolveObjectForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         return getResolveObjectForSQLMain(forSQLRetrieverForDB, null);
     }
-    String getResolveObjectForSQLMain(SQLRetrieverForDBs forSQLRetrieverForDB, @Nullable BaseDbTable forDbt) {
+    String getResolveObjectForSQLMain(SQLRetrieverForDbAbstract forSQLRetrieverForDB, @Nullable BaseDbTable forDbt) {
         String returnName = StringUtils.defaultString(this.getHasPrefix());
 
         String tableHasPrefixForFields = (forDbt == null ? StringUtils.EMPTY : StringUtils.defaultString(DbTableInstances.getMapTableInstance(forDbt).getTablePrefixForFields()));

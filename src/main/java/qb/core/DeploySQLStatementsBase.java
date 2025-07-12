@@ -1,6 +1,6 @@
 package qb.core;
 
-sealed interface IDeploySQLStatements extends IDefaultsSQLRetrieverForDBs
+sealed interface DeploySQLStatementsBase extends DefaultsSQLRetrieverForDBsBase
         permits SQLRetrieverCore {
     default String getSQLStatementForSelect() { return getDefaultSQLStatementForSelect(); }
     default String getSQLStatementForDelete() { return getDefaultSQLStatementForDelete(); }

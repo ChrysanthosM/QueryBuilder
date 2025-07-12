@@ -2,7 +2,7 @@ package qb.core;
 
 import lombok.Getter;
 
-sealed interface IDeploySQLFunctions extends IDefaultsSQLRetrieverForDBs
+sealed interface DeploySQLFunctionsBase extends DefaultsSQLRetrieverForDBsBase
         permits SQLRetrieverCore {
 
     @Getter
@@ -74,5 +74,5 @@ sealed interface IDeploySQLFunctions extends IDefaultsSQLRetrieverForDBs
             default -> { return null; }
         }
     }
-    default String resolveSQLStringsFunction(SQLFunction sqlFunction) { return sqlFunction.defaultResolver((SQLRetrieverForDBs) this); }
+    default String resolveSQLStringsFunction(SQLFunction sqlFunction) { return sqlFunction.defaultResolver((SQLRetrieverForDbAbstract) this); }
 }

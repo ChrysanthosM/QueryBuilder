@@ -13,7 +13,7 @@ abstract sealed class AbstractWhere extends AbstractFilter
 
     protected AbstractWhere(Object whereObject) {
         this.whereObject = whereObject;
-        if (this.whereObject instanceof IProvideDataTypeForSQL iprovidedatatypeforsql) this.inQuotesRequirement = iprovidedatatypeforsql.getInQuotesRequirement();
+        if (this.whereObject instanceof ProvideDataTypeForSQLBase iprovidedatatypeforsql) this.inQuotesRequirement = iprovidedatatypeforsql.getInQuotesRequirement();
 
     }
 
@@ -23,8 +23,8 @@ abstract sealed class AbstractWhere extends AbstractFilter
     protected String resolveParenthesisRight() { return (super.getParenthesisRight() > 0) ? Strings.repeat(")", super.getParenthesisRight()) : StringUtils.EMPTY; }
 
 
-    protected String whereObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) { return whereObjectForSQL(forSQLRetrieverForDB, null); }
-    protected String whereObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB, @Nullable String putComparisonClause) {
+    protected String whereObjectForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB) { return whereObjectForSQL(forSQLRetrieverForDB, null); }
+    protected String whereObjectForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB, @Nullable String putComparisonClause) {
         StringBuilder returnValue = new StringBuilder();
         if (super.getTypeOfLogicalOperator() != null) returnValue.append(super.getTypeOfLogicalOperator().name().concat(StringUtils.SPACE));
         returnValue.append(resolveParenthesisLeft());

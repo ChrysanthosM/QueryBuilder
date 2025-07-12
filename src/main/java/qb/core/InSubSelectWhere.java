@@ -14,7 +14,7 @@ final class InSubSelectWhere extends AbstractWhere {
     }
 
     @Override
-    public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    public String getResolveObjectForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         return super.whereObjectForSQL(forSQLRetrieverForDB) + "(" + StringUtils.defaultString(this.inSubSelect).trim() + ")" +
                 super.resolveAttachedFilters(forSQLRetrieverForDB) +
                 super.resolveParenthesisRight();

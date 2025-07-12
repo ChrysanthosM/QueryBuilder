@@ -2,7 +2,7 @@ package qb.core;
 
 import org.apache.commons.lang3.StringUtils;
 
-abstract sealed class BuildSQLCore implements IBuildSQLCore
+abstract sealed class BuildSQLCore implements BuildSQLCoreBase
         permits BuildSQLGroupByHavingValues, BuildSQLInsertRows, BuildSQLJoinWith, BuildSQLOrderBy, BuildSQLSelectFields,
         BuildSQLUnionWith, BuildSQLUpdateFields, BuildSQLWhereFilters, BuildSQLWorkTable {
 

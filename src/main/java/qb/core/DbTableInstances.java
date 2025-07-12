@@ -11,10 +11,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public final class DbTableInstances {
     private static final ConcurrentHashMap<BaseDbTable, DbTable> mapTableInstances = new ConcurrentHashMap<>();
-    private final List<IDbTable> implementations;
+    private final List<DbTableBase> implementations;
 
     @Autowired
-    private DbTableInstances(List<IDbTable> implementations) {
+    private DbTableInstances(List<DbTableBase> implementations) {
         this.implementations = List.copyOf(implementations);
     }
     @PostConstruct

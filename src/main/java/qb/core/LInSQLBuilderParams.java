@@ -23,10 +23,10 @@ final class LInSQLBuilderParams {
     @Setter private boolean applyAutoAlias = false;
     private MutablePair<BigInteger, BigInteger> limitOffset;
     private MutablePair<BigInteger, BigInteger> offsetFetch;
-    private final List<IWhere> whereClauses = new ArrayList<>();
+    private final List<WhereBase> whereClauses = new ArrayList<>();
     private final List<MutablePair<SqlUserSelection, SortOrder>> orderByFields = new ArrayList<>();
-    private MutablePair<List<SqlUserSelection>, List<IWhere>> groupBySelectionsHavingValues;
-    private final List<MutableTriple<LinSQL.TypeOfJoin, LinSQL, List<IWhere>>> joinWith = new ArrayList<>();
+    private MutablePair<List<SqlUserSelection>, List<WhereBase>> groupBySelectionsHavingValues;
+    private final List<MutableTriple<LinSQL.TypeOfJoin, LinSQL, List<WhereBase>>> joinWith = new ArrayList<>();
     private final List<MutablePair<SqlUserSelection, SqlUserSelection>> updateFieldsSetValues = new ArrayList<>();
     private final List<List<Object>> insertRowsFieldValues = new ArrayList<>();
     private String insertRowsFromQuery = null;
@@ -70,7 +70,7 @@ final class LInSQLBuilderParams {
     void addUserSelection(Object userSelection, String asAlias) { this.sqlUserSelections.add(LInSQLBuilderShared.getSqlUserSelection(userSelection, asAlias)); }
 
     //-------GroupBy/Having
-    void setGroupBySelectionsHavingValues(MutablePair<List<Object>, List<IWhere>> groupBySelectionsHavingValues) {
+    void setGroupBySelectionsHavingValues(MutablePair<List<Object>, List<WhereBase>> groupBySelectionsHavingValues) {
         List<SqlUserSelection> groupByUserSelections = groupBySelectionsHavingValues.getLeft().stream()
                 .filter(Objects::nonNull)
                 .map(LInSQLBuilderShared::getSqlUserSelection)
@@ -88,11 +88,11 @@ final class LInSQLBuilderParams {
     void setOffsetFetch(MutablePair<BigInteger, BigInteger> offsetFetch) { this.offsetFetch = offsetFetch; }
 
     //-------Where Filters
-    void addWhereClause(IWhere whereClause) { this.whereClauses.add(whereClause); }
+    void addWhereClause(WhereBase whereClause) { this.whereClauses.add(whereClause); }
 
     //-------Join With
-    void addJoinWith(MutableTriple<LinSQL.TypeOfJoin, LinSQL, List<IWhere>> joinWith) { this.joinWith.add(joinWith); }
-    MutableTriple<LinSQL.TypeOfJoin, LinSQL, List<IWhere>> getLastJoin() {
+    void addJoinWith(MutableTriple<LinSQL.TypeOfJoin, LinSQL, List<WhereBase>> joinWith) { this.joinWith.add(joinWith); }
+    MutableTriple<LinSQL.TypeOfJoin, LinSQL, List<WhereBase>> getLastJoin() {
         if (CollectionUtils.isEmpty(this.joinWith)) throw new IllegalCallerException("Nothing to Join With");
         return this.joinWith.getLast();
     }

@@ -16,9 +16,9 @@ final class BuildSQLJoinWith extends BuildSQLCore {
     private String joinWithTablesOnFieldsForSQL = StringUtils.EMPTY;
     @Getter private String whereJoinFiltersForSQL = StringUtils.EMPTY;
 
-    static BuildSQLJoinWith createFor(SQLRetrieverForDBs forSQLRetrieverForDB) { return new BuildSQLJoinWith(forSQLRetrieverForDB); }
-    private BuildSQLJoinWith(SQLRetrieverForDBs forSQLRetrieverForDB) {
-        List<MutableTriple<LinSQL.TypeOfJoin, LinSQL, List<IWhere>>> joinWiths = forSQLRetrieverForDB.getWorkLInSQLBuilderParams().getJoinWith();
+    static BuildSQLJoinWith createFor(SQLRetrieverForDbAbstract forSQLRetrieverForDB) { return new BuildSQLJoinWith(forSQLRetrieverForDB); }
+    private BuildSQLJoinWith(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
+        List<MutableTriple<LinSQL.TypeOfJoin, LinSQL, List<WhereBase>>> joinWiths = forSQLRetrieverForDB.getWorkLInSQLBuilderParams().getJoinWith();
         if (CollectionUtils.isEmpty(joinWiths)) return;
 
         forSQLRetrieverForDB.addAvailableTableWithFields(Triple.of(
@@ -29,7 +29,7 @@ final class BuildSQLJoinWith extends BuildSQLCore {
         List<String> selectedJoinFieldsList = new ArrayList<>();
         List<String> joinWithTablesOnFieldsList = new ArrayList<>();
         List<String> whereJoinFiltersList = new ArrayList<>();
-        for (MutableTriple<LinSQL.TypeOfJoin, LinSQL, List<IWhere>> joinWith : joinWiths) {
+        for (MutableTriple<LinSQL.TypeOfJoin, LinSQL, List<WhereBase>> joinWith : joinWiths) {
             LinSQL joinLinSQL = joinWith.getMiddle();
             joinLinSQL.getSQL();
 

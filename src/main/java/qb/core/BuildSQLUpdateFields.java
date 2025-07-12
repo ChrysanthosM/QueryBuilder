@@ -10,8 +10,8 @@ import java.util.List;
 
 final class BuildSQLUpdateFields extends BuildSQLCore {
 
-    static BuildSQLUpdateFields createFor(SQLRetrieverForDBs forSQLRetrieverForDB) { return new BuildSQLUpdateFields(forSQLRetrieverForDB); }
-    private BuildSQLUpdateFields(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    static BuildSQLUpdateFields createFor(SQLRetrieverForDbAbstract forSQLRetrieverForDB) { return new BuildSQLUpdateFields(forSQLRetrieverForDB); }
+    private BuildSQLUpdateFields(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         List<MutablePair<SqlUserSelection, SqlUserSelection>> updateFieldsSetValues = forSQLRetrieverForDB.getWorkLInSQLBuilderParams().getUpdateFieldsSetValues();
         if (CollectionUtils.isEmpty(updateFieldsSetValues)) return;
 

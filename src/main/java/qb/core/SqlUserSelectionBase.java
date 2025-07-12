@@ -4,7 +4,7 @@ import jakarta.annotation.Nullable;
 
 import java.lang.reflect.Type;
 
-sealed interface ISqlUserSelection extends IResolveObjectForSQL, IDeployFilters
+sealed interface SqlUserSelectionBase extends ResolveObjectForSQLBase, DeployFiltersBase
         permits SqlUserSelection {
     Type getTypeOfSelection();
     void init(@Nullable String setPrefix, @Nullable String asAlias, @Nullable Object... args);

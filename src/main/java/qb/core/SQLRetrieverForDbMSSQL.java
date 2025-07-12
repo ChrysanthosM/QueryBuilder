@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.math.BigInteger;
 import java.util.Map;
 
-final class SQLRetrieverForDB_MSSQL extends SQLRetrieverForDBs {
+final class SQLRetrieverForDbMSSQL extends SQLRetrieverForDbAbstract {
     private static final Map<LinSQL.TypeOfComparison, String> comparisonType =
             Map.of(
                     LinSQL.TypeOfComparison.IS_NULL, "IS NULL",
@@ -32,7 +32,7 @@ final class SQLRetrieverForDB_MSSQL extends SQLRetrieverForDBs {
                     LinSQL.TypeOfJoin.RIGHT, "RIGHT JOIN"
             );
 
-    SQLRetrieverForDB_MSSQL(LinSQL.TypeOfNamingSystemOrNormalized namingSystemOrNormalized, @Nullable String dbPrefixForTable) {
+    SQLRetrieverForDbMSSQL(LinSQL.TypeOfNamingSystemOrNormalized namingSystemOrNormalized, @Nullable String dbPrefixForTable) {
         super(namingSystemOrNormalized, StringUtils.defaultString(dbPrefixForTable));
     }
 

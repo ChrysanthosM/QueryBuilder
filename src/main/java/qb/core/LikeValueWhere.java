@@ -19,7 +19,7 @@ final class LikeValueWhere extends AbstractWhere {
     }
 
     @Override
-    public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    public String getResolveObjectForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         return super.whereObjectForSQL(forSQLRetrieverForDB) + LinSQLCommons.QUOTE + StringUtils.defaultString(escapeLeft) +
                 StringUtils.defaultString(this.compareValue) +
                 StringUtils.defaultString(escapeRight) + LinSQLCommons.QUOTE +

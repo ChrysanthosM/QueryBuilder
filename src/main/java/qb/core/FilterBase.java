@@ -1,6 +1,6 @@
 package qb.core;
 
-sealed interface IFilter permits AbstractFilter {
+sealed interface FilterBase permits AbstractFilter {
     LinSQL.TypeOfLogicalOperator getTypeOfLogicalOperator();
     void setTypeOfLogicalOperator(LinSQL.TypeOfLogicalOperator typeOfLogicalOperator);
     boolean isInvertSelection();

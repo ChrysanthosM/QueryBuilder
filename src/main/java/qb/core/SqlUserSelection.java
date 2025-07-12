@@ -3,7 +3,7 @@ package qb.core;
 import jakarta.annotation.Nullable;
 import lombok.Getter;
 
-abstract non-sealed class SqlUserSelection implements ISqlUserSelection {
+abstract non-sealed class SqlUserSelection implements SqlUserSelectionBase {
     @Getter private boolean ignoreTableAsAlias = false;
     void setIgnoreTableAsAlias() { this.ignoreTableAsAlias = true; }
 

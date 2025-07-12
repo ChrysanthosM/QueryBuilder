@@ -7,7 +7,7 @@ import lombok.NonNull;
 
 
 @Getter
-public final class PairOfTableField implements IDeployFilters, IDeployOrdering, IProvideDataTypeForSQL {
+public final class PairOfTableField implements DeployFiltersBase, DeployOrderingBase, ProvideDataTypeForSQLBase {
     public static PairOfTableField of(BaseDbTable dbt, BaseDbField dbf) { return new PairOfTableField(dbt, dbf); }
 
     private final BaseDbTable baseDbTable;

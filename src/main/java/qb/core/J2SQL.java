@@ -125,32 +125,32 @@ public final class J2SQL {
     }
 
     @Description("add Filters")
-    private J2SQL addFilters(@NonNull IWhere... filters) {
+    private J2SQL addFilters(@NonNull WhereBase... filters) {
         workLinSQL.addFilters(filters);
         return this;
     }
     @Description("add Filters")
-    public J2SQL where(@NonNull IWhere... filters) {
+    public J2SQL where(@NonNull WhereBase... filters) {
         workLinSQL.where(filters);
         return this;
     }
     @Description("add 'AND' Filter")
-    public J2SQL and(@NonNull IWhere... filters) {
+    public J2SQL and(@NonNull WhereBase... filters) {
         this.addFilters(filters);
         return this;
     }
     @Description("add 'AND NOT' Filter")
-    public J2SQL andNot(@NonNull IWhere... filters) {
+    public J2SQL andNot(@NonNull WhereBase... filters) {
         workLinSQL.andNot(filters);
         return this;
     }
     @Description("add 'OR' Filter")
-    public J2SQL or(@NonNull IWhere... filters) {
+    public J2SQL or(@NonNull WhereBase... filters) {
         workLinSQL.or(filters);
         return this;
     }
     @Description("add 'OR NOT' Filter")
-    public J2SQL orNot(@NonNull IWhere... filters) {
+    public J2SQL orNot(@NonNull WhereBase... filters) {
         workLinSQL.orNot(filters);
         return this;
     }
@@ -189,14 +189,14 @@ public final class J2SQL {
         return this;
     }
     @Description("add Having Values")
-    public J2SQL having(@NonNull IWhere... filters) {
+    public J2SQL having(@NonNull WhereBase... filters) {
         workLinSQL.having(filters);
         return this;
     }
 
 
     @Description("Join with Table/Join On fields/Join Where Filters")
-    public J2SQL joinWith(@NonNull LinSQL.TypeOfJoin typeOfJoin, @NonNull J2SQL joinWith, @Nullable IWhere... joinOn) {
+    public J2SQL joinWith(@NonNull LinSQL.TypeOfJoin typeOfJoin, @NonNull J2SQL joinWith, @Nullable WhereBase... joinOn) {
         workLinSQL.joinWith(typeOfJoin, joinWith.workLinSQL, joinOn);
         return this;
     }
@@ -216,12 +216,12 @@ public final class J2SQL {
     @Description("Full Join with") public J2SQL fullJoin(@NonNull DbTable joinWith) { return joinWith(LinSQL.TypeOfJoin.FULL, J2SQL.create(this.forDataSource, this.normalizeNames).from(joinWith)); }
     @Description("Full Join with") public J2SQL fullJoin(@NonNull DbTable joinWith, @NonNull String asAlias) { return joinWith(LinSQL.TypeOfJoin.FULL, J2SQL.create(this.forDataSource, this.normalizeNames).from(joinWith, asAlias)); }
     @Description("Full Join with") public J2SQL fullJoin(@NonNull DbTable joinWith, @NonNull J2SQLShared.PFX asAlias) { return joinWith(LinSQL.TypeOfJoin.FULL, J2SQL.create(this.forDataSource, this.normalizeNames).from(joinWith, asAlias)); }
-    @Description("Join On") public J2SQL on(@NonNull IWhere... joinOn) {
+    @Description("Join On") public J2SQL on(@NonNull WhereBase... joinOn) {
         workLinSQL.on(joinOn);
         return this;
     }
     @Description("Join Where Filters, will be added in main Query 'Where' Filters")
-    public J2SQL addJoinFilters(@NonNull IWhere... addWhereFiltersToMainQuery) {
+    public J2SQL addJoinFilters(@NonNull WhereBase... addWhereFiltersToMainQuery) {
         workLinSQL.addJoinFilters(addWhereFiltersToMainQuery);
         return this;
     }

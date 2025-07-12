@@ -3,7 +3,7 @@ package qb.core;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
-abstract sealed class AbstractFilter implements IWhere, IResolveObjectForSQL, IFilter
+abstract sealed class AbstractFilter implements WhereBase, ResolveObjectForSQLBase, FilterBase
         permits AbstractWhere, GroupOfWheres {
 
     private LinSQL.TypeOfLogicalOperator typeOfLogicalOperator = null;
@@ -19,22 +19,22 @@ abstract sealed class AbstractFilter implements IWhere, IResolveObjectForSQL, IF
     @Override public void addParenthesisLeft() { this.parenthesisLeft += 1; }
     @Override public void addParenthesisRight() { this.parenthesisRight += 1; }
 
-    private IWhere attachedFilter = null;
-    @Override public IWhere getAttachedFilters() { return this.attachedFilter; }
-    public String resolveAttachedFilters(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    private WhereBase attachedFilter = null;
+    @Override public WhereBase getAttachedFilters() { return this.attachedFilter; }
+    public String resolveAttachedFilters(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         if (this.attachedFilter == null) return StringUtils.EMPTY;
-        return StringUtils.SPACE.concat(((IResolveObjectForSQL) this.attachedFilter).getResolveObjectForSQL(forSQLRetrieverForDB));
+        return StringUtils.SPACE.concat(((ResolveObjectForSQLBase) this.attachedFilter).getResolveObjectForSQL(forSQLRetrieverForDB));
     }
 
 
     @Override
-    public IWhere and(IWhere attachFilter) {
+    public WhereBase and(WhereBase attachFilter) {
         ((AbstractFilter) attachFilter).setTypeOfLogicalOperator(LinSQL.TypeOfLogicalOperator.AND);
         this.attachedFilter = attachFilter;
         return this;
     }
     @Override
-    public IWhere or(IWhere attachFilter) {
+    public WhereBase or(WhereBase attachFilter) {
         ((AbstractFilter) attachFilter).setTypeOfLogicalOperator(LinSQL.TypeOfLogicalOperator.OR);
         this.attachedFilter = attachFilter;
         return this;

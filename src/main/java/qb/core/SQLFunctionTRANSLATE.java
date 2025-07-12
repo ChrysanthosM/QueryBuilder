@@ -7,14 +7,14 @@ import java.util.List;
 
 final class SQLFunctionTRANSLATE extends SQLFunction {
     @Override
-    public IDeploySQLFunctions.TypeOfSQLFunction getTypeOfSQLFunction() { return IDeploySQLFunctions.TypeOfSQLFunction.TRANSLATE; }
+    public DeploySQLFunctionsBase.TypeOfSQLFunction getTypeOfSQLFunction() { return DeploySQLFunctionsBase.TypeOfSQLFunction.TRANSLATE; }
 
     SQLFunctionTRANSLATE(@NonNull Object... args) { super.init(null, null, args); }
 
-    @Override public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) { return forSQLRetrieverForDB.resolveSQLStringsFunction(this); }
+    @Override public String getResolveObjectForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB) { return forSQLRetrieverForDB.resolveSQLStringsFunction(this); }
 
     @Override
-    public String defaultResolver(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    public String defaultResolver(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         List<?> params = super.getParamsSelectedFieldForSQL(forSQLRetrieverForDB, null);
         String result = "TRANSLATE(" + super.getFirstParamSelectedFieldForSQL(forSQLRetrieverForDB, null) + ", " +
                 params.get(1) + ", " + params.get(2);
@@ -26,5 +26,5 @@ final class SQLFunctionTRANSLATE extends SQLFunction {
     }
 
     @Override
-    public String alternateResolver(SQLRetrieverForDBs forSQLRetrieverForDB, @Nullable Object... args) { throw new IllegalCallerException(NON_SUPPORTED_MSG); }
+    public String alternateResolver(SQLRetrieverForDbAbstract forSQLRetrieverForDB, @Nullable Object... args) { throw new IllegalCallerException(NON_SUPPORTED_MSG); }
 }

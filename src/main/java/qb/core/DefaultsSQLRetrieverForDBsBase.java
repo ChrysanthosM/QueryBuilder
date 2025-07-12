@@ -1,7 +1,7 @@
 package qb.core;
 
-sealed interface IDefaultsSQLRetrieverForDBs
-        permits IDeploySQLFunctions, IDeploySQLStatements, SQLRetrieverForDBs {
+sealed interface DefaultsSQLRetrieverForDBsBase
+        permits DeploySQLFunctionsBase, DeploySQLStatementsBase, SQLRetrieverForDbAbstract {
     String getDefaultSQLStatementForSelect();
     String getDefaultSQLStatementForDelete();
     String getDefaultSQLStatementForUpdate();

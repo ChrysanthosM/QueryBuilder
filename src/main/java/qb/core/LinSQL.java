@@ -24,7 +24,7 @@ final class LinSQL {
     public enum TypeOfJoin { FULL, JOIN, LEFT, RIGHT }
 
     private final LInSQLBuilder workLInSQLBuilder;
-    public SQLRetrieverForDBs getSqlRetrieverForDB() { return workLInSQLBuilder.getSqlRetrieverForDB(); }
+    public SQLRetrieverForDbAbstract getSqlRetrieverForDB() { return workLInSQLBuilder.getSqlRetrieverForDB(); }
     public BuildSQLWorkTable getWorkBuildSQLWorkTable() { return workLInSQLBuilder.getWorkBuildSQLWorkTable(); }
     public BuildSQLJoinWith getWorkBuildSQLJoinWith() { return workLInSQLBuilder.getWorkBuildSQLJoinWith(); }
     public BuildSQLSelectFields getWorkBuildSQLSelectFields() { return workLInSQLBuilder.getWorkBuildSQLSelectFields(); }
@@ -108,19 +108,19 @@ final class LinSQL {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addUserSelection(BaseDbField.ALL(), StringUtils.EMPTY);
     }
 
-    public void addFilters(@NonNull IWhere... filters) {
+    public void addFilters(@NonNull WhereBase... filters) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addWhereClause(GroupOfWheres.getGroupOfFilters(TypeOfLogicalOperator.AND, false, filters));
     }
-    public void where(@NonNull IWhere... filters) {
+    public void where(@NonNull WhereBase... filters) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addWhereClause(GroupOfWheres.getGroupOfFilters(null, false, filters));
     }
-    public void andNot(@NonNull IWhere... filters) {
+    public void andNot(@NonNull WhereBase... filters) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addWhereClause(GroupOfWheres.getGroupOfFilters(TypeOfLogicalOperator.AND, true, filters));
     }
-    public void or(@NonNull IWhere... filters) {
+    public void or(@NonNull WhereBase... filters) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addWhereClause(GroupOfWheres.getGroupOfFilters(TypeOfLogicalOperator.OR, false, filters));
     }
-    public void orNot(@NonNull IWhere... filters) {
+    public void orNot(@NonNull WhereBase... filters) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addWhereClause(GroupOfWheres.getGroupOfFilters(TypeOfLogicalOperator.OR, true, filters));
     }
     public void whereExists(@NonNull LinSQL existQuery) {
@@ -146,23 +146,23 @@ final class LinSQL {
         List<Object> groupBy = Stream.of(setGroupBy).filter(Objects::nonNull).toList();
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setGroupBySelectionsHavingValues(MutablePair.of(groupBy, new ArrayList<>()));
     }
-    public void having(@NonNull IWhere... filters) {
-        List<IWhere> whereList = Stream.of(filters).filter(Objects::nonNull).toList();
+    public void having(@NonNull WhereBase... filters) {
+        List<WhereBase> whereList = Stream.of(filters).filter(Objects::nonNull).toList();
         workLInSQLBuilder.getWorkLInSQLBuilderParams().getGroupBySelectionsHavingValues().getRight().addAll(whereList);
     }
 
 
-    public void joinWith(@NonNull TypeOfJoin typeOfJoin, @NonNull LinSQL joinWith, @Nullable IWhere... joinOn) {
-        List<IWhere> joinOnList = new ArrayList<>();
+    public void joinWith(@NonNull TypeOfJoin typeOfJoin, @NonNull LinSQL joinWith, @Nullable WhereBase... joinOn) {
+        List<WhereBase> joinOnList = new ArrayList<>();
         if (joinOn != null) Stream.of(joinOn).filter(Objects::nonNull).forEach(joinOnList::add);
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addJoinWith(MutableTriple.of(typeOfJoin, joinWith, joinOnList));
     }
-    public LinSQL on(@NonNull IWhere... joinOn) {
-        List<IWhere> joinOnList = Stream.of(joinOn).filter(Objects::nonNull).toList();
+    public LinSQL on(@NonNull WhereBase... joinOn) {
+        List<WhereBase> joinOnList = Stream.of(joinOn).filter(Objects::nonNull).toList();
         workLInSQLBuilder.getWorkLInSQLBuilderParams().getLastJoin().setRight(joinOnList);
         return this;
     }
-    public void addJoinFilters(@NonNull IWhere... addWhereFiltersToMainQuery) {
+    public void addJoinFilters(@NonNull WhereBase... addWhereFiltersToMainQuery) {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().getLastJoin().getMiddle().addFilters(addWhereFiltersToMainQuery);
     }
     public void fromJoinSelectOnly(@NonNull Object... addSelectFields) {

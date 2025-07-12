@@ -1,15 +1,15 @@
 package qb.definition.db.base;
 
-import qb.core.IDeployFilters;
-import qb.core.IDeployOrdering;
-import qb.core.IProvideDataTypeForSQL;
+import qb.core.DeployFiltersBase;
+import qb.core.DeployOrderingBase;
+import qb.core.ProvideDataTypeForSQLBase;
 import qb.definition.db.system.sqlite.schema.structure.DbFieldValuesSQLite;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
-public interface BaseDbField extends IDeployFilters, IDeployOrdering, IProvideDataTypeForSQL {
+public interface BaseDbField extends DeployFiltersBase, DeployOrderingBase, ProvideDataTypeForSQLBase {
     static BaseDbField ALL() { return DummyALL.getDummyALL(); }
 
     String systemName();

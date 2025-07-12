@@ -22,13 +22,13 @@ final class SQLFieldFromConstant extends SqlUserSelection {
         Preconditions.checkNotNull(args);
         Preconditions.checkElementIndex(0, args.length);
         this.value = args[0];
-        if (this.value instanceof IValueFor enumValue) {
+        if (this.value instanceof ValueForBase enumValue) {
             this.value = enumValue.getValue();
         }
         super.setAsAlias(asAlias);
     }
 
-    @Override public String getResolveObjectForSQL(SQLRetrieverForDBs forSQLRetrieverForDB) {
+    @Override public String getResolveObjectForSQL(SQLRetrieverForDbAbstract forSQLRetrieverForDB) {
         boolean inQuotes = true;
         if (this.inQuotesRequirement.isPresent()) {
             inQuotes = (this.inQuotesRequirement.get());

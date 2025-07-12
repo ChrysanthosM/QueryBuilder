@@ -1,7 +1,7 @@
 package qb;
 
-import qb.core.DbFieldInstances;
-import qb.core.DbTableInstances;
+import qb.builder.DbFieldInstances;
+import qb.builder.DbTableInstances;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 

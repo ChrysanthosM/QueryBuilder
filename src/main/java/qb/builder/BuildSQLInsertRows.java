@@ -2,9 +2,9 @@ package qb.builder;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import qb.base.builder.BaseDbField;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import qb.base.builder.BaseDbField;
 
 import java.sql.Timestamp;
 import java.util.Collections;

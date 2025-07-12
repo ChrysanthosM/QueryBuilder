@@ -1,9 +1,9 @@
 package qb.builder;
 
 import com.google.common.base.Preconditions;
-import qb.base.builder.BaseDbField;
 import jakarta.annotation.Nullable;
 import lombok.NonNull;
+import qb.base.builder.BaseDbField;
 
 import java.lang.reflect.Type;
 

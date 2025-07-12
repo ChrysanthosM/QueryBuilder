@@ -1,9 +1,9 @@
 package qb.builder;
 
-import qb.base.builder.BaseDbField;
-import qb.base.builder.BaseDbTable;
 import lombok.Getter;
 import lombok.NonNull;
+import qb.base.builder.BaseDbField;
+import qb.base.builder.BaseDbTable;
 
 
 @Getter

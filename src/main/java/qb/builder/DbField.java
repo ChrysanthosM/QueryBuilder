@@ -1,8 +1,8 @@
 package qb.builder;
 
+import lombok.Getter;
 import qb.base.builder.BaseDbField;
 import qb.base.builder.DbFieldDataType;
-import lombok.Getter;
 
 import java.util.List;
 

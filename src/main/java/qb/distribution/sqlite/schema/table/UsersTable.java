@@ -1,10 +1,10 @@
 package qb.distribution.sqlite.schema.table;
 
+import org.springframework.stereotype.Component;
 import qb.builder.AbstractTable;
 import qb.builder.PairOfTableField;
 import qb.distribution.sqlite.schema.structure.DbFieldSQLite;
 import qb.distribution.sqlite.schema.structure.DbTableSQLite;
-import org.springframework.stereotype.Component;
 
 @Component
 public final class UsersTable extends AbstractTable {

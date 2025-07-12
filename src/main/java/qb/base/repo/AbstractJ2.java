@@ -8,8 +8,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import qb.ApplicationSQLRun;
-import qb.builder.J2SQL;
 import qb.base.datasource.WorkWithDataSource;
+import qb.builder.J2SQL;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

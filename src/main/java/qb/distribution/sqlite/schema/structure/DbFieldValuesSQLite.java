@@ -1,13 +1,13 @@
 package qb.distribution.sqlite.schema.structure;
 
-import qb.builder.ValueForBase;
-import qb.base.builder.BaseDbField;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
+import qb.base.builder.BaseDbField;
+import qb.builder.ValueForBase;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,14 +1,14 @@
 package qb.builder;
 
 import com.google.common.base.Preconditions;
-import qb.base.builder.BaseDbField;
-import qb.base.datasource.WorkWithDataSource;
 import jakarta.annotation.Nullable;
 import lombok.NonNull;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.MutableTriple;
+import qb.base.builder.BaseDbField;
+import qb.base.datasource.WorkWithDataSource;
 
 import javax.swing.*;
 import java.math.BigInteger;
@@ -101,7 +101,7 @@ final class LinSQL {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setWorkWithDbTableAsAlias(setWorkWithTable, StringUtils.defaultString(asAlias));
     }
 
-    public void select(@NonNull Object... addSelectedFields) {
+    public void select(Object... addSelectedFields) {
         Stream.of(addSelectedFields).filter(Objects::nonNull).forEach(o -> workLInSQLBuilder.getWorkLInSQLBuilderParams().addUserSelection(o, StringUtils.EMPTY));
     }
     public void selectAll() {
@@ -132,22 +132,22 @@ final class LinSQL {
 
     public void orderBy(@NonNull SortOrder sortOrder, @NonNull Object... addOrderBy) {
         Preconditions.checkArgument(sortOrder == SortOrder.ASCENDING || sortOrder == SortOrder.DESCENDING);
-        Stream.of(addOrderBy).filter(Objects::nonNull).forEach(s -> workLInSQLBuilder.getWorkLInSQLBuilderParams().addOrdering(s, sortOrder));
+        Stream.of(addOrderBy).forEach(s -> workLInSQLBuilder.getWorkLInSQLBuilderParams().addOrdering(s, sortOrder));
     }
     @SafeVarargs
     public final void orderBy(@NonNull MutablePair<Object, SortOrder>... addOrderBy) {
-        Stream.of(addOrderBy).filter(Objects::nonNull).forEach(o -> workLInSQLBuilder.getWorkLInSQLBuilderParams().addOrdering(o.left, o.right));
+        Stream.of(addOrderBy).forEach(o -> workLInSQLBuilder.getWorkLInSQLBuilderParams().addOrdering(o.left, o.right));
     }
     public void orderBy(@NonNull List<MutablePair<Object, SortOrder>> addOrderBy) {
         addOrderBy.stream().filter(Objects::nonNull).forEach(o -> workLInSQLBuilder.getWorkLInSQLBuilderParams().addOrdering(o.left, o.right));
     }
 
     public void groupBy(@NonNull Object... setGroupBy) {
-        List<Object> groupBy = Stream.of(setGroupBy).filter(Objects::nonNull).toList();
+        List<Object> groupBy = Stream.of(setGroupBy).toList();
         workLInSQLBuilder.getWorkLInSQLBuilderParams().setGroupBySelectionsHavingValues(MutablePair.of(groupBy, new ArrayList<>()));
     }
     public void having(@NonNull WhereBase... filters) {
-        List<WhereBase> whereList = Stream.of(filters).filter(Objects::nonNull).toList();
+        List<WhereBase> whereList = Stream.of(filters).toList();
         workLInSQLBuilder.getWorkLInSQLBuilderParams().getGroupBySelectionsHavingValues().getRight().addAll(whereList);
     }
 
@@ -158,7 +158,7 @@ final class LinSQL {
         workLInSQLBuilder.getWorkLInSQLBuilderParams().addJoinWith(MutableTriple.of(typeOfJoin, joinWith, joinOnList));
     }
     public LinSQL on(@NonNull WhereBase... joinOn) {
-        List<WhereBase> joinOnList = Stream.of(joinOn).filter(Objects::nonNull).toList();
+        List<WhereBase> joinOnList = Stream.of(joinOn).toList();
         workLInSQLBuilder.getWorkLInSQLBuilderParams().getLastJoin().setRight(joinOnList);
         return this;
     }

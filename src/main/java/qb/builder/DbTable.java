@@ -1,12 +1,12 @@
 package qb.builder;
 
-import qb.base.builder.BaseDbField;
-import qb.base.builder.BaseDbTable;
 import jakarta.annotation.PostConstruct;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import org.apache.commons.lang3.tuple.Pair;
+import qb.base.builder.BaseDbField;
+import qb.base.builder.BaseDbTable;
 
 import java.util.List;
 

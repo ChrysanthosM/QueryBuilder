@@ -1,13 +1,13 @@
 package qb.builder;
 
 import com.google.common.base.Preconditions;
-import qb.base.builder.BaseDbField;
-import qb.base.builder.BaseDbTable;
 import jakarta.annotation.Nullable;
 import lombok.NonNull;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
+import qb.base.builder.BaseDbField;
+import qb.base.builder.BaseDbTable;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

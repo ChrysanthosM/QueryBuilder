@@ -1,7 +1,7 @@
 package qb.builder;
 
-import qb.base.builder.BaseDbField;
 import lombok.experimental.UtilityClass;
+import qb.base.builder.BaseDbField;
 
 @UtilityClass
 class LInSQLBuilderShared {

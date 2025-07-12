@@ -1,10 +1,10 @@
 package qb.builder;
 
-import qb.base.datasource.WorkWithDataSource;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
+import qb.base.datasource.WorkWithDataSource;
 
 
 final class LInSQLBuilder {

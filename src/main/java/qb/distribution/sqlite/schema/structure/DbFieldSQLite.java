@@ -1,10 +1,10 @@
 package qb.distribution.sqlite.schema.structure;
 
+import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 import qb.base.builder.BaseDbField;
 import qb.base.builder.ConfigDbField;
 import qb.base.builder.DbFieldDataType;
-import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;

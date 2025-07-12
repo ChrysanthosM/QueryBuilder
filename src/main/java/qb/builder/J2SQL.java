@@ -1,13 +1,13 @@
 package qb.builder;
 
 import com.google.common.base.Preconditions;
-import qb.base.datasource.WorkWithDataSource;
 import jakarta.annotation.Nullable;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.context.annotation.Description;
+import qb.base.datasource.WorkWithDataSource;
 
 import javax.swing.*;
 import java.util.Arrays;

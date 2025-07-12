@@ -1,9 +1,9 @@
 package qb.builder;
 
-import qb.base.builder.BaseDbField;
-import qb.base.builder.BaseDbTable;
 import lombok.AccessLevel;
 import lombok.Getter;
+import qb.base.builder.BaseDbField;
+import qb.base.builder.BaseDbTable;
 
 import java.util.List;
 

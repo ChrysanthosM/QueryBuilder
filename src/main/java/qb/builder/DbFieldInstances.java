@@ -1,9 +1,9 @@
 package qb.builder;
 
-import qb.base.builder.BaseDbField;
-import qb.distribution.EnumStructureFinder;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
+import qb.base.builder.BaseDbField;
+import qb.distribution.DistributionStructureFinder;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -13,8 +13,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class DbFieldInstances {
     private static final ConcurrentHashMap<BaseDbField, DbField> mapFieldInstances = new ConcurrentHashMap<>();
 
-    private final EnumStructureFinder enumFinder;
-    public DbFieldInstances(EnumStructureFinder enumFinder) {
+    private final DistributionStructureFinder enumFinder;
+    public DbFieldInstances(DistributionStructureFinder enumFinder) {
         this.enumFinder = enumFinder;
     }
 

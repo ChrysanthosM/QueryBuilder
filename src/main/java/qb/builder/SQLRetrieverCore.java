@@ -1,11 +1,11 @@
 package qb.builder;
 
-import qb.base.builder.BaseDbField;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
+import qb.base.builder.BaseDbField;
 
 import java.util.ArrayList;
 import java.util.HashSet;

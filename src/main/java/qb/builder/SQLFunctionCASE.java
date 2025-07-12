@@ -25,6 +25,7 @@ final class SQLFunctionCASE extends SQLFunction {
 
         Boolean inQuotesRequirement = (Boolean) super.getParams().get(0);
 
+        @SuppressWarnings("unchecked")
         Optional<Object> caseOpt = (Optional<Object>) super.getParams().get(1);
         String caseExpression = caseOpt.map(o -> LInSQLBuilderShared.getSqlUserSelection(o, inQuotesRequirement).getResolveObjectForSQL(forSQLRetrieverForDB)).orElse(null);
 

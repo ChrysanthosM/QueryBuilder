@@ -1,12 +1,12 @@
 package qb.builder;
 
 import com.google.common.base.Preconditions;
-import qb.base.builder.BaseDbField;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.MutableTriple;
+import qb.base.builder.BaseDbField;
 
 import javax.swing.*;
 import java.math.BigInteger;

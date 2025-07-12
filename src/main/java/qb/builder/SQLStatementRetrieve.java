@@ -1,7 +1,7 @@
 package qb.builder;
 
-import qb.base.datasource.WorkWithDataSource;
 import lombok.Getter;
+import qb.base.datasource.WorkWithDataSource;
 
 @Getter
 final class SQLStatementRetrieve {

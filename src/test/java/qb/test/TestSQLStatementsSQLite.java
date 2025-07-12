@@ -5,15 +5,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import qb.builder.J2SQL;
 import qb.base.datasource.WorkWithDataSource;
+import qb.builder.J2SQL;
 import qb.distribution.sqlite.schema.structure.DbFieldValuesSQLite;
 import qb.distribution.sqlite.schema.table.AutoNumberingTable;
 import qb.distribution.sqlite.schema.table.OptionsTable;
 
 import java.util.List;
 
-import static qb.builder.J2SQL.*;
+import static qb.builder.J2SQL.asAlias;
+import static qb.builder.J2SQL.operation;
 import static qb.builder.J2SQLShared.*;
 import static qb.builder.J2SQLShared.PFX.*;
 

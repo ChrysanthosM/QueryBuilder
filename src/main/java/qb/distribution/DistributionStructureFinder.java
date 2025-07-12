@@ -11,7 +11,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-public final class EnumStructureFinder {
+public final class DistributionStructureFinder {
     private final Map<Class<?>, Set<Class<? extends Enum<?>>>> enumClassCache = new ConcurrentHashMap<>();
 
     @PostConstruct

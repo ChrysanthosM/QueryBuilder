@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Description;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 final class GroupOfWheres extends AbstractFilter {
@@ -37,7 +36,7 @@ final class GroupOfWheres extends AbstractFilter {
 
     @Description("create Filters (enclosed in Parenthesis)")
     static WhereBase getGroupOfFilters(@Nullable LinSQL.TypeOfLogicalOperator typeOfLogicalOperator, boolean invertSelection, @NonNull WhereBase... filters) {
-        List<WhereBase> whereList = Stream.of(filters).filter(Objects::nonNull).toList();
+        List<WhereBase> whereList = Stream.of(filters).toList();
         if (CollectionUtils.isEmpty(whereList)) return null;
         GroupOfWheres wheres = new GroupOfWheres(whereList);
         if (typeOfLogicalOperator != null) wheres.setTypeOfLogicalOperator(typeOfLogicalOperator);

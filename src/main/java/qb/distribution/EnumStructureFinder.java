@@ -1,4 +1,4 @@
-package qb.db;
+package qb.distribution;
 
 import jakarta.annotation.PostConstruct;
 import org.apache.commons.lang3.ObjectUtils;

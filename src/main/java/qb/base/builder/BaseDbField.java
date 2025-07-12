@@ -3,7 +3,7 @@ package qb.base.builder;
 import qb.builder.DeployFiltersBase;
 import qb.builder.DeployOrderingBase;
 import qb.builder.ProvideDataTypeForSQLBase;
-import qb.db.sqlite.schema.structure.DbFieldValuesSQLite;
+import qb.distribution.sqlite.schema.structure.DbFieldValuesSQLite;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;

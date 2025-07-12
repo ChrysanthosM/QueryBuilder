@@ -1,4 +1,4 @@
-package qb.db.sqlite.schema.structure;
+package qb.distribution.sqlite.schema.structure;
 
 import qb.builder.ValueForBase;
 import qb.base.builder.BaseDbField;

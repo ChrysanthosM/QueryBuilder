@@ -1,9 +1,9 @@
-package qb.db.sqlite.schema.table;
+package qb.distribution.sqlite.schema.table;
 
 import qb.builder.AbstractTable;
 import qb.builder.PairOfTableField;
-import qb.db.sqlite.schema.structure.DbFieldSQLite;
-import qb.db.sqlite.schema.structure.DbTableSQLite;
+import qb.distribution.sqlite.schema.structure.DbFieldSQLite;
+import qb.distribution.sqlite.schema.structure.DbTableSQLite;
 import org.springframework.stereotype.Component;
 
 @Component

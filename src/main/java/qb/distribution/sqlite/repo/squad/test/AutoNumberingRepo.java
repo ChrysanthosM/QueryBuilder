@@ -1,4 +1,4 @@
-package qb.db.sqlite.repo.squad.test;
+package qb.distribution.sqlite.repo.squad.test;
 
 import qb.base.repo.RepoBase;
 

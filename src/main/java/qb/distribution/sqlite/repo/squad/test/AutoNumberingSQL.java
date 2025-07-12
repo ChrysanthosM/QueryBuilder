@@ -1,4 +1,4 @@
-package qb.db.sqlite.repo.squad.test;
+package qb.distribution.sqlite.repo.squad.test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

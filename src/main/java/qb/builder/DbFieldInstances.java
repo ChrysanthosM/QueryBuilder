@@ -1,7 +1,7 @@
 package qb.builder;
 
 import qb.base.builder.BaseDbField;
-import qb.db.EnumStructureFinder;
+import qb.distribution.EnumStructureFinder;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 

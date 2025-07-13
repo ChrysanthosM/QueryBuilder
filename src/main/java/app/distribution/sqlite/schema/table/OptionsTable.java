@@ -1,8 +1,8 @@
 package app.distribution.sqlite.schema.table;
 
 import org.springframework.stereotype.Component;
-import app.builder.AbstractTable;
-import app.builder.PairOfTableField;
+import app.builder.core.AbstractTable;
+import app.builder.core.PairOfTableField;
 import app.distribution.sqlite.schema.structure.DbFieldSQLite;
 import app.distribution.sqlite.schema.structure.DbTableSQLite;
 

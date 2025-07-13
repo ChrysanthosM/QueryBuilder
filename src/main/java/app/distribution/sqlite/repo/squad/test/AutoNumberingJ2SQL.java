@@ -2,12 +2,12 @@ package app.distribution.sqlite.repo.squad.test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import app.base.repo.AbstractJ2;
-import app.base.repo.LoadJ2SQL;
-import app.builder.J2SQL;
+import app.builder.base.repo.AbstractJ2;
+import app.builder.base.repo.LoadJ2SQL;
+import app.builder.core.J2SQL;
 import app.distribution.sqlite.schema.table.AutoNumberingTable;
 
-import static app.builder.J2SQLShared.MAX;
+import static app.builder.core.J2SQLShared.MAX;
 
 @Component
 public final class AutoNumberingJ2SQL extends AbstractJ2<AutoNumberingRepo.NameOfSQL> implements AutoNumberingRepo {

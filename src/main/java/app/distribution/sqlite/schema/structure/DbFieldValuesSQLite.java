@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
-import app.base.builder.BaseDbField;
-import app.builder.ValueForBase;
+import app.builder.base.builder.BaseDbField;
+import app.builder.core.ValueForBase;
 
 import java.util.Arrays;
 import java.util.List;

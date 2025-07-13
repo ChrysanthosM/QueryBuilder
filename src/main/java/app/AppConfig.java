@@ -2,8 +2,8 @@ package app;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import app.builder.DbFieldInstances;
-import app.builder.DbTableInstances;
+import app.builder.core.DbFieldInstances;
+import app.builder.core.DbTableInstances;
 
 @Configuration
 @RequiredArgsConstructor

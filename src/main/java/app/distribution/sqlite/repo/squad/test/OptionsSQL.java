@@ -2,7 +2,7 @@ package app.distribution.sqlite.repo.squad.test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import app.base.repo.GenericSQL;
+import app.builder.base.repo.GenericSQL;
 import app.distribution.sqlite.schema.table.OptionsTable;
 
 @Component

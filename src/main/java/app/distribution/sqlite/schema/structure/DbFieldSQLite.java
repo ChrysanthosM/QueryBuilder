@@ -2,15 +2,15 @@ package app.distribution.sqlite.schema.structure;
 
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
-import app.base.builder.BaseDbField;
-import app.base.builder.ConfigDbField;
-import app.base.builder.DbFieldDataType;
+import app.builder.base.builder.BaseDbField;
+import app.builder.base.builder.ConfigDbField;
+import app.builder.base.builder.DbFieldDataType;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import static app.base.builder.DbFieldDataType.DATATYPE_INTEGER;
-import static app.base.builder.DbFieldDataType.DATATYPE_TEXT;
+import static app.builder.base.builder.DbFieldDataType.DATATYPE_INTEGER;
+import static app.builder.base.builder.DbFieldDataType.DATATYPE_TEXT;
 
 @Getter
 public enum DbFieldSQLite implements BaseDbField {

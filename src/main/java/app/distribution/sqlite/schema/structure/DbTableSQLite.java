@@ -1,8 +1,8 @@
 package app.distribution.sqlite.schema.structure;
 
-import app.base.builder.BaseDbField;
-import app.base.builder.BaseDbTable;
-import app.base.builder.ConfigDbTable;
+import app.builder.base.builder.BaseDbField;
+import app.builder.base.builder.BaseDbTable;
+import app.builder.base.builder.ConfigDbTable;
 
 import java.util.List;
 

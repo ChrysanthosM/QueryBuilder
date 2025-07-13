@@ -5,18 +5,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import app.base.datasource.WorkWithDataSource;
-import app.builder.J2SQL;
+import app.builder.base.datasource.WorkWithDataSource;
+import app.builder.core.J2SQL;
 import app.distribution.sqlite.schema.structure.DbFieldValuesSQLite;
 import app.distribution.sqlite.schema.table.AutoNumberingTable;
 import app.distribution.sqlite.schema.table.OptionsTable;
 
 import java.util.List;
 
-import static app.builder.J2SQL.asAlias;
-import static app.builder.J2SQL.operation;
-import static app.builder.J2SQLShared.*;
-import static app.builder.J2SQLShared.PFX.*;
+import static app.builder.core.J2SQL.*;
+import static app.builder.core.J2SQLShared.*;
+import static app.builder.core.J2SQLShared.PFX.*;
 
 
 @SpringBootTest

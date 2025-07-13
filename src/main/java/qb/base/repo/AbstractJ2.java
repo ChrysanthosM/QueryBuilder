@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import qb.ApplicationSQLRun;
 import qb.base.datasource.WorkWithDataSource;
 import qb.builder.J2SQL;
-import qb.distribution.sqlite.schema.table.AutoNumberingTable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

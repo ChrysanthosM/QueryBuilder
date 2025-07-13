@@ -38,7 +38,7 @@ final class SQLFieldFromTable extends SqlUserSelection {
         Preconditions.checkNotNull(args[0]);
         Preconditions.checkArgument(args[0] instanceof BaseDbField);
         this.dbF = (BaseDbField) args[0];
-        this.dbField = DbFieldInstances.getMapTableInstance(this.dbF);
+        this.dbField = DbFieldInstances.getInstance(this.dbF);
         super.setHasPrefix(setPrefix);
         super.setAsAlias(asAlias);
     }
@@ -51,7 +51,7 @@ final class SQLFieldFromTable extends SqlUserSelection {
     String getResolveObjectForSQLMain(SQLRetrieverForDbAbstract forSQLRetrieverForDB, @Nullable BaseDbTable forDbt) {
         String returnName = StringUtils.defaultString(this.getHasPrefix());
 
-        String tableHasPrefixForFields = (forDbt == null ? StringUtils.EMPTY : StringUtils.defaultString(DbTableInstances.getMapTableInstance(forDbt).getTablePrefixForFields()));
+        String tableHasPrefixForFields = (forDbt == null ? StringUtils.EMPTY : StringUtils.defaultString(DbTableInstances.getInstance(forDbt).getTablePrefixForFields()));
 
         if (this.dbF == BaseDbField.ALL()) {
             returnName = returnName.concat(LinSQLCommons.ASTERISK);

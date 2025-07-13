@@ -16,7 +16,7 @@ public final class PairOfTableField implements DeployFiltersBase, DeployOrdering
     private PairOfTableField(BaseDbTable baseDbTable, BaseDbField baseDbField) {
         this.baseDbTable = baseDbTable;
         this.baseDbField = baseDbField;
-        this.dbField = DbFieldInstances.getMapTableInstance(this.baseDbField);
+        this.dbField = DbFieldInstances.getInstance(this.baseDbField);
     }
 
     public SQLFieldObject as(@NonNull String asAlias) { return new SQLFieldObject(this, asAlias, null); }

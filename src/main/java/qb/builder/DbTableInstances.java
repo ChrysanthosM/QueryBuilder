@@ -23,7 +23,7 @@ public final class DbTableInstances {
     }
 
 
-    static DbTable getMapTableInstance(BaseDbTable forDbT) {
+    static DbTable getInstance(BaseDbTable forDbT) {
         return mapTableInstances.getOrDefault(forDbT, null);
     }
 }

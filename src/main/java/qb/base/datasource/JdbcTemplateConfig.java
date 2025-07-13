@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 
 @Configuration
 public class JdbcTemplateConfig {
-    @Value("${sqlite.datasource.url:null}") private String sqliteDataSourceUrl;
+    @Value("${spring.datasource.url:null}") private String sqliteDataSourceUrl;
     @Bean(name = "sqliteDataSource")
     @ConditionalOnProperty(name = "datasource.type", havingValue = "sqlite")
     public DataSource sqliteDataSource() {

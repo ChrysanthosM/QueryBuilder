@@ -1,14 +1,12 @@
-package app;
+package app.builder.core;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import app.builder.core.DbFieldInstances;
-import app.builder.core.DbTableInstances;
 
 @Configuration
 @RequiredArgsConstructor
 @SuppressWarnings("unused")
-public class AppConfig {
+public class InstancesConfig {
     @SuppressWarnings("unused")
     private final DbFieldInstances dbFieldInstances;
     @SuppressWarnings("unused")

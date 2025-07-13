@@ -6,11 +6,12 @@ import org.springframework.stereotype.Component;
 import app.builder.base.builder.BaseDbTable;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public final class DbTableInstances {
-    private static final ConcurrentHashMap<BaseDbTable, DbTable> mapTableInstances = new ConcurrentHashMap<>();
+    private static final Map<BaseDbTable, DbTable> mapTableInstances = new ConcurrentHashMap<>();
     private final List<DbTableBase> implementations;
 
     @Autowired
